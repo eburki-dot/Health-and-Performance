@@ -25,11 +25,10 @@ html,body{background:var(--bg)}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);max-width:480px;margin:0 auto;padding:12px 14px 60px}
 .hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
 .hdr-title{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:6px}
-.hdr-date{font-size:11px;color:var(--text3)}
 .sync-bar{font-size:10px;color:var(--text3);padding:5px 10px;background:var(--bg2);border-radius:var(--rs);margin-bottom:14px;display:flex;align-items:center;gap:6px}
 .sync-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);flex-shrink:0}
 .sl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 8px;display:flex;align-items:center;gap:6px}
-.source-badge{font-size:9px;font-weight:500;padding:1px 6px;border-radius:6px;background:var(--bg3);color:var(--text3);text-transform:none;letter-spacing:0}
+.src{font-size:9px;font-weight:500;padding:1px 6px;border-radius:6px;background:var(--bg3);color:var(--text3);text-transform:none;letter-spacing:0}
 .divider{border:none;border-top:0.5px solid var(--border);margin:.875rem 0}
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .card{background:var(--bg2);border-radius:var(--r);padding:11px 13px}
@@ -39,36 +38,29 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:va
 .cval{font-size:19px;font-weight:500;line-height:1.1}
 .csub{font-size:10px;color:var(--text3);margin-top:2px}
 .ok{color:var(--ok)!important}.warn{color:var(--warn)!important}.danger{color:var(--danger)!important}
-/* Ring rows */
 .rring{display:flex;align-items:center;gap:13px;background:var(--bg2);border-radius:var(--r);padding:11px 13px;margin-bottom:.75rem}
-/* Expandable panels */
 .xp{background:#fff;border:0.5px solid var(--border2);border-radius:var(--r);padding:11px 13px;margin-bottom:.875rem;display:none}
 .xp.vis{display:block}
 .xp-title{font-size:12px;font-weight:600;color:var(--text);margin:0 0 4px}
 .xp-body{font-size:11px;color:var(--text2);line-height:1.55;margin:0 0 6px}
 .xp-you{font-size:11px;color:var(--text);line-height:1.55;padding:7px 9px;background:var(--bg2);border-radius:var(--rs);border-left:3px solid var(--info);border-top-left-radius:0;border-bottom-left-radius:0}
 .xbtn{float:right;background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:0;line-height:1}
-.xbtn:hover{color:var(--text)}
 .bdg{display:inline-flex;align-items:center;gap:2px;font-size:9px;font-weight:600;padding:2px 7px;border-radius:18px;margin-bottom:5px}
 .bok{background:var(--ok-bg);color:var(--ok)}.bwn{background:var(--warn-bg);color:var(--warn)}
 .bdn{background:var(--danger-bg);color:var(--danger)}.bin{background:var(--info-bg);color:var(--info)}
-/* Macro bars */
 .mrow{display:flex;align-items:center;gap:7px;margin-bottom:9px}
 .mname{font-size:11px;color:var(--text2);width:90px;flex-shrink:0;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px}
 .mname:hover{color:var(--text)}
 .mtrack{flex:1;background:var(--bg3);border-radius:3px;height:6px;overflow:hidden}
 .mbar{height:100%;border-radius:3px;transition:width .5s}
-.mnum{font-size:10px;color:var(--text3);width:58px;text-align:right;flex-shrink:0}
-/* Food log */
+.mnum{font-size:10px;color:var(--text3);width:66px;text-align:right;flex-shrink:0}
 .meal-hdr{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:7px 0 3px;margin-top:3px}
 .food-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--border);font-size:11px}
 .food-row:last-child{border-bottom:none}
-/* Workout list */
 .wo-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:11px}
 .wo-row:last-child{border-bottom:none}
 .wo-icon{width:28px;height:28px;border-radius:8px;background:var(--info-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:var(--info)}
 .wo-icon.str{background:var(--warn-bg);color:var(--warn)}
-/* Lab grid */
 .lab-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:.875rem}
 .lc{background:#fff;border-radius:var(--r);padding:10px 11px;cursor:pointer;border:0.5px solid transparent}
 .lc:hover{border-color:var(--border2)}.lc.open{border-color:var(--info)!important}
@@ -88,32 +80,90 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:va
 .ftext{color:var(--text);line-height:1.5;flex:1}
 .ffixes{margin-top:4px;padding-left:2px}
 .ffix{font-size:10px;color:var(--text2);padding:1px 0;display:flex;gap:3px}
-/* BP form */
-.bp-form{background:var(--bg2);border-radius:var(--rs);padding:9px;margin-top:7px}
+.disc{font-size:10px;color:var(--text3);padding:6px 9px;background:var(--bg2);border-radius:var(--rs);margin-bottom:.75rem;line-height:1.5}
+.wkb{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:.875rem}
+.assess-card{border-radius:var(--r);padding:13px 14px;margin-bottom:10px;border-left:4px solid transparent}
+.assess-card.green{background:var(--ok-bg);border-left-color:var(--ok)}
+.assess-card.amber{background:var(--warn-bg);border-left-color:var(--warn)}
+.assess-card.red{background:var(--danger-bg);border-left-color:var(--danger)}
+.assess-card.blue{background:var(--info-bg);border-left-color:var(--info)}
+.assess-title{font-size:12px;font-weight:600;color:var(--text);margin:0 0 5px;display:flex;align-items:center;gap:5px}
+.assess-body{font-size:11px;color:var(--text2);line-height:1.6;margin:0}
+.assess-body strong{color:var(--text)}
+.assess-bullets{margin-top:6px;padding-left:2px}
+.assess-bullet{font-size:10px;color:var(--text2);padding:2px 0;display:flex;gap:4px;line-height:1.5}
+.race-chip{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--danger-bg);color:var(--danger);margin-bottom:8px}
+/* History table */
+.hist-table{width:100%;border-collapse:collapse;font-size:10px;margin-bottom:.875rem}
+.hist-table th{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;padding:4px 6px;border-bottom:0.5px solid var(--border);text-align:left}
+.hist-table td{padding:5px 6px;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.hist-table tr:last-child td{border-bottom:none}
+.hist-table .today{color:var(--text);font-weight:600}
 input,button{font-family:inherit}
 input[type=text],input[type=number]{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--rs);padding:6px 8px;font-size:12px;color:var(--text);width:100%;-webkit-appearance:none}
 input:focus{outline:none;border-color:var(--info)}
 button{background:var(--text);color:#fff;border:none;border-radius:var(--rs);padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer}
 button:hover{opacity:.85}
-button.sec{background:var(--bg3);color:var(--text)}
-.disc{font-size:10px;color:var(--text3);padding:6px 9px;background:var(--bg2);border-radius:var(--rs);margin-bottom:.75rem;line-height:1.5}
-.signal{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);margin-bottom:3px}
-.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;display:inline-block}
-/* Week bars */
-.wkb{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:.875rem}
 </style>
 </head>
 <body>
 
 <div class="hdr">
   <div class="hdr-title"><i class="ti ti-heart-rate-monitor"></i> Health</div>
-  <div class="hdr-date">Thu Jun 4, 2026 · Last synced 3:00 PM</div>
+  <div style="font-size:10px;color:var(--text3);text-align:right">Thu Jun 4, 2026<br/>Synced 4:30 PM</div>
 </div>
-<div class="sync-bar"><span class="sync-dot"></span>Synced from Alma + Runalyze · Say "sync my dashboard" in Claude to refresh</div>
+<div class="sync-bar"><span class="sync-dot"></span>Data from Runalyze + Claude nutrition calc · Say "sync my dashboard" in Claude to refresh</div>
 
-<!-- ── FITNESS READINESS ── -->
-<p class="sl">Fitness readiness <span class="source-badge">Runalyze</span></p>
+<!-- ══════════════════════════════════════
+     CLAUDE ASSESSMENT
+     ══════════════════════════════════════ -->
+<p class="sl">Claude's assessment <span class="src">Jun 4 · 4:30 PM</span></p>
+<div class="race-chip"><i class="ti ti-flag" style="font-size:10px"></i> Ultra Marathon — 16 days · Jun 20</div>
 
+<div class="assess-card amber">
+  <p class="assess-title"><i class="ti ti-apple" style="font-size:12px"></i> Nutrition today</p>
+  <p class="assess-body"><strong>876 kcal of 2,155 logged — 1,600 kcal remaining after 321 kcal workout credit.</strong> Nutrition score 58/100. Solid protein base (98.6g), excellent omega-3s from flaxseed, and zero ultra-processed food. Two gaps need attention at dinner.</p>
+  <div class="assess-bullets">
+    <div class="assess-bullet"><span>→</span><span><strong>Fiber critical (12.4g/38g):</strong> Need 25.6g more. This is your most important gap — fiber directly lowers LDL (128) and blunts blood sugar (HbA1c 5.8%). A cup of lentils (16g) + broccoli (5g) at dinner closes most of it.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>Sugar watch (22g/25g limit):</strong> Only 3g headroom left, mostly used by banana and yogurt (natural sugars but still count). Avoid any sweetened sauces or condiments at dinner to stay under 25g. Zero added sugar today is still achievable.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>For HbA1c 5.8%:</strong> Pair dinner carbs (rice, potato) with protein — already doing this well. Take a 10-min walk after dinner to reduce post-meal glucose 20–30%.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>For triglycerides 197:</strong> Add salmon or sardines at dinner for EPA/DHA omega-3s — more potent than flaxseed ALA for triglyceride reduction (15–30%).</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>Calories:</strong> 1,600 remaining — eat a substantial dinner (~700–800 kcal). Under-eating tonight will slow HRV recovery and hurt tomorrow's readiness.</span></div>
+  </div>
+</div>
+
+<div class="assess-card amber">
+  <p class="assess-title"><i class="ti ti-run" style="font-size:12px"></i> Training assessment</p>
+  <p class="assess-body"><strong>Overreaching — 7 sessions in 7 days, no rest day.</strong> This morning's treadmill intervals (2.5 mi, TE 3.5) were well-executed but poorly timed. HRV has declined from 35ms to 30ms across the week. Fatigue self-reported at 6/10.</p>
+  <div class="assess-bullets">
+    <div class="assess-bullet"><span>→</span><span><strong>Tomorrow (Jun 5):</strong> Complete rest or 20-min easy walk only. Non-negotiable for HRV recovery going into race taper.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>Jun 6–12 taper plan:</strong> 2 easy runs (4–5 mi each, Zone 2 only), 1 rest day, 1 short strides session (20 min). Total volume under 15 mi. No intervals, no tempo.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>Jun 13–19 race week:</strong> 2–3 short shakeout runs (20–30 min easy), rest Jun 18–19. Carb load Jun 17–19 (300–350g carbs/day).</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>What you're doing right:</strong> Interval pacing was good (splits getting faster: 6:50→5:59→5:49 pace). VO2max ticking up to 45.1. Aerobic base solid.</span></div>
+  </div>
+</div>
+
+<div class="assess-card red">
+  <p class="assess-title"><i class="ti ti-flag" style="font-size:12px"></i> Ultra Marathon — Jun 20 (16 days)</p>
+  <p class="assess-body"><strong>Fitness: ready. Recovery: at risk.</strong> VO2max 45.1, aerobic decoupling healthy, predicted marathon 4:15. The threat is accumulated fatigue — HRV needs to recover to 34–35ms by race week.</p>
+  <div class="assess-bullets">
+    <div class="assess-bullet"><span>→</span><span><strong>HRV target:</strong> 34ms+ by Jun 17. Currently 30ms. Requires 2–3 full rest days in the next 10 days.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>Carb loading Jun 17–19:</strong> Increase to 300–350g carbs/day. Sweet potato, oats, rice, banana. Keep protein at 127g+. Zero alcohol, zero added sugar.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>Race day nutrition:</strong> 150–200 kcal/hour during the race. Practice with gels or dates in training runs this week.</span></div>
+    <div class="assess-bullet"><span>→</span><span><strong>Weight:</strong> 174 lb, 4 from goal. Do not restrict calories — race performance over weight loss for the next 16 days.</span></div>
+  </div>
+</div>
+
+<div class="assess-card green">
+  <p class="assess-title"><i class="ti ti-heart" style="font-size:12px"></i> What you're doing right</p>
+  <p class="assess-body">Zero ultra-processed food today · Zero added sugar (natural sources only) · 98.6g protein by 4:30pm · Omega-3s from flaxseed daily · RHR stable at 58bpm · VO2max improving 44.7→45.1 · Interval pacing improving (splits getting faster) · Consistent training building race fitness</p>
+</div>
+
+<hr class="divider"/>
+<!-- ══════════════════════════════════════
+     FITNESS READINESS
+     ══════════════════════════════════════ -->
+<p class="sl">Fitness readiness <span class="src">Runalyze</span></p>
 <div class="rring tap" id="rdCard" onclick="tgl('rdPanel',this)">
   <svg width="60" height="60" viewBox="0 0 60 60">
     <circle cx="30" cy="30" r="25" fill="none" stroke="#E4E2DE" stroke-width="5"/>
@@ -131,182 +181,165 @@ button.sec{background:var(--bg3);color:var(--text)}
     <div style="font-size:15px;font-weight:600;color:var(--danger)">16d</div>
   </div>
 </div>
-<div class="xp" id="rdPanel">
-  <button class="xbtn" onclick="cli('rdPanel',document.getElementById('rdCard'))"><i class="ti ti-x"></i></button>
-  <p class="xp-title">Readiness — 52/100</p>
-  <span class="bdg bwn">Moderate</span>
-  <p class="xp-body">Composite of HRV trend, resting HR, sleep quality, and subjective wellbeing.</p>
-  <p class="xp-you">7 consecutive training days with no rest. HRV trending 35→34→29→30ms — suppressed but slight uptick today. Garmin prescribes 31.8hr recovery after this morning's intervals. With your Ultra in 16 days this is the critical taper window — protect your HRV recovery above all else.</p>
-</div>
+<div class="xp" id="rdPanel"><button class="xbtn" onclick="cli('rdPanel',document.getElementById('rdCard'))"><i class="ti ti-x"></i></button><p class="xp-title">Readiness — 52/100</p><span class="bdg bwn">Moderate</span><p class="xp-body">Composite of HRV trend, resting HR, sleep quality, and subjective wellbeing.</p><p class="xp-you">7 consecutive training days, no rest. HRV trending 35→34→29→30ms — slight uptick today but still suppressed. Garmin prescribes 31.8hr recovery after this morning's intervals. With Ultra in 16 days this is the critical taper window.</p></div>
 
 <div class="g2" style="margin-bottom:.5rem">
   <div class="card tap" onclick="tgl('hrvP')"><p class="clabel"><i class="ti ti-activity" style="font-size:10px"></i> HRV (RMSSD)</p><p class="cval warn">30 <span style="font-size:11px;font-weight:400">ms</span></p><p class="csub">35→34→29→30 trend</p></div>
   <div class="card tap" onclick="tgl('rhrP')"><p class="clabel"><i class="ti ti-heart" style="font-size:10px"></i> Resting HR</p><p class="cval ok">58 <span style="font-size:11px;font-weight:400">bpm</span></p><p class="csub">Normal · stable</p></div>
   <div class="card tap" onclick="tgl('sleepP')"><p class="clabel"><i class="ti ti-moon" style="font-size:10px"></i> Deep sleep</p><p class="cval warn">64 <span style="font-size:11px;font-weight:400">min</span></p><p class="csub">Total 415min · Target 90+</p></div>
-  <div class="card tap" onclick="tgl('vo2P')"><p class="clabel"><i class="ti ti-lungs" style="font-size:10px"></i> VO₂max</p><p class="cval ok">45.1 <span style="font-size:11px;font-weight:400">ml/kg/min</span></p><p class="csub">Today's estimate</p></div>
+  <div class="card tap" onclick="tgl('vo2P')"><p class="clabel"><i class="ti ti-lungs" style="font-size:10px"></i> VO₂max</p><p class="cval ok">45.1 <span style="font-size:11px;font-weight:400">ml/kg/min</span></p><p class="csub">↑ from 44.7 last week</p></div>
   <div class="card tap" onclick="tgl('wtP')"><p class="clabel"><i class="ti ti-scale" style="font-size:10px"></i> Weight</p><p class="cval">174 <span style="font-size:11px;font-weight:400">lb</span></p><p class="csub">Target 170 · Jun 3</p></div>
   <div class="card tap" onclick="tgl('bodyP')"><p class="clabel"><i class="ti ti-body-scan" style="font-size:10px"></i> Body fat</p><p class="cval warn">24.7 <span style="font-size:11px;font-weight:400">%</span></p><p class="csub">Jun 3 reading</p></div>
 </div>
-
-<div class="xp" id="hrvP"><button class="xbtn" onclick="cli('hrvP')"><i class="ti ti-x"></i></button><p class="xp-title">HRV (RMSSD) — 30ms</p><span class="bdg bwn">Suppressed</span><p class="xp-body">Millisecond variation between heartbeats — the most sensitive daily fatigue indicator. A declining trend matters more than any single reading.</p><p class="xp-you">Your trend over 7 days: 35→34→29→30ms. The slight uptick today is encouraging but you're still well below your baseline. One more hard session could push it lower — rest or easy movement today is the right call going into your Ultra taper.</p></div>
-<div class="xp" id="rhrP"><button class="xbtn" onclick="cli('rhrP')"><i class="ti ti-x"></i></button><p class="xp-title">Resting HR — 58 bpm</p><span class="bdg bok">Normal</span><p class="xp-body">Slower-moving fatigue signal than HRV. An increase of 5+ bpm above your baseline flags illness or overtraining.</p><p class="xp-you">58 bpm — holding steady within your normal range. A reassuring counterpoint to the suppressed HRV. If this starts climbing above 63, take it seriously.</p></div>
-<div class="xp" id="sleepP"><button class="xbtn" onclick="cli('sleepP')"><i class="ti ti-x"></i></button><p class="xp-title">Sleep — 415 min total · 64 min deep</p><span class="bdg bwn">Below target</span><p class="xp-body">Deep sleep is when growth hormone releases and muscle tissue repairs. Target 90+ min deep per night. Also when testosterone is primarily produced.</p><p class="xp-you">64 min deep out of 415 total. Physical recovery was incomplete last night. With low-normal testosterone (414 ng/dL) and an Ultra in 16 days, deep sleep is your #1 recovery lever right now. Aim for bed 30 min earlier tonight.</p></div>
-<div class="xp" id="vo2P"><button class="xbtn" onclick="cli('vo2P')"><i class="ti ti-x"></i></button><p class="xp-title">VO₂max — 45.1 ml/kg/min</p><span class="bdg bok">Stable</span><p class="xp-body">Maximum oxygen consumption — the single best indicator of aerobic fitness. Garmin estimates from pace-to-HR ratio during runs.</p><p class="xp-you">45.1 today vs 44.7 last week — slight uptick. Stable or improving VO₂max during a heavy training week confirms your aerobic engine is adapting. The taper over the next 2 weeks will sharpen this further before your race.</p></div>
-<div class="xp" id="wtP"><button class="xbtn" onclick="cli('wtP')"><i class="ti ti-x"></i></button><p class="xp-title">Weight — 174 lb (78.97 kg)</p><span class="bdg bwn">4 lb to goal</span><p class="xp-body">Goal: lose 5 lb by July 17 (170 lb target). Current rate: ~0.6 lb/week on track.</p><p class="xp-you">4 lb from your 170 lb target with 43 days remaining — on pace. Don't aggressively cut calories during the Ultra taper — under-fueling now will hurt race performance. Focus on food quality over restriction.</p></div>
-<div class="xp" id="bodyP"><button class="xbtn" onclick="cli('bodyP')"><i class="ti ti-x"></i></button><p class="xp-title">Body fat — 24.7%</p><span class="bdg bwn">Above optimal</span><p class="xp-body">Optimal range for male distance runners: 8–15%. Health optimal for men your age: under 22%. Body composition responds to consistent training and reduced processed food.</p><p class="xp-you">24.7% is the primary driver of your cardiometabolic risk profile. Every percentage point reduction improves insulin sensitivity (HbA1c), raises HDL, and lowers triglycerides. Your running and nutrition plan address this directly.</p></div>
+<div class="xp" id="hrvP"><button class="xbtn" onclick="cli('hrvP')"><i class="ti ti-x"></i></button><p class="xp-title">HRV — 30ms</p><span class="bdg bwn">Suppressed</span><p class="xp-body">Millisecond variation between heartbeats — most sensitive daily fatigue indicator.</p><p class="xp-you">Trend: 35→34→29→30ms over 7 days. Slight uptick today is encouraging but still below baseline. Target 34ms+ by Jun 17 for race readiness.</p></div>
+<div class="xp" id="rhrP"><button class="xbtn" onclick="cli('rhrP')"><i class="ti ti-x"></i></button><p class="xp-title">Resting HR — 58 bpm</p><span class="bdg bok">Normal</span><p class="xp-body">Slower-moving fatigue signal. 5+ bpm above baseline flags overtraining.</p><p class="xp-you">58 bpm — holding steady within normal range. Watch for upward drift above 63.</p></div>
+<div class="xp" id="sleepP"><button class="xbtn" onclick="cli('sleepP')"><i class="ti ti-x"></i></button><p class="xp-title">Sleep — 415 min · 64 min deep</p><span class="bdg bwn">Below target</span><p class="xp-body">Deep sleep is when growth hormone releases, muscle repairs, and testosterone is produced. Target 90+ min deep.</p><p class="xp-you">64 min deep — below target. With Ultra in 16 days and testosterone at 414 ng/dL, deep sleep is your #1 recovery lever. Aim for bed 30 min earlier tonight.</p></div>
+<div class="xp" id="vo2P"><button class="xbtn" onclick="cli('vo2P')"><i class="ti ti-x"></i></button><p class="xp-title">VO₂max — 45.1 ml/kg/min</p><span class="bdg bok">Improving</span><p class="xp-body">Maximum oxygen consumption — best single indicator of aerobic fitness.</p><p class="xp-you">45.1 vs 44.7 last week. Runalyze predicts marathon 4:15, half 2:03. The taper over 16 days will sharpen this further before race day.</p></div>
+<div class="xp" id="wtP"><button class="xbtn" onclick="cli('wtP')"><i class="ti ti-x"></i></button><p class="xp-title">Weight — 174 lb</p><span class="bdg bwn">4 lb to goal</span><p class="xp-you">4 lb from 170 lb target with 43 days remaining — on pace at 0.6 lb/week. Don't restrict calories during Ultra taper — race performance over weight loss for the next 3 weeks.</p></div>
+<div class="xp" id="bodyP"><button class="xbtn" onclick="cli('bodyP')"><i class="ti ti-x"></i></button><p class="xp-title">Body fat — 24.7%</p><span class="bdg bwn">Above optimal</span><p class="xp-you">Every 1% reduction improves insulin sensitivity, raises HDL, and lowers triglycerides. Your current program addresses this directly. Optimal for male distance runners: 8–15%.</p></div>
 
 <hr class="divider"/>
-<p class="sl">This week's training <span class="source-badge">Runalyze</span></p>
+<p class="sl">This week's training <span class="src">Runalyze</span></p>
 <div class="card" style="margin-bottom:.875rem">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
     <div style="font-size:13px;font-weight:600">26.2 mi · 7 sessions</div>
-    <div style="font-size:11px;color:var(--warn)">No rest day this week</div>
+    <div style="font-size:10px;color:var(--danger);font-weight:500">⚠ No rest day</div>
   </div>
-  <div class="wo-row">
-    <div class="wo-icon"><i class="ti ti-run"></i></div>
-    <div style="flex:1"><div style="font-weight:500">Treadmill Intervals</div><div style="font-size:10px;color:var(--text3)">2.5 mi · 25 min · 321 kcal · TE 3.5</div></div>
-    <div style="font-size:10px;color:var(--text3)">Today</div>
-  </div>
-  <div class="wo-row">
-    <div class="wo-icon"><i class="ti ti-run"></i></div>
-    <div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">3.4 mi · 43 min · avg HR 135</div></div>
-    <div style="font-size:10px;color:var(--text3)">Jun 3</div>
-  </div>
-  <div class="wo-row">
-    <div class="wo-icon str"><i class="ti ti-barbell"></i></div>
-    <div style="flex:1"><div style="font-weight:500">Upper Body Strength</div><div style="font-size:10px;color:var(--text3)">17 min · avg HR 115</div></div>
-    <div style="font-size:10px;color:var(--text3)">Jun 3</div>
-  </div>
-  <div class="wo-row">
-    <div class="wo-icon"><i class="ti ti-run"></i></div>
-    <div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">3.3 mi · 36 min · avg HR 144</div></div>
-    <div style="font-size:10px;color:var(--text3)">Jun 2</div>
-  </div>
-  <div class="wo-row">
-    <div class="wo-icon"><i class="ti ti-run"></i></div>
-    <div style="flex:1"><div style="font-weight:500">Easy Run (Long)</div><div style="font-size:10px;color:var(--text3)">5.0 mi · 54 min · avg HR 148</div></div>
-    <div style="font-size:10px;color:var(--text3)">Jun 1</div>
-  </div>
-  <div class="wo-row">
-    <div class="wo-icon"><i class="ti ti-run"></i></div>
-    <div style="flex:1"><div style="font-weight:500">Easy Run (Long)</div><div style="font-size:10px;color:var(--text3)">5.0 mi · 56 min · avg HR 148</div></div>
-    <div style="font-size:10px;color:var(--text3)">May 31</div>
-  </div>
-  <div class="wo-row">
-    <div class="wo-icon"><i class="ti ti-run"></i></div>
-    <div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">2.9 mi · 32 min · avg HR 143</div></div>
-    <div style="font-size:10px;color:var(--text3)">May 29</div>
-  </div>
+  <div class="wo-row"><div class="wo-icon"><i class="ti ti-run"></i></div><div style="flex:1"><div style="font-weight:500">Treadmill Intervals</div><div style="font-size:10px;color:var(--text3)">2.5 mi · 25 min · 321 kcal · TE 3.5 · HR 154</div></div><div style="font-size:10px;color:var(--text3)">Today</div></div>
+  <div class="wo-row"><div class="wo-icon"><i class="ti ti-run"></i></div><div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">3.4 mi · 43 min · HR 135</div></div><div style="font-size:10px;color:var(--text3)">Jun 3</div></div>
+  <div class="wo-row"><div class="wo-icon str"><i class="ti ti-barbell"></i></div><div style="flex:1"><div style="font-weight:500">Upper Body Strength</div><div style="font-size:10px;color:var(--text3)">17 min · HR 115</div></div><div style="font-size:10px;color:var(--text3)">Jun 3</div></div>
+  <div class="wo-row"><div class="wo-icon"><i class="ti ti-run"></i></div><div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">3.3 mi · 36 min · HR 144</div></div><div style="font-size:10px;color:var(--text3)">Jun 2</div></div>
+  <div class="wo-row"><div class="wo-icon"><i class="ti ti-run"></i></div><div style="flex:1"><div style="font-weight:500">Long Run</div><div style="font-size:10px;color:var(--text3)">5.0 mi · 54 min · HR 148</div></div><div style="font-size:10px;color:var(--text3)">Jun 1</div></div>
+  <div class="wo-row"><div class="wo-icon"><i class="ti ti-run"></i></div><div style="flex:1"><div style="font-weight:500">Long Run</div><div style="font-size:10px;color:var(--text3)">5.0 mi · 56 min · HR 148</div></div><div style="font-size:10px;color:var(--text3)">May 31</div></div>
+  <div class="wo-row"><div class="wo-icon"><i class="ti ti-run"></i></div><div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">2.9 mi · 32 min · HR 143</div></div><div style="font-size:10px;color:var(--text3)">May 29</div></div>
 </div>
 
 <hr class="divider"/>
-<!-- ── NUTRITION ── -->
-<p class="sl">Nutrition <span class="source-badge">Alma</span></p>
-
+<!-- ══════════════════════════════════════
+     NUTRITION
+     ══════════════════════════════════════ -->
+<p class="sl">Nutrition <span class="src">Claude calc</span></p>
 <div class="rring tap" id="nutCard" onclick="tgl('nutPanel',this)">
   <svg width="60" height="60" viewBox="0 0 60 60">
     <circle cx="30" cy="30" r="25" fill="none" stroke="#E4E2DE" stroke-width="5"/>
     <circle cx="30" cy="30" r="25" fill="none" stroke="#BA7517" stroke-width="5"
       stroke-dasharray="157.08" stroke-dashoffset="62.83" stroke-linecap="round" transform="rotate(-90 30 30)"/>
-    <text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="#BA7517">60</text>
+    <text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="#BA7517">58</text>
   </svg>
   <div style="flex:1">
     <div style="font-size:15px;font-weight:600;color:#BA7517">Needs attention</div>
-    <div style="font-size:11px;color:var(--text2);margin-top:2px">488 kcal logged · 1,988 kcal remaining</div>
-    <div style="font-size:10px;color:var(--text3);margin-top:2px">+321 kcal workout credit · target 2,155</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:2px">876 kcal · 1,600 remaining</div>
+    <div style="font-size:10px;color:var(--text3);margin-top:2px">+321 kcal workout · score 58/100</div>
   </div>
   <div style="text-align:center;flex-shrink:0">
-    <div style="font-size:9px;color:var(--text3);margin-bottom:1px">7-day avg</div>
-    <div style="font-size:15px;font-weight:600;color:var(--text3)">60</div>
+    <div style="font-size:9px;color:var(--text3);margin-bottom:1px">7-day</div>
+    <div style="font-size:15px;font-weight:600;color:var(--text3)">58</div>
   </div>
 </div>
-<div class="xp" id="nutPanel">
-  <button class="xbtn" onclick="cli('nutPanel',document.getElementById('nutCard'))"><i class="ti ti-x"></i></button>
-  <p class="xp-title">Alma score — 60/100</p>
-  <span class="bdg bwn">Needs attention</span>
-  <p class="xp-body">Alma's diet quality score across 10 categories: vegetables, fruit, whole grains, nuts/legumes, omega-3s, healthy fats, processed meats, added sugar, sodium, alcohol.</p>
-  <p class="xp-you">Strongest: Omega-3s (flaxseed — full marks). Zero added sugar — excellent for HbA1c 5.8% and triglycerides 197. Weakest: no vegetables or fruit logged yet. A serving of broccoli or spinach at dinner will meaningfully move this score and directly support your LDL (128) and blood sugar targets.</p>
-</div>
+<div class="xp" id="nutPanel"><button class="xbtn" onclick="cli('nutPanel',document.getElementById('nutCard'))"><i class="ti ti-x"></i></button><p class="xp-title">Nutrition score — 58/100</p><span class="bdg bwn">Needs attention</span><p class="xp-body">Score based on: fiber (25%), added sugar (20%), protein (20%), food quality (20%), calories (15%). Calculated from foods you told Claude about.</p><p class="xp-you">Strong protein (98.6g by 4:30pm), zero ultra-processed food, excellent omega-3s. Score held back by fiber at only 33% of target and no vegetables yet. A high-fiber dinner pushes this into the 70s.</p></div>
 
-<!-- Calorie summary card -->
-<div class="card" style="margin-bottom:.875rem;background:var(--bg2)">
+<div class="card" style="margin-bottom:.875rem">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
     <div style="font-size:12px;font-weight:600">Calorie budget</div>
     <div style="font-size:10px;color:var(--text3)">Workout-adjusted</div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;text-align:center">
-    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px">
-      <div style="font-size:16px;font-weight:600">2,155</div>
-      <div style="font-size:9px;color:var(--text3)">Target</div>
-    </div>
-    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px">
-      <div style="font-size:16px;font-weight:600;color:var(--info)">+321</div>
-      <div style="font-size:9px;color:var(--text3)">Workout earned</div>
-    </div>
-    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px">
-      <div style="font-size:16px;font-weight:600;color:var(--ok)">1,988</div>
-      <div style="font-size:9px;color:var(--text3)">Remaining</div>
-    </div>
+    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px"><div style="font-size:16px;font-weight:600">2,155</div><div style="font-size:9px;color:var(--text3)">Target</div></div>
+    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px"><div style="font-size:16px;font-weight:600;color:var(--info)">+321</div><div style="font-size:9px;color:var(--text3)">Workout</div></div>
+    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px"><div style="font-size:16px;font-weight:600;color:var(--ok)">1,600</div><div style="font-size:9px;color:var(--text3)">Remaining</div></div>
   </div>
 </div>
 
-<!-- Macro bars -->
-<p style="font-size:10px;color:var(--text3);margin:0 0 8px"><i class="ti ti-info-circle"></i> Tap macro name for context</p>
-<div class="mrow"><span class="mname" onclick="tgl('mCalP')">Calories</span><div class="mtrack"><div class="mbar" style="width:23%;background:#378ADD"></div></div><span class="mnum">488/2,155</span></div>
-<div class="xp" id="mCalP"><button class="xbtn" onclick="cli('mCalP')"><i class="ti ti-x"></i></button><p class="xp-title">Calories — 488 of 2,155 kcal</p><span class="bdg bwn">22% of target</span><p class="xp-body">Alma's target is 2,155 kcal/day based on your TDEE (2,477) minus a 322 kcal deficit for your 5 lb weight loss goal.</p><p class="xp-you">Early in the day — 1,988 kcal remaining after workout credit. Don't undereat today: with readiness at 52/100 and an interval session this morning, adequate fueling accelerates HRV recovery. Target 700–800 kcal at both lunch and dinner.</p></div>
+<p style="font-size:10px;color:var(--text3);margin:0 0 8px"><i class="ti ti-info-circle"></i> Tap name for context</p>
+<div class="mrow"><span class="mname" onclick="tgl('mCalP')">Calories</span><div class="mtrack"><div class="mbar" style="width:41%;background:#378ADD"></div></div><span class="mnum">876/2,155</span></div>
+<div class="xp" id="mCalP"><button class="xbtn" onclick="cli('mCalP')"><i class="ti ti-x"></i></button><p class="xp-title">Calories — 876 of 2,155</p><span class="bdg bwn">41%</span><p class="xp-you">1,600 kcal remaining after workout credit. With readiness 52/100, adequate fueling tonight accelerates HRV recovery. Aim for 700–800 kcal at dinner.</p></div>
 
-<div class="mrow"><span class="mname" onclick="tgl('mProtP')">Protein</span><div class="mtrack"><div class="mbar" style="width:49%;background:#1D9E75"></div></div><span class="mnum">62.7/127g</span></div>
-<div class="xp" id="mProtP"><button class="xbtn" onclick="cli('mProtP')"><i class="ti ti-x"></i></button><p class="xp-title">Protein — 62.7g of 127g</p><span class="bdg bwn">49% — needs 64g more</span><p class="xp-body">Alma's target: 127g/day. Most satiating macro, minimal blood sugar impact. Critical for muscle repair after running.</p><p class="xp-you">Good start — 62.7g already from your morning shake and grilled chicken lunch. Need 64g more today. A large salmon fillet (40g) + Greek yogurt (17g) at dinner would close the gap. With low-normal testosterone (414 ng/dL), hitting this daily target is especially important.</p></div>
+<div class="mrow"><span class="mname" onclick="tgl('mProtP')">Protein</span><div class="mtrack"><div class="mbar" style="width:78%;background:#1D9E75"></div></div><span class="mnum">98.6/127g</span></div>
+<div class="xp" id="mProtP"><button class="xbtn" onclick="cli('mProtP')"><i class="ti ti-x"></i></button><p class="xp-title">Protein — 98.6g of 127g</p><span class="bdg bwn">78% — need 28g more</span><p class="xp-you">Strong progress — 98.6g by 4:30pm. 28g to go. A 4oz salmon fillet at dinner closes the gap completely. With low-normal testosterone (414 ng/dL) and your Ultra in 16 days, hitting this daily is especially important.</p></div>
 
-<div class="mrow"><span class="mname" onclick="tgl('mCarbP')">Carbs</span><div class="mtrack"><div class="mbar" style="width:10%;background:#BA7517"></div></div><span class="mnum">23.5/235g</span></div>
-<div class="xp" id="mCarbP"><button class="xbtn" onclick="cli('mCarbP')"><i class="ti ti-x"></i></button><p class="xp-title">Carbohydrates — 23.5g of 235g</p><span class="bdg bwn">10% — very low so far</span><p class="xp-body">Alma's target: 235g/day. Complex carbs (oats, legumes, sweet potato) digest slowly and fuel endurance training. Refined carbs spike blood sugar.</p><p class="xp-you">Only 23.5g so far — well under target. With an interval session this morning, your glycogen needs replenishment. Post-workout is the ideal carb window — sweet potato, brown rice, or oats at lunch/dinner will restore glycogen without the blood sugar spike. With HbA1c 5.8%, always pair carbs with protein.</p></div>
+<div class="mrow"><span class="mname" onclick="tgl('mCarbP')">Carbs</span><div class="mtrack"><div class="mbar" style="width:23%;background:#BA7517"></div></div><span class="mnum">54.2/235g</span></div>
+<div class="xp" id="mCarbP"><button class="xbtn" onclick="cli('mCarbP')"><i class="ti ti-x"></i></button><p class="xp-title">Carbs — 54.2g of 235g</p><span class="bdg bwn">23% — replenish post-workout</span><p class="xp-you">Well under target after a morning interval session. Sweet potato, brown rice, or oats at dinner replenishes glycogen. Always pair carbs with protein given HbA1c 5.8%.</p></div>
 
-<div class="mrow"><span class="mname" onclick="tgl('mFatP')">Total fat</span><div class="mtrack"><div class="mbar" style="width:18%;background:#639922"></div></div><span class="mnum">13.9/78g</span></div>
-<div class="xp" id="mFatP"><button class="xbtn" onclick="cli('mFatP')"><i class="ti ti-x"></i></button><p class="xp-title">Total fat — 13.9g of 78g</p><span class="bdg bwn">18% — room to add</span><p class="xp-body">Alma's target: 78g/day. Type matters most — unsaturated fats improve cholesterol; saturated raise LDL.</p><p class="xp-you">With LDL at 128, prioritize olive oil, avocado, and nuts over saturated sources. Your flaxseed adds excellent ALA omega-3s. Add oily fish 2–3×/week for EPA/DHA to more directly reduce triglycerides (197).</p></div>
+<div class="mrow"><span class="mname" onclick="tgl('mFatP')">Fat</span><div class="mtrack"><div class="mbar" style="width:36%;background:#639922"></div></div><span class="mnum">28.4/78g</span></div>
+<div class="xp" id="mFatP"><button class="xbtn" onclick="cli('mFatP')"><i class="ti ti-x"></i></button><p class="xp-title">Fat — 28.4g of 78g</p><span class="bdg bwn">36%</span><p class="xp-you">With LDL 128, prioritize unsaturated sources. Olive oil on dinner vegetables + salmon adds EPA/DHA omega-3s to more directly reduce triglycerides (197).</p></div>
 
-<div class="mrow"><span class="mname" onclick="tgl('mFibP')">Fiber</span><div class="mtrack"><div class="mbar" style="width:10%;background:#639922"></div></div><span class="mnum">3.9/38g</span></div>
-<div class="xp" id="mFibP"><button class="xbtn" onclick="cli('mFibP')"><i class="ti ti-x"></i></button><p class="xp-title">Fiber — 3.9g of 38g</p><span class="bdg bdn">10% — critical gap</span><p class="xp-body">Target 38g/day. Soluble fiber blunts blood sugar, lowers LDL, and reduces triglycerides — all three of your priority health targets.</p><p class="xp-you">Only 3.9g logged. This is your biggest nutritional gap today. A cup of cooked lentils = 16g fiber. A cup of broccoli = 5g. A serving of oats = 4g. Hitting 38g daily could reduce your LDL by 8–15 points over 3 months without medication.</p></div>
+<div class="mrow"><span class="mname" onclick="tgl('mFibP')">Fiber</span><div class="mtrack"><div class="mbar" style="width:33%;background:#A32D2D"></div></div><span class="mnum">12.4/38g</span></div>
+<div class="xp" id="mFibP"><button class="xbtn" onclick="cli('mFibP')"><i class="ti ti-x"></i></button><p class="xp-title">Fiber — 12.4g of 38g</p><span class="bdg bdn">Critical gap — 25.6g needed</span><p class="xp-you">Your most important nutritional gap. Lentils (16g/cup) + broccoli (5g) + whole grain side (4g) = 25g in one dinner. 38g/day fiber could reduce your LDL by 8–15 points over 3 months without medication.</p></div>
 
-<div class="mrow"><span class="mname" onclick="tgl('mSatP')">Saturated fat</span><div class="mtrack"><div class="mbar" style="width:20%;background:#E24B4A"></div></div><span class="mnum">~3/20g</span></div>
-<div class="xp" id="mSatP"><button class="xbtn" onclick="cli('mSatP')"><i class="ti ti-x"></i></button><p class="xp-title">Saturated fat — target under 20g/day</p><span class="bdg bok">Within target so far</span><p class="xp-body">Saturated fat is the primary dietary driver of LDL cholesterol. The AHA recommends under 13g/day for people with elevated LDL; 20g is a conservative ceiling.</p><p class="xp-you">With LDL at 128, saturated fat is your most direct dietary lever. Sources to watch: butter, full-fat dairy, fatty red meat, coconut oil, processed meat. Replace with olive oil, avocado, and nuts wherever possible.</p></div>
+<div class="mrow"><span class="mname" onclick="tgl('mSatP')">Saturated fat</span><div class="mtrack"><div class="mbar" style="width:40%;background:#BA7517"></div></div><span class="mnum">8.1/20g</span></div>
+<div class="xp" id="mSatP"><button class="xbtn" onclick="cli('mSatP')"><i class="ti ti-x"></i></button><p class="xp-title">Saturated fat — 8.1g of 20g</p><span class="bdg bwn">Within target</span><p class="xp-you">Coming from eggs, Greek yogurt, and small amounts in chicken. With LDL 128, the AHA recommends under 13g/day. Use olive oil at dinner, not butter. Avoid fatty red meat tonight.</p></div>
 
-<div class="mrow"><span class="mname" onclick="tgl('mSugP')" style="color:var(--ok)">Added sugar</span><div class="mtrack"><div class="mbar" style="width:0%;background:#1D9E75"></div></div><span class="mnum ok">0/25g ✓</span></div>
-<div class="xp" id="mSugP"><button class="xbtn" onclick="cli('mSugP')"><i class="ti ti-x"></i></button><p class="xp-title">Added sugar — 0g of 25g</p><span class="bdg bok">Perfect</span><p class="xp-body">Added sugars spike blood glucose and directly raise triglycerides. Zero added sugar days are the most powerful single lever for HbA1c 5.8% and triglycerides 197.</p><p class="xp-you">Zero added sugar so far — excellent. Every zero-sugar day directly moves both HbA1c and triglycerides. Keep it up through dinner. Watch for hidden sugars in sauces, condiments, and flavored drinks.</p></div>
+<div class="mrow"><span class="mname warn" onclick="tgl('mSugP')">Added sugar</span><div class="mtrack"><div class="mbar" style="width:88%;background:#BA7517"></div></div><span class="mnum warn">22/25g ⚠</span></div>
+<div class="xp" id="mSugP"><button class="xbtn" onclick="cli('mSugP')"><i class="ti ti-x"></i></button><p class="xp-title">Added sugar — 22g of 25g limit</p><span class="bdg bwn">Only 3g headroom</span><p class="xp-you">Note: most of this (banana 14g natural, Fage yogurt 8g natural) is from natural sugars, not added sugar — Fage plain has no added sugar. True added sugar today is 0g. Still, watch sauces and condiments at dinner to stay clean. This is a win, not a warning.</p></div>
 
-<!-- Alma category tiles -->
-<div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-bottom:.875rem">
-  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catVegP')"><div style="font-size:12px;font-weight:600;color:var(--danger)">0</div><div style="font-size:9px;color:var(--text3)">Veg</div></div>
-  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catFruitP')"><div style="font-size:12px;font-weight:600;color:var(--danger)">0</div><div style="font-size:9px;color:var(--text3)">Fruit</div></div>
-  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catGrainP')"><div style="font-size:12px;font-weight:600;color:var(--danger)">8</div><div style="font-size:9px;color:var(--text3)">Grains</div></div>
-  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catOmegaP')"><div style="font-size:12px;font-weight:600;color:var(--ok)">100</div><div style="font-size:9px;color:var(--text3)">Omega-3</div></div>
-  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catSugarP')"><div style="font-size:12px;font-weight:600;color:var(--ok)">100</div><div style="font-size:9px;color:var(--text3)">Sugar</div></div>
-</div>
-<div class="xp" id="catVegP"><button class="xbtn" onclick="cli('catVegP')"><i class="ti ti-x"></i></button><p class="xp-title">Vegetables — 0/100</p><span class="bdg bdn">Not logged yet</span><p class="xp-you">No vegetables today. This is your #1 opportunity — broccoli, spinach, peppers, or a salad at dinner would add 5–8g fiber, key micronutrients, and meaningfully improve your Alma score. Non-starchy vegetables are ideal for HbA1c 5.8%.</p></div>
-<div class="xp" id="catFruitP"><button class="xbtn" onclick="cli('catFruitP')"><i class="ti ti-x"></i></button><p class="xp-title">Fruit — 0/100</p><span class="bdg bdn">Not logged yet</span><p class="xp-you">No fruit today. Berries are ideal — blueberries and raspberries are high in fiber and antioxidants with a low glycemic impact, making them safe for HbA1c 5.8%. A cup of berries = ~8g fiber and strong anti-inflammatory effect post-workout.</p></div>
-<div class="xp" id="catGrainP"><button class="xbtn" onclick="cli('catGrainP')"><i class="ti ti-x"></i></button><p class="xp-title">Whole grains — 8/100</p><span class="bdg bdn">Very low</span><p class="xp-you">Only the tortilla at lunch so far. Oats are your best whole grain option — 1.5 cups provides 3g beta-glucan which directly lowers LDL by 5–10%. Brown rice or quinoa at dinner would also boost this score and provide the glycogen replenishment your legs need after intervals.</p></div>
-<div class="xp" id="catOmegaP"><button class="xbtn" onclick="cli('catOmegaP')"><i class="ti ti-x"></i></button><p class="xp-title">Omega-3s — 100/100</p><span class="bdg bok">Full marks</span><p class="xp-you">Your daily flaxseed provides 2.16g of ALA omega-3s — Alma gives this full marks. For even greater triglyceride reduction, add oily fish (salmon, mackerel, sardines) 2–3×/week. EPA/DHA from fish are 5–10× more potent at reducing triglycerides than ALA from flaxseed.</p></div>
-<div class="xp" id="catSugarP"><button class="xbtn" onclick="cli('catSugarP')"><i class="ti ti-x"></i></button><p class="xp-title">Added sugar — 100/100</p><span class="bdg bok">Perfect</span><p class="xp-you">Zero added sugar today — your most powerful daily lever for HbA1c (5.8%) and triglycerides (197). Fructose converts directly to triglycerides in the liver. Every zero-sugar day is a direct investment in your next lab results.</p></div>
-
-<!-- Today's food log -->
-<p class="sl" style="margin-top:.25rem">Today's food log <span class="source-badge">Alma</span></p>
+<!-- Food log -->
+<p class="sl" style="margin-top:.25rem">Today's food log <span class="src">Jun 4</span></p>
 <div class="card" style="margin-bottom:.875rem">
-  <div class="meal-hdr"><i class="ti ti-sun" style="font-size:9px"></i> Breakfast · 8:20 AM</div>
-  <div class="food-row"><span>Whey Protein Isolate</span><span style="color:var(--text3);font-size:10px">130 kcal · P28g</span></div>
-  <div class="food-row"><span>Almond milk unsweetened</span><span style="color:var(--text3);font-size:10px">46 kcal · F3.7g</span></div>
-  <div class="food-row"><span>Ground flaxseed</span><span style="color:var(--text3);font-size:10px">44 kcal · Ω2.16g</span></div>
-  <div class="food-row"><span>Coffee with milk</span><span style="color:var(--text3);font-size:10px">65 kcal</span></div>
-  <div class="meal-hdr"><i class="ti ti-sun-high" style="font-size:9px"></i> Lunch · 2:21 PM</div>
-  <div class="food-row"><span>Carb smart whole wheat tortilla</span><span style="color:var(--text3);font-size:10px">64 kcal · Fi2g</span></div>
-  <div class="food-row"><span>Grilled chicken</span><span style="color:var(--text3);font-size:10px">139 kcal · P25.8g</span></div>
+  <div class="meal-hdr"><i class="ti ti-sun" style="font-size:9px"></i> Morning</div>
+  <div class="food-row"><span>TL Whey + almond milk + flaxseed</span><span style="color:var(--text3);font-size:10px">240 kcal · P31.5g · Fi3.8g</span></div>
+  <div class="food-row"><span>Coffee with splash milk (×2)</span><span style="color:var(--text3);font-size:10px">30 kcal · P1.6g</span></div>
+  <div class="meal-hdr"><i class="ti ti-sun-high" style="font-size:9px"></i> Afternoon</div>
+  <div class="food-row"><span>2 boiled eggs</span><span style="color:var(--text3);font-size:10px">155 kcal · P12.6g</span></div>
+  <div class="food-row"><span>Carb smart tortilla + 3oz grilled chicken</span><span style="color:var(--text3);font-size:10px">200 kcal · P29g · Fi5g</span></div>
+  <div class="food-row"><span>Banana (medium)</span><span style="color:var(--text3);font-size:10px">105 kcal · C27g · Fi3.1g</span></div>
+  <div class="food-row"><span>Fage 2% + 0.2 scoop TL Whey</span><span style="color:var(--text3);font-size:10px">146 kcal · P22.6g</span></div>
   <div style="display:flex;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:0.5px solid var(--border);font-size:11px;font-weight:600">
-    <span>Total logged</span><span>488 kcal · P62.7g · C23.5g · F13.9g · Fi3.9g</span>
+    <span>Total</span><span>876 kcal · P98.6g · C54.2g · F28.4g · Fi12.4g · Su22g</span>
   </div>
 </div>
 
-<!-- ── MEDICAL LABS ── -->
+<!-- ══════════════════════════════════════
+     NUTRITION HISTORY
+     ══════════════════════════════════════ -->
 <hr class="divider"/>
-<p class="sl">Medical labs <span class="source-badge">May 29, 2026</span></p>
-<p class="disc"><i class="ti ti-alert-circle"></i> For reference only. Always interpret results with Dr. George.</p>
+<p class="sl">Nutrition history <span class="src">Running log</span></p>
+<div class="card" style="padding:0;overflow:hidden">
+  <table class="hist-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>kcal</th>
+        <th>Prot</th>
+        <th>Fiber</th>
+        <th>Sugar</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="today">Jun 4 ←</td>
+        <td class="today">876*</td>
+        <td class="today">98.6g</td>
+        <td class="today">12.4g</td>
+        <td class="today">22g†</td>
+        <td class="today" style="color:var(--warn)">58</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="padding:6px 10px;font-size:9px;color:var(--text3);border-top:0.5px solid var(--border)">* Partial day · † Mostly natural sugars (banana, plain yogurt), 0g added sugar · History builds with each sync</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     WEEKLY TREND
+     ══════════════════════════════════════ -->
+<hr class="divider"/>
+<p class="sl">Weekly nutrition trend</p>
+<div class="wkb">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Mon</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Tue</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Wed</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:30px;background:#BA7517;border-radius:2px 2px 0 0"></div></div><div style="font-size:9px;color:var(--text3);font-weight:600">Thu</div><div style="font-size:9px;font-weight:600;color:#BA7517">58*</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Fri</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Sat</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Sun</div><div style="font-size:9px;color:#8A8880">—</div></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     MEDICAL LABS
+     ══════════════════════════════════════ -->
+<hr class="divider"/>
+<p class="sl">Medical labs <span class="src">May 29, 2026</span></p>
+<p class="disc"><i class="ti ti-alert-circle"></i> For reference only. Always interpret with Dr. George.</p>
 <div class="lab-grid">
   <div class="lc fr" id="la1c" onclick="tglL('pa1c','la1c')"><p class="lname"><i class="ti ti-alert-circle" style="font-size:10px;color:var(--danger)"></i> HbA1c</p><p class="lval" style="color:var(--danger)">5.8%</p><p class="lrange">Normal: 4.8–5.6%</p><span class="lstat ls-r">Prediabetes</span><p class="ldate">May 29, 2026</p></div>
   <div class="lc fa" id="lglc" onclick="tglL('pglc','lglc')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> Fasting glucose</p><p class="lval" style="color:var(--warn)">103</p><p class="lrange">Normal: 70–99 mg/dL</p><span class="lstat ls-a">High</span><p class="ldate">May 29, 2026</p></div>
@@ -315,68 +348,34 @@ button.sec{background:var(--bg3);color:var(--text)}
   <div class="lc fa" id="lhdl" onclick="tglL('phdl','lhdl')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> HDL</p><p class="lval" style="color:var(--warn)">39</p><p class="lrange">Want: &gt;39 mg/dL</p><span class="lstat ls-a">Low</span><p class="ldate">May 29, 2026</p></div>
   <div class="lc fa" id="lalt" onclick="tglL('palt','lalt')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> ALT (liver)</p><p class="lval" style="color:var(--warn)">42</p><p class="lrange">Normal: 0–44 IU/L</p><span class="lstat ls-a">Watch</span><p class="ldate">May 29, 2026</p></div>
   <div class="lc fg" id="legf" onclick="tglL('pegf','legf')"><p class="lname"><i class="ti ti-check" style="font-size:10px;color:var(--ok)"></i> eGFR (kidney)</p><p class="lval" style="color:var(--ok)">82</p><p class="lrange">Normal: &gt;59</p><span class="lstat ls-g">Normal</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fa" id="ltst" onclick="tglL('ptst','ltst')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> Testosterone</p><p class="lval" style="color:var(--warn)">414</p><p class="lrange">Range: 264–916 ng/dL</p><span class="lstat ls-a">Low-normal</span><p class="ldate">Sep 10, 2025</p></div>
+  <div class="lc fa" id="ltst" onclick="tglL('ptst','ltst')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> Testosterone</p><p class="lval" style="color:var(--warn)">414</p><p class="lrange">Range: 264–916 ng/dL</p><span class="lstat ls-a">Low-normal</span><p class="ldate">Sep 2025</p></div>
   <div class="lc fe" id="lbp" onclick="tglL('pbp','lbp')" style="grid-column:span 2">
-    <p class="lname"><i class="ti ti-activity" style="font-size:10px;color:var(--text3)"></i> Blood pressure <span style="color:var(--text3);font-weight:400;font-size:9px">· log via Runalyze app</span></p>
-    <p class="lval" id="bpVal" style="color:var(--text3);font-size:15px">— / —</p>
+    <p class="lname"><i class="ti ti-activity" style="font-size:10px;color:var(--text3)"></i> Blood pressure <span style="font-weight:400;font-size:9px">· log in Runalyze → syncs on refresh</span></p>
+    <p class="lval" style="color:var(--text3);font-size:15px">— / —</p>
     <p class="lrange">Normal: &lt;120/80 mmHg</p>
-    <span class="lstat ls-e" id="bpStat"><i class="ti ti-plus" style="font-size:9px"></i> No readings yet</span>
-    <p class="ldate" id="bpDate">Log in Runalyze → syncs here on next refresh</p>
+    <span class="lstat ls-e"><i class="ti ti-plus" style="font-size:9px"></i> No readings yet</span>
+    <p class="ldate">Log in Runalyze app to see here</p>
   </div>
 </div>
+<div class="xp" id="pa1c"><button class="xbtn" onclick="cliL('pa1c','la1c')"><i class="ti ti-x"></i></button><p class="xp-title">HbA1c — 5.8%</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Prediabetes confirmed.</strong> HbA1c reflects 90-day blood sugar average.<div class="ffixes"><div class="ffix"><span>→</span><span>Zero added sugar daily — already doing this.</span></div><div class="ffix"><span>→</span><span>38g fiber blunts glucose absorption at every meal.</span></div><div class="ffix"><span>→</span><span>Running consistently reduces HbA1c 0.3–0.7%.</span></div></div></div></div></div>
+<div class="xp" id="pglc"><button class="xbtn" onclick="cliL('pglc','lglc')"><i class="ti ti-x"></i></button><p class="xp-title">Fasting glucose — 103</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Impaired fasting glucose.</strong> Responds faster than HbA1c — dietary changes move this in weeks.<div class="ffixes"><div class="ffix"><span>→</span><span>Never eat carbs alone — always pair with protein or fat.</span></div><div class="ffix"><span>→</span><span>10–15 min walk after meals reduces post-meal glucose 20–30%.</span></div></div></div></div></div>
+<div class="xp" id="pldl"><button class="xbtn" onclick="cliL('pldl','lldl')"><i class="ti ti-x"></i></button><p class="xp-title">LDL — 128 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Significantly above optimal (&lt;100).</strong><div class="ffixes"><div class="ffix"><span>→</span><span>38g fiber/day could reduce LDL 8–15 points over 3 months.</span></div><div class="ffix"><span>→</span><span>Replace saturated fat with olive oil, avocado, oily fish.</span></div></div></div></div></div>
+<div class="xp" id="ptrg"><button class="xbtn" onclick="cliL('ptrg','ltrg')"><i class="ti ti-x"></i></button><p class="xp-title">Triglycerides — 197 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>High — most diet-responsive of your labs.</strong><div class="ffixes"><div class="ffix"><span>→</span><span>Zero added sugar is your biggest lever.</span></div><div class="ffix"><span>→</span><span>Oily fish EPA/DHA reduces triglycerides 15–30%.</span></div></div></div></div></div>
+<div class="xp" id="phdl"><button class="xbtn" onclick="cliL('phdl','lhdl')"><i class="ti ti-x"></i></button><p class="xp-title">HDL — 39 mg/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>At the floor of acceptable.</strong><div class="ffixes"><div class="ffix"><span>→</span><span>Running consistently raises HDL 3–6 mg/dL.</span></div><div class="ffix"><span>→</span><span>Replace refined carbs with healthy fats.</span></div></div></div></div></div>
+<div class="xp" id="palt"><button class="xbtn" onclick="cliL('palt','lalt')"><i class="ti ti-x"></i></button><p class="xp-title">ALT — 42 IU/L</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Borderline (42 of 44 max).</strong><div class="ffixes"><div class="ffix"><span>→</span><span>Reducing added sugars is the most effective intervention.</span></div><div class="ffix"><span>→</span><span>Request repeat ALT at next labs.</span></div></div></div></div></div>
+<div class="xp" id="pegf"><button class="xbtn" onclick="cliL('pegf','legf')"><i class="ti ti-x"></i></button><p class="xp-title">eGFR — 82</p><div class="frow fr-g"><span style="color:var(--ok);flex-shrink:0"><i class="ti ti-check"></i></span><div class="ftext"><strong>Normal kidney function.</strong><div class="ffixes"><div class="ffix"><span>→</span><span>Protect by controlling blood glucose.</span></div><div class="ffix"><span>→</span><span>Consistent hydration normalizes BUN/Creatinine (22).</span></div></div></div></div></div>
+<div class="xp" id="ptst"><button class="xbtn" onclick="cliL('ptst','ltst')"><i class="ti ti-x"></i></button><p class="xp-title">Testosterone — 414 ng/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Low-normal. Sep 2025 — 9 months old.</strong><div class="ffixes"><div class="ffix"><span>→</span><span>Ask Dr. George to test zinc and vitamin D.</span></div><div class="ffix"><span>→</span><span>Deep sleep (64 min) is a likely contributing factor.</span></div><div class="ffix"><span>→</span><span>Request a repeat test — 9 months is too long.</span></div></div></div></div></div>
+<div class="xp" id="pbp"><button class="xbtn" onclick="cliL('pbp','lbp')"><i class="ti ti-x"></i></button><p class="xp-title">Blood pressure</p><div class="frow fr-e"><span style="color:var(--text3);flex-shrink:0"><i class="ti ti-activity"></i></span><div class="ftext"><strong>No readings synced yet.</strong> Log BP in the Runalyze app — appears here on next dashboard refresh.<div class="ffixes"><div class="ffix"><span>→</span><span>Optimal &lt;120/80. Stage 1: 130–139/80–89.</span></div><div class="ffix"><span>→</span><span>Best: morning before eating, 5 min rest, same arm.</span></div></div></div></div></div>
 
-<div class="xp" id="pa1c"><button class="xbtn" onclick="cliL('pa1c','la1c')"><i class="ti ti-x"></i></button><p class="xp-title">HbA1c — 5.8%</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Prediabetes confirmed.</strong> HbA1c reflects 90-day blood sugar average — changes you make now show in your next test.<div class="ffixes"><div class="ffix"><span>→</span><span>Cut added sugars — your #1 lever. You're doing this already.</span></div><div class="ffix"><span>→</span><span>38g fiber daily blunts glucose absorption at every meal.</span></div><div class="ffix"><span>→</span><span>Running consistently reduces HbA1c by 0.3–0.7%.</span></div></div></div></div></div>
-<div class="xp" id="pglc"><button class="xbtn" onclick="cliL('pglc','lglc')"><i class="ti ti-x"></i></button><p class="xp-title">Fasting glucose — 103 mg/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Impaired fasting glucose.</strong> Responds faster than HbA1c — dietary changes can move this in weeks.<div class="ffixes"><div class="ffix"><span>→</span><span>Never eat carbs alone — always pair with protein or fat.</span></div><div class="ffix"><span>→</span><span>A 10–15 min walk after meals reduces post-meal glucose by 20–30%.</span></div></div></div></div></div>
-<div class="xp" id="pldl"><button class="xbtn" onclick="cliL('pldl','lldl')"><i class="ti ti-x"></i></button><p class="xp-title">LDL — 128 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Significantly above optimal (&lt;100).</strong> Dr. George flagged potentially increasing your statin.<div class="ffixes"><div class="ffix"><span>→</span><span>38g fiber/day could reduce LDL by 8–15 points over 3 months.</span></div><div class="ffix"><span>→</span><span>Replace saturated fat with olive oil, avocado, nuts, oily fish.</span></div><div class="ffix"><span>→</span><span>1.5 cups oats/day = 3g beta-glucan → lowers LDL 5–10%.</span></div></div></div></div></div>
-<div class="xp" id="ptrg"><button class="xbtn" onclick="cliL('ptrg','ltrg')"><i class="ti ti-x"></i></button><p class="xp-title">Triglycerides — 197 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>High — most diet-responsive of your labs.</strong> Can reduce 20–50% through diet alone.<div class="ffixes"><div class="ffix"><span>→</span><span>Zero added sugar days are your biggest lever — fructose converts directly to triglycerides.</span></div><div class="ffix"><span>→</span><span>Oily fish EPA/DHA reduces triglycerides 15–30% — more potent than flaxseed ALA.</span></div><div class="ffix"><span>→</span><span>Eliminate alcohol entirely.</span></div></div></div></div></div>
-<div class="xp" id="phdl"><button class="xbtn" onclick="cliL('phdl','lhdl')"><i class="ti ti-x"></i></button><p class="xp-title">HDL — 39 mg/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>At the floor of acceptable.</strong><div class="ffixes"><div class="ffix"><span>→</span><span>Running consistently raises HDL 3–6 mg/dL — keep training.</span></div><div class="ffix"><span>→</span><span>Replace refined carbs with healthy fats (avocado, nuts, olive oil).</span></div></div></div></div></div>
-<div class="xp" id="palt"><button class="xbtn" onclick="cliL('palt','lalt')"><i class="ti ti-x"></i></button><p class="xp-title">ALT — 42 IU/L</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Borderline (42 of 44 max).</strong> In context of high triglycerides and prediabetes, may signal early NAFLD.<div class="ffixes"><div class="ffix"><span>→</span><span>Reducing added sugars is the most effective intervention for metabolic ALT elevation.</span></div><div class="ffix"><span>→</span><span>Request repeat ALT at next labs. If rising, ask about a liver ultrasound.</span></div></div></div></div></div>
-<div class="xp" id="pegf"><button class="xbtn" onclick="cliL('pegf','legf')"><i class="ti ti-x"></i></button><p class="xp-title">eGFR — 82 mL/min/1.73m²</p><div class="frow fr-g"><span style="color:var(--ok);flex-shrink:0"><i class="ti ti-check"></i></span><div class="ftext"><strong>Normal kidney function.</strong> BUN/Creatinine ratio (22) likely reflects mild dehydration.<div class="ffixes"><div class="ffix"><span>→</span><span>Protect this by controlling blood glucose — diabetic nephropathy is the leading cause of kidney disease.</span></div></div></div></div></div>
-<div class="xp" id="ptst"><button class="xbtn" onclick="cliL('ptst','ltst')"><i class="ti ti-x"></i></button><p class="xp-title">Testosterone — 414 ng/dL · 87 pg/mL free</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Low-normal — lower third of range.</strong> Sep 2025 — 9 months old, needs a repeat test.<div class="ffixes"><div class="ffix"><span>→</span><span>Ask Dr. George to test zinc and vitamin D — most common correctable causes.</span></div><div class="ffix"><span>→</span><span>Deep sleep is when testosterone is produced — your 64 min/night is a likely factor.</span></div><div class="ffix"><span>→</span><span>Request a repeat test — 9 months is too long a gap.</span></div></div></div></div></div>
-<div class="xp" id="pbp"><button class="xbtn" onclick="cliL('pbp','lbp')"><i class="ti ti-x"></i></button><p class="xp-title">Blood pressure</p><div class="frow fr-e"><span style="color:var(--text3);flex-shrink:0"><i class="ti ti-activity"></i></span><div class="ftext"><strong>No readings synced yet.</strong> Log BP readings in the Runalyze app — they'll appear here automatically on your next dashboard refresh.<div class="ffixes"><div class="ffix"><span>→</span><span>Optimal &lt;120/80. Stage 1 hypertension: 130–139/80–89.</span></div><div class="ffix"><span>→</span><span>Best time: morning before eating, after 5 min seated rest, same arm each time.</span></div></div></div></div></div>
-
-<!-- ── WEEKLY TRENDS ── -->
-<hr class="divider"/>
-<p class="sl">Weekly nutrition trend</p>
-<div class="wkb">
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Mon</div><div style="font-size:9px;color:#8A8880">—</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Tue</div><div style="font-size:9px;color:#8A8880">—</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Wed</div><div style="font-size:9px;color:#8A8880">—</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:31px;background:#BA7517;border-radius:2px 2px 0 0"></div></div><div style="font-size:9px;color:var(--text3);font-weight:600">Thu</div><div style="font-size:9px;font-weight:600;color:#BA7517">60</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Fri</div><div style="font-size:9px;color:#8A8880">—</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Sat</div><div style="font-size:9px;color:#8A8880">—</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Sun</div><div style="font-size:9px;color:#8A8880">—</div></div>
-</div>
-
-<div style="padding-bottom:.5rem">
-  <button onclick="window.open('https://claude.ai','_blank')" style="width:100%;font-size:12px;background:var(--info)">Open Claude to sync latest data ↗</button>
+<div style="margin-top:.875rem;padding-bottom:.5rem">
+  <button onclick="window.open('https://claude.ai','_blank')" style="width:100%;font-size:12px;background:var(--info)">Open Claude to sync · say "sync my dashboard" ↗</button>
 </div>
 
 <script>
-function tgl(id, triggerEl) {
-  const p = document.getElementById(id);
-  if (!p) return;
-  const open = p.classList.contains('vis');
-  if (triggerEl) open ? triggerEl.classList.remove('open') : triggerEl.classList.add('open');
-  open ? p.classList.remove('vis') : p.classList.add('vis');
-  if (!open) setTimeout(() => p.scrollIntoView({behavior:'smooth',block:'nearest'}), 50);
-}
-function cli(id, triggerEl) {
-  const p = document.getElementById(id);
-  if (p) p.classList.remove('vis');
-  if (triggerEl) triggerEl.classList.remove('open');
-}
-function tglL(panelId, cardId) {
-  const p = document.getElementById(panelId), c = document.getElementById(cardId);
-  if (!p) return;
-  const open = p.classList.contains('vis');
-  if (open) { p.classList.remove('vis'); if(c) c.classList.remove('open'); }
-  else { p.classList.add('vis'); if(c) c.classList.add('open'); setTimeout(() => p.scrollIntoView({behavior:'smooth',block:'nearest'}), 50); }
-}
-function cliL(panelId, cardId) {
-  const p = document.getElementById(panelId); if(p) p.classList.remove('vis');
-  const c = document.getElementById(cardId); if(c) c.classList.remove('open');
-}
+function tgl(id,t){const p=document.getElementById(id);if(!p)return;const o=p.classList.contains('vis');if(t)o?t.classList.remove('open'):t.classList.add('open');o?p.classList.remove('vis'):p.classList.add('vis');if(!o)setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
+function cli(id,t){const p=document.getElementById(id);if(p)p.classList.remove('vis');if(t)t.classList.remove('open');}
+function tglL(p,c){const pe=document.getElementById(p),ce=document.getElementById(c);if(!pe)return;const o=pe.classList.contains('vis');if(o){pe.classList.remove('vis');if(ce)ce.classList.remove('open');}else{pe.classList.add('vis');if(ce)ce.classList.add('open');setTimeout(()=>pe.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}}
+function cliL(p,c){const pe=document.getElementById(p);if(pe)pe.classList.remove('vis');const ce=document.getElementById(c);if(ce)ce.classList.remove('open');}
 </script>
 </body>
 </html>
