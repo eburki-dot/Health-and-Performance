@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
-<meta name="apple-mobile-web-app-title" content="Health Dashboard"/>
+<meta name="apple-mobile-web-app-title" content="Health"/>
 <title>Health Dashboard</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
 <style>
-:root {
+:root{
   --bg:#F7F6F2;--bg2:#EEECEA;--bg3:#E4E2DE;
   --text:#1A1916;--text2:#4A4845;--text3:#8A8880;
   --border:#D8D6D2;--border2:#CECCCA;
@@ -17,553 +17,366 @@
   --warn:#BA7517;--warn-bg:#FEF4E4;
   --danger:#A32D2D;--danger-bg:#FDEAEA;
   --info:#378ADD;--info-bg:#EBF4FE;
-  --radius:10px;--radius-sm:6px;
+  --r:10px;--rs:6px;
   color-scheme:light;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{background:var(--bg)}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;padding:12px 14px 60px}
-.app-title{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;padding-bottom:10px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;gap:8px}
-.sync-bar{font-size:10px;color:var(--text3);padding:5px 10px;background:var(--bg2);border-radius:var(--radius-sm);margin-bottom:12px;display:flex;align-items:center;gap:6px}
-.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--text3);flex-shrink:0}
-.sync-dot.ok{background:var(--ok)}.sync-dot.syncing{background:var(--warn)}.sync-dot.err{background:var(--danger)}
-.sl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 8px}
-.divider{border:none;border-top:0.5px solid var(--border);margin:1rem 0}
+html,body{background:var(--bg)}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);max-width:480px;margin:0 auto;padding:12px 14px 60px}
+.hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
+.hdr-title{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:6px}
+.hdr-date{font-size:11px;color:var(--text3)}
+.sync-bar{font-size:10px;color:var(--text3);padding:5px 10px;background:var(--bg2);border-radius:var(--rs);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--ok);flex-shrink:0}
+.sl{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin:0 0 8px;display:flex;align-items:center;gap:6px}
+.source-badge{font-size:9px;font-weight:500;padding:1px 6px;border-radius:6px;background:var(--bg3);color:var(--text3);text-transform:none;letter-spacing:0}
+.divider{border:none;border-top:0.5px solid var(--border);margin:.875rem 0}
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.card{background:var(--bg2);border-radius:var(--radius);padding:12px 14px}
-.card-click{cursor:pointer;border:0.5px solid transparent;transition:border-color .15s}
-.card-click:hover{border-color:var(--border2)}.card-click.active{border-color:var(--info)!important}
-.card-label{font-size:11px;color:var(--text2);margin:0 0 3px;display:flex;align-items:center;gap:4px}
-.card-val{font-size:20px;font-weight:500;color:var(--text);line-height:1.1}
-.card-sub{font-size:10px;color:var(--text3);margin-top:2px}
+.card{background:var(--bg2);border-radius:var(--r);padding:11px 13px}
+.tap{cursor:pointer;border:0.5px solid transparent;transition:border-color .15s}
+.tap:hover{border-color:var(--border2)}.tap.open{border-color:var(--info)!important}
+.clabel{font-size:10px;color:var(--text2);margin:0 0 2px;display:flex;align-items:center;gap:3px}
+.cval{font-size:19px;font-weight:500;line-height:1.1}
+.csub{font-size:10px;color:var(--text3);margin-top:2px}
 .ok{color:var(--ok)!important}.warn{color:var(--warn)!important}.danger{color:var(--danger)!important}
-.ring-row{display:flex;align-items:center;gap:14px;background:var(--bg2);border-radius:var(--radius);padding:12px 14px;margin-bottom:.75rem;cursor:pointer;border:0.5px solid transparent;transition:border-color .15s}
-.ring-row:hover{border-color:var(--border2)}.ring-row.active{border-color:var(--info)!important}
-.score-bd{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-bottom:1rem}
-.sbc{background:var(--bg2);border-radius:var(--radius-sm);padding:6px 4px;text-align:center;cursor:pointer;border:0.5px solid transparent;transition:border-color .15s}
-.sbc:hover{border-color:var(--border2)}.sbc.active{border-color:var(--info)!important}
-.scv{font-size:13px;font-weight:600}.scl{font-size:9px;color:var(--text3);margin-top:1px}
-.panel{background:#fff;border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;margin-bottom:1rem;display:none}
-.panel.vis{display:block}
-.panel-title{font-size:13px;font-weight:600;color:var(--text);margin:0 0 5px}
-.panel-body{font-size:12px;color:var(--text2);line-height:1.55;margin:0 0 7px}
-.panel-you{font-size:12px;color:var(--text);line-height:1.55;padding:8px 10px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--info);border-top-left-radius:0;border-bottom-left-radius:0}
-.xbtn{float:right;background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:0;line-height:1;margin-top:-1px}
+/* Ring rows */
+.rring{display:flex;align-items:center;gap:13px;background:var(--bg2);border-radius:var(--r);padding:11px 13px;margin-bottom:.75rem}
+/* Expandable panels */
+.xp{background:#fff;border:0.5px solid var(--border2);border-radius:var(--r);padding:11px 13px;margin-bottom:.875rem;display:none}
+.xp.vis{display:block}
+.xp-title{font-size:12px;font-weight:600;color:var(--text);margin:0 0 4px}
+.xp-body{font-size:11px;color:var(--text2);line-height:1.55;margin:0 0 6px}
+.xp-you{font-size:11px;color:var(--text);line-height:1.55;padding:7px 9px;background:var(--bg2);border-radius:var(--rs);border-left:3px solid var(--info);border-top-left-radius:0;border-bottom-left-radius:0}
+.xbtn{float:right;background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:0;line-height:1}
 .xbtn:hover{color:var(--text)}
-.bdg{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-bottom:6px}
+.bdg{display:inline-flex;align-items:center;gap:2px;font-size:9px;font-weight:600;padding:2px 7px;border-radius:18px;margin-bottom:5px}
 .bok{background:var(--ok-bg);color:var(--ok)}.bwn{background:var(--warn-bg);color:var(--warn)}
 .bdn{background:var(--danger-bg);color:var(--danger)}.bin{background:var(--info-bg);color:var(--info)}
-.mrow{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.mname{font-size:11px;color:var(--text2);width:95px;flex-shrink:0;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px}
+/* Macro bars */
+.mrow{display:flex;align-items:center;gap:7px;margin-bottom:9px}
+.mname{font-size:11px;color:var(--text2);width:90px;flex-shrink:0;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px}
 .mname:hover{color:var(--text)}
-.mtrack{flex:1;background:var(--bg3);border-radius:3px;height:7px;overflow:hidden}
-.mbar{height:100%;border-radius:3px;transition:width .4s}
-.mnums{font-size:10px;color:var(--text3);width:62px;text-align:right;flex-shrink:0}
-.signal{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);margin-bottom:3px}
-.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;display:inline-block}
-.wkb{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:1rem}
-.wkd{display:flex;flex-direction:column;align-items:center;gap:2px}
-.lab-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:1rem}
-.lc{background:#fff;border-radius:var(--radius);padding:11px 12px;cursor:pointer;border:0.5px solid transparent;transition:border-color .15s}
-.lc:hover{border-color:var(--border2)}.lc.active{border-color:var(--info)!important}
+.mtrack{flex:1;background:var(--bg3);border-radius:3px;height:6px;overflow:hidden}
+.mbar{height:100%;border-radius:3px;transition:width .5s}
+.mnum{font-size:10px;color:var(--text3);width:58px;text-align:right;flex-shrink:0}
+/* Food log */
+.meal-hdr{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;padding:7px 0 3px;margin-top:3px}
+.food-row{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--border);font-size:11px}
+.food-row:last-child{border-bottom:none}
+/* Workout list */
+.wo-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--border);font-size:11px}
+.wo-row:last-child{border-bottom:none}
+.wo-icon{width:28px;height:28px;border-radius:8px;background:var(--info-bg);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;color:var(--info)}
+.wo-icon.str{background:var(--warn-bg);color:var(--warn)}
+/* Lab grid */
+.lab-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:.875rem}
+.lc{background:#fff;border-radius:var(--r);padding:10px 11px;cursor:pointer;border:0.5px solid transparent}
+.lc:hover{border-color:var(--border2)}.lc.open{border-color:var(--info)!important}
 .lc.fr{border:0.5px solid #f5c6c6;background:var(--danger-bg)}
 .lc.fa{border:0.5px solid #f5ddb0;background:var(--warn-bg)}
 .lc.fg{border:0.5px solid #b0e0cf;background:var(--ok-bg)}
 .lc.fe{border:0.5px solid var(--border);background:var(--bg2)}
 .lname{font-size:10px;color:var(--text2);margin:0 0 2px}
-.lval{font-size:18px;font-weight:600;line-height:1.1}
+.lval{font-size:17px;font-weight:600;line-height:1.1}
 .lrange{font-size:9px;color:var(--text3);margin:2px 0 0}
 .ldate{font-size:9px;color:var(--text3);margin:2px 0 0}
-.lstat{font-size:9px;font-weight:600;padding:2px 6px;border-radius:9px;margin-top:4px;display:inline-flex;align-items:center;gap:2px}
+.lstat{font-size:9px;font-weight:600;padding:2px 5px;border-radius:8px;margin-top:4px;display:inline-flex;align-items:center;gap:2px}
 .ls-r{background:var(--danger-bg);color:var(--danger)}.ls-a{background:var(--warn-bg);color:var(--warn)}
 .ls-g{background:var(--ok-bg);color:var(--ok)}.ls-e{background:var(--bg3);color:var(--text3)}
-.frow{display:flex;align-items:flex-start;gap:7px;padding:8px 10px;border-radius:var(--radius-sm);font-size:11px;margin-bottom:7px}
+.frow{display:flex;align-items:flex-start;gap:6px;padding:7px 9px;border-radius:var(--rs);font-size:11px;margin-bottom:6px}
 .fr-r{background:var(--danger-bg)}.fr-a{background:var(--warn-bg)}.fr-g{background:var(--ok-bg)}.fr-e{background:var(--bg2)}
 .ftext{color:var(--text);line-height:1.5;flex:1}
-.ffixes{margin-top:5px;padding-left:3px}
-.ffix{font-size:10px;color:var(--text2);padding:1px 0;display:flex;gap:4px}
-.fi{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:0.5px solid var(--border);font-size:11px}
-.fi:last-child{border-bottom:none}
-.fdl{background:none;border:none;cursor:pointer;color:var(--text3);font-size:12px;padding:0 2px;line-height:1}
-.fdl:hover{color:var(--danger)}
-.pp{font-size:9px;padding:2px 5px;border-radius:8px;font-weight:600}
-.pp0{background:var(--ok-bg);color:var(--ok)}.pp1{background:var(--warn-bg);color:var(--warn)}.pp2{background:var(--danger-bg);color:var(--danger)}
-.rcd{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:10px 12px;margin-bottom:7px}
-.rcn{font-size:12px;font-weight:600;color:var(--text)}
-.rcm{display:flex;gap:6px;margin-top:5px;flex-wrap:wrap}
-.rm{font-size:10px;color:var(--text2)}.rm span{font-weight:600;color:var(--text)}
-.wqg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
-.wqb{font-size:11px;padding:8px 3px;border-radius:var(--radius-sm);background:#fff;border:0.5px solid var(--border);cursor:pointer;text-align:center;color:var(--text)}
-.wqb:hover{background:var(--bg2)}
-.wli{display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--border);font-size:11px}
-.wli:last-child{border-bottom:none}
-.disc{font-size:10px;color:var(--text3);padding:7px 10px;background:var(--bg2);border-radius:var(--radius-sm);margin-bottom:.75rem;line-height:1.5}
-.bp-form{background:var(--bg2);border-radius:var(--radius-sm);padding:10px;margin-top:8px}
-.lga{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:1rem}
-.ht{font-size:10px;color:var(--text3);margin-bottom:.5rem;display:flex;align-items:center;gap:3px}
-.acd{background:#fff;border:0.5px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:8px}
-.act{font-size:12px;font-weight:600;color:var(--text);margin:0 0 4px;display:flex;align-items:center;gap:5px}
-.acb{font-size:11px;color:var(--text2);line-height:1.5}
-.se-row{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:0.5px solid var(--border);font-size:11px}
-.se-row:last-child{border-bottom:none}
-.se-name{flex:1;color:var(--text2)}
-.se-bw{width:60px;flex-shrink:0;background:var(--bg3);border-radius:3px;height:5px;overflow:hidden}
-.se-b{height:100%;border-radius:3px}
-.se-v{font-weight:600;width:28px;text-align:right;flex-shrink:0}
-.score-explain{background:#fff;border:0.5px solid var(--border2);border-radius:var(--radius);padding:12px 14px;margin-bottom:1rem;display:none}
-.score-explain.vis{display:block}
+.ffixes{margin-top:4px;padding-left:2px}
+.ffix{font-size:10px;color:var(--text2);padding:1px 0;display:flex;gap:3px}
+/* BP form */
+.bp-form{background:var(--bg2);border-radius:var(--rs);padding:9px;margin-top:7px}
 input,button{font-family:inherit}
-input[type=text],input[type=number]{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius-sm);padding:7px 9px;font-size:12px;color:var(--text);width:100%;-webkit-appearance:none;appearance:none}
+input[type=text],input[type=number]{background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--rs);padding:6px 8px;font-size:12px;color:var(--text);width:100%;-webkit-appearance:none}
 input:focus{outline:none;border-color:var(--info)}
-button{background:var(--text);color:#fff;border:none;border-radius:var(--radius-sm);padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:opacity .15s}
+button{background:var(--text);color:#fff;border:none;border-radius:var(--rs);padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer}
 button:hover{opacity:.85}
-button.secondary{background:var(--bg3);color:var(--text)}
+button.sec{background:var(--bg3);color:var(--text)}
+.disc{font-size:10px;color:var(--text3);padding:6px 9px;background:var(--bg2);border-radius:var(--rs);margin-bottom:.75rem;line-height:1.5}
+.signal{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);margin-bottom:3px}
+.dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;display:inline-block}
+/* Week bars */
+.wkb{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;margin-bottom:.875rem}
 </style>
 </head>
 <body>
 
-<h1 class="app-title"><i class="ti ti-heart-rate-monitor"></i> Health Dashboard</h1>
-<div class="sync-bar" id="syncBar"><span class="sync-dot" id="syncDot"></span><span id="syncMsg">Connecting to cloud…</span></div>
-
-<!-- FITNESS READINESS -->
-<p class="sl">Fitness readiness — Jun 4, 2026</p>
-<div class="ring-row card-click" id="readCard" onclick="tgl('read-info',this)">
-  <svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="26" fill="none" stroke="#E4E2DE" stroke-width="5"/><circle cx="31" cy="31" r="26" fill="none" stroke="#BA7517" stroke-width="5" stroke-dasharray="163.4" stroke-dashoffset="81.7" stroke-linecap="round" transform="rotate(-90 31 31)"/><text x="31" y="36" text-anchor="middle" font-size="14" font-weight="600" fill="#BA7517">52</text></svg>
-  <div style="flex:1"><div style="font-size:16px;font-weight:600;color:#BA7517">Moderate readiness</div><div style="font-size:11px;color:var(--text2);margin-top:2px">Proceed with caution today</div><div style="font-size:10px;color:var(--text3);margin-top:3px"><i class="ti ti-chevron-down" style="font-size:10px"></i> Tap for details</div></div>
-  <div style="text-align:center;flex-shrink:0"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Weekly</div><div style="font-size:18px;font-weight:600;color:var(--text3)">—</div></div>
+<div class="hdr">
+  <div class="hdr-title"><i class="ti ti-heart-rate-monitor"></i> Health</div>
+  <div class="hdr-date">Thu Jun 4, 2026 · Last synced 3:00 PM</div>
 </div>
-<div class="panel" id="read-info"><button class="xbtn" onclick="cli('read-info',document.getElementById('readCard'))"><i class="ti ti-x"></i></button><p class="panel-title">Readiness score — 52/100</p><span class="bdg bwn"><i class="ti ti-alert-triangle" style="font-size:10px"></i> Moderate</span><p class="panel-body">A composite of HRV, resting HR, sleep quality, and subjective wellbeing. Reflects how prepared your body is for a training stimulus today.</p><p class="panel-you">Your score reflects back-to-back running with no rest day, declining HRV (35→29 ms), elevated fatigue (6/10), and below-target deep sleep (64 min). RHR (58 bpm) and aerobic decoupling are keeping the score from falling further. Rest or easy movement recommended today.</p></div>
+<div class="sync-bar"><span class="sync-dot"></span>Synced from Alma + Runalyze · Say "sync my dashboard" in Claude to refresh</div>
+
+<!-- ── FITNESS READINESS ── -->
+<p class="sl">Fitness readiness <span class="source-badge">Runalyze</span></p>
+
+<div class="rring tap" id="rdCard" onclick="tgl('rdPanel',this)">
+  <svg width="60" height="60" viewBox="0 0 60 60">
+    <circle cx="30" cy="30" r="25" fill="none" stroke="#E4E2DE" stroke-width="5"/>
+    <circle cx="30" cy="30" r="25" fill="none" stroke="#BA7517" stroke-width="5"
+      stroke-dasharray="157.08" stroke-dashoffset="75.4" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+    <text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="#BA7517">52</text>
+  </svg>
+  <div style="flex:1">
+    <div style="font-size:15px;font-weight:600;color:#BA7517">Moderate readiness</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:2px">HRV 30ms · RHR 58bpm · Sleep 415min</div>
+    <div style="font-size:10px;color:var(--text3);margin-top:2px">Fatigue 6/10 · Stress 6/10 · Mood 5/10</div>
+  </div>
+  <div style="text-align:center;flex-shrink:0">
+    <div style="font-size:9px;color:var(--text3);margin-bottom:1px">Ultra</div>
+    <div style="font-size:15px;font-weight:600;color:var(--danger)">16d</div>
+  </div>
+</div>
+<div class="xp" id="rdPanel">
+  <button class="xbtn" onclick="cli('rdPanel',document.getElementById('rdCard'))"><i class="ti ti-x"></i></button>
+  <p class="xp-title">Readiness — 52/100</p>
+  <span class="bdg bwn">Moderate</span>
+  <p class="xp-body">Composite of HRV trend, resting HR, sleep quality, and subjective wellbeing.</p>
+  <p class="xp-you">7 consecutive training days with no rest. HRV trending 35→34→29→30ms — suppressed but slight uptick today. Garmin prescribes 31.8hr recovery after this morning's intervals. With your Ultra in 16 days this is the critical taper window — protect your HRV recovery above all else.</p>
+</div>
 
 <div class="g2" style="margin-bottom:.5rem">
-  <div class="card card-click" onclick="tgl('hrv-info')"><p class="card-label"><i class="ti ti-activity" style="font-size:11px"></i> HRV (RMSSD)</p><p class="card-val warn">29 <span style="font-size:12px;font-weight:400">ms</span></p><p class="card-sub">↓ from 35 ms May 28</p></div>
-  <div class="card card-click" onclick="tgl('rhr-info')"><p class="card-label"><i class="ti ti-heart" style="font-size:11px"></i> Resting HR</p><p class="card-val ok">58 <span style="font-size:12px;font-weight:400">bpm</span></p><p class="card-sub">Normal range</p></div>
-  <div class="card card-click" onclick="tgl('sleep-info')"><p class="card-label"><i class="ti ti-moon" style="font-size:11px"></i> Deep sleep</p><p class="card-val warn">64 <span style="font-size:12px;font-weight:400">min</span></p><p class="card-sub">Target: 90+ min</p></div>
-  <div class="card card-click" onclick="tgl('vo2-info')"><p class="card-label"><i class="ti ti-lungs" style="font-size:11px"></i> VO₂max</p><p class="card-val ok">44.7 <span style="font-size:12px;font-weight:400">ml/kg/min</span></p><p class="card-sub">Stable this week</p></div>
-  <div class="card card-click" onclick="tgl('dec-info')"><p class="card-label"><i class="ti ti-wave-sine" style="font-size:11px"></i> Aerobic decoupling</p><p class="card-val ok">4.6 <span style="font-size:12px;font-weight:400">%</span></p><p class="card-sub">Under 5% threshold</p></div>
-  <div class="card card-click" onclick="tgl('vol-info')"><p class="card-label"><i class="ti ti-run" style="font-size:11px"></i> Weekly volume</p><p class="card-val warn">19.6 <span style="font-size:12px;font-weight:400">mi</span></p><p class="card-sub">5 runs · no rest day</p></div>
-</div>
-<div class="panel" id="hrv-info"><button class="xbtn" onclick="cli('hrv-info')"><i class="ti ti-x"></i></button><p class="panel-title">HRV (RMSSD)</p><span class="bdg bwn">Suppressed</span><p class="panel-body">Measures millisecond variation between heartbeats. A declining trend is the most reliable signal of accumulated fatigue.</p><p class="panel-you">Down from 35 ms (May 28) to 29 ms today — a 17% decline over 7 consecutive training days. One or two easy days should allow this to rebound toward your baseline.</p></div>
-<div class="panel" id="rhr-info"><button class="xbtn" onclick="cli('rhr-info')"><i class="ti ti-x"></i></button><p class="panel-title">Resting heart rate</p><span class="bdg bok">Normal</span><p class="panel-body">A slower-moving fatigue signal than HRV. Elevation of 5+ bpm above baseline indicates illness or overtraining.</p><p class="panel-you">58 bpm today — within your normal range. A reassuring counterpoint to the declining HRV trend.</p></div>
-<div class="panel" id="sleep-info"><button class="xbtn" onclick="cli('sleep-info')"><i class="ti ti-x"></i></button><p class="panel-title">Deep sleep</p><span class="bdg bwn">Below target</span><p class="panel-body">The most physically restorative sleep stage — when growth hormone releases and muscle tissue repairs. Adults need 90+ min per night.</p><p class="panel-you">64 min last night (414 total). Physical repair was likely incomplete. An earlier bedtime tonight would meaningfully support recovery. Deep sleep is also when testosterone is primarily produced.</p></div>
-<div class="panel" id="vo2-info"><button class="xbtn" onclick="cli('vo2-info')"><i class="ti ti-x"></i></button><p class="panel-title">VO₂max estimate</p><span class="bdg bok">Stable</span><p class="panel-body">Maximum oxygen consumption — the single best indicator of aerobic fitness. Garmin estimates from pace-to-HR ratio.</p><p class="panel-you">Holding steady at 44.7 ml/kg/min — in the "good" range for recreational male runners. The stability confirms accumulated fatigue hasn't dented your aerobic engine.</p></div>
-<div class="panel" id="dec-info"><button class="xbtn" onclick="cli('dec-info')"><i class="ti ti-x"></i></button><p class="panel-title">Aerobic decoupling</p><span class="bdg bok">Healthy</span><p class="panel-body">How much your heart rate drifts relative to pace over a run. Under 5% = strong aerobic base.</p><p class="panel-you">June 1 showed 2.4% (excellent) and June 3 showed 4.6% in 82°F heat — still healthy given the conditions.</p></div>
-<div class="panel" id="vol-info"><button class="xbtn" onclick="cli('vol-info')"><i class="ti ti-x"></i></button><p class="panel-title">Weekly volume</p><span class="bdg bwn">High for recovery state</span><p class="panel-body">Weekly mileage drives both fitness and injury risk. The density of days matters as much as total distance.</p><p class="panel-you">19.6 miles across 5 consecutive days plus a strength session — effectively 6 of 7 days trained. The lack of rest days is directly contributing to your readiness deficit.</p></div>
-
-<hr class="divider"/>
-<p class="sl">Fitness signals</p>
-<div class="card" style="margin-bottom:.75rem">
-  <div class="signal"><span class="dot" style="background:#A32D2D"></span>HRV declining — 35→27→29→33→29 ms across 7 days</div>
-  <div class="signal"><span class="dot" style="background:#BA7517"></span>Fatigue 6/10, stress 6/10 — logged Jun 3</div>
-  <div class="signal"><span class="dot" style="background:#BA7517"></span>Garmin prescribed 44hr recovery after Jun 1 — not fully respected</div>
-  <div class="signal"><span class="dot" style="background:#1D9E75"></span>VO₂max stable at 44.7 — aerobic engine intact</div>
-  <div class="signal"><span class="dot" style="background:#1D9E75"></span>Aerobic decoupling 2.4–4.6% — healthy aerobic base</div>
+  <div class="card tap" onclick="tgl('hrvP')"><p class="clabel"><i class="ti ti-activity" style="font-size:10px"></i> HRV (RMSSD)</p><p class="cval warn">30 <span style="font-size:11px;font-weight:400">ms</span></p><p class="csub">35→34→29→30 trend</p></div>
+  <div class="card tap" onclick="tgl('rhrP')"><p class="clabel"><i class="ti ti-heart" style="font-size:10px"></i> Resting HR</p><p class="cval ok">58 <span style="font-size:11px;font-weight:400">bpm</span></p><p class="csub">Normal · stable</p></div>
+  <div class="card tap" onclick="tgl('sleepP')"><p class="clabel"><i class="ti ti-moon" style="font-size:10px"></i> Deep sleep</p><p class="cval warn">64 <span style="font-size:11px;font-weight:400">min</span></p><p class="csub">Total 415min · Target 90+</p></div>
+  <div class="card tap" onclick="tgl('vo2P')"><p class="clabel"><i class="ti ti-lungs" style="font-size:10px"></i> VO₂max</p><p class="cval ok">45.1 <span style="font-size:11px;font-weight:400">ml/kg/min</span></p><p class="csub">Today's estimate</p></div>
+  <div class="card tap" onclick="tgl('wtP')"><p class="clabel"><i class="ti ti-scale" style="font-size:10px"></i> Weight</p><p class="cval">174 <span style="font-size:11px;font-weight:400">lb</span></p><p class="csub">Target 170 · Jun 3</p></div>
+  <div class="card tap" onclick="tgl('bodyP')"><p class="clabel"><i class="ti ti-body-scan" style="font-size:10px"></i> Body fat</p><p class="cval warn">24.7 <span style="font-size:11px;font-weight:400">%</span></p><p class="csub">Jun 3 reading</p></div>
 </div>
 
-<!-- NUTRITION SCORE -->
+<div class="xp" id="hrvP"><button class="xbtn" onclick="cli('hrvP')"><i class="ti ti-x"></i></button><p class="xp-title">HRV (RMSSD) — 30ms</p><span class="bdg bwn">Suppressed</span><p class="xp-body">Millisecond variation between heartbeats — the most sensitive daily fatigue indicator. A declining trend matters more than any single reading.</p><p class="xp-you">Your trend over 7 days: 35→34→29→30ms. The slight uptick today is encouraging but you're still well below your baseline. One more hard session could push it lower — rest or easy movement today is the right call going into your Ultra taper.</p></div>
+<div class="xp" id="rhrP"><button class="xbtn" onclick="cli('rhrP')"><i class="ti ti-x"></i></button><p class="xp-title">Resting HR — 58 bpm</p><span class="bdg bok">Normal</span><p class="xp-body">Slower-moving fatigue signal than HRV. An increase of 5+ bpm above your baseline flags illness or overtraining.</p><p class="xp-you">58 bpm — holding steady within your normal range. A reassuring counterpoint to the suppressed HRV. If this starts climbing above 63, take it seriously.</p></div>
+<div class="xp" id="sleepP"><button class="xbtn" onclick="cli('sleepP')"><i class="ti ti-x"></i></button><p class="xp-title">Sleep — 415 min total · 64 min deep</p><span class="bdg bwn">Below target</span><p class="xp-body">Deep sleep is when growth hormone releases and muscle tissue repairs. Target 90+ min deep per night. Also when testosterone is primarily produced.</p><p class="xp-you">64 min deep out of 415 total. Physical recovery was incomplete last night. With low-normal testosterone (414 ng/dL) and an Ultra in 16 days, deep sleep is your #1 recovery lever right now. Aim for bed 30 min earlier tonight.</p></div>
+<div class="xp" id="vo2P"><button class="xbtn" onclick="cli('vo2P')"><i class="ti ti-x"></i></button><p class="xp-title">VO₂max — 45.1 ml/kg/min</p><span class="bdg bok">Stable</span><p class="xp-body">Maximum oxygen consumption — the single best indicator of aerobic fitness. Garmin estimates from pace-to-HR ratio during runs.</p><p class="xp-you">45.1 today vs 44.7 last week — slight uptick. Stable or improving VO₂max during a heavy training week confirms your aerobic engine is adapting. The taper over the next 2 weeks will sharpen this further before your race.</p></div>
+<div class="xp" id="wtP"><button class="xbtn" onclick="cli('wtP')"><i class="ti ti-x"></i></button><p class="xp-title">Weight — 174 lb (78.97 kg)</p><span class="bdg bwn">4 lb to goal</span><p class="xp-body">Goal: lose 5 lb by July 17 (170 lb target). Current rate: ~0.6 lb/week on track.</p><p class="xp-you">4 lb from your 170 lb target with 43 days remaining — on pace. Don't aggressively cut calories during the Ultra taper — under-fueling now will hurt race performance. Focus on food quality over restriction.</p></div>
+<div class="xp" id="bodyP"><button class="xbtn" onclick="cli('bodyP')"><i class="ti ti-x"></i></button><p class="xp-title">Body fat — 24.7%</p><span class="bdg bwn">Above optimal</span><p class="xp-body">Optimal range for male distance runners: 8–15%. Health optimal for men your age: under 22%. Body composition responds to consistent training and reduced processed food.</p><p class="xp-you">24.7% is the primary driver of your cardiometabolic risk profile. Every percentage point reduction improves insulin sensitivity (HbA1c), raises HDL, and lowers triglycerides. Your running and nutrition plan address this directly.</p></div>
+
 <hr class="divider"/>
-<p class="sl">Daily nutrition score</p>
-<div class="ring-row card-click" id="scoreRingCard" onclick="tgl('score-explain',this)">
-  <svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="26" fill="none" stroke="#E4E2DE" stroke-width="5"/><circle id="scoreArcPath" cx="31" cy="31" r="26" fill="none" stroke="#D8D6D2" stroke-width="5" stroke-dasharray="163.4" stroke-dashoffset="163.4" stroke-linecap="round" transform="rotate(-90 31 31)"/><text id="scoreTxt" x="31" y="36" text-anchor="middle" font-size="14" font-weight="600" fill="#8A8880">—</text></svg>
+<p class="sl">This week's training <span class="source-badge">Runalyze</span></p>
+<div class="card" style="margin-bottom:.875rem">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div style="font-size:13px;font-weight:600">26.2 mi · 7 sessions</div>
+    <div style="font-size:11px;color:var(--warn)">No rest day this week</div>
+  </div>
+  <div class="wo-row">
+    <div class="wo-icon"><i class="ti ti-run"></i></div>
+    <div style="flex:1"><div style="font-weight:500">Treadmill Intervals</div><div style="font-size:10px;color:var(--text3)">2.5 mi · 25 min · 321 kcal · TE 3.5</div></div>
+    <div style="font-size:10px;color:var(--text3)">Today</div>
+  </div>
+  <div class="wo-row">
+    <div class="wo-icon"><i class="ti ti-run"></i></div>
+    <div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">3.4 mi · 43 min · avg HR 135</div></div>
+    <div style="font-size:10px;color:var(--text3)">Jun 3</div>
+  </div>
+  <div class="wo-row">
+    <div class="wo-icon str"><i class="ti ti-barbell"></i></div>
+    <div style="flex:1"><div style="font-weight:500">Upper Body Strength</div><div style="font-size:10px;color:var(--text3)">17 min · avg HR 115</div></div>
+    <div style="font-size:10px;color:var(--text3)">Jun 3</div>
+  </div>
+  <div class="wo-row">
+    <div class="wo-icon"><i class="ti ti-run"></i></div>
+    <div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">3.3 mi · 36 min · avg HR 144</div></div>
+    <div style="font-size:10px;color:var(--text3)">Jun 2</div>
+  </div>
+  <div class="wo-row">
+    <div class="wo-icon"><i class="ti ti-run"></i></div>
+    <div style="flex:1"><div style="font-weight:500">Easy Run (Long)</div><div style="font-size:10px;color:var(--text3)">5.0 mi · 54 min · avg HR 148</div></div>
+    <div style="font-size:10px;color:var(--text3)">Jun 1</div>
+  </div>
+  <div class="wo-row">
+    <div class="wo-icon"><i class="ti ti-run"></i></div>
+    <div style="flex:1"><div style="font-weight:500">Easy Run (Long)</div><div style="font-size:10px;color:var(--text3)">5.0 mi · 56 min · avg HR 148</div></div>
+    <div style="font-size:10px;color:var(--text3)">May 31</div>
+  </div>
+  <div class="wo-row">
+    <div class="wo-icon"><i class="ti ti-run"></i></div>
+    <div style="flex:1"><div style="font-weight:500">Easy Run</div><div style="font-size:10px;color:var(--text3)">2.9 mi · 32 min · avg HR 143</div></div>
+    <div style="font-size:10px;color:var(--text3)">May 29</div>
+  </div>
+</div>
+
+<hr class="divider"/>
+<!-- ── NUTRITION ── -->
+<p class="sl">Nutrition <span class="source-badge">Alma</span></p>
+
+<div class="rring tap" id="nutCard" onclick="tgl('nutPanel',this)">
+  <svg width="60" height="60" viewBox="0 0 60 60">
+    <circle cx="30" cy="30" r="25" fill="none" stroke="#E4E2DE" stroke-width="5"/>
+    <circle cx="30" cy="30" r="25" fill="none" stroke="#BA7517" stroke-width="5"
+      stroke-dasharray="157.08" stroke-dashoffset="62.83" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+    <text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="#BA7517">60</text>
+  </svg>
   <div style="flex:1">
-    <div id="scoreLbl" style="font-size:16px;font-weight:600;color:var(--text)">No data yet</div>
-    <div style="font-size:11px;color:var(--text2);margin-top:2px"><span id="calC" style="font-weight:600">0</span> / 2,100 kcal &nbsp;·&nbsp; <span id="calR" style="font-weight:600;color:var(--ok)">2,100</span> left</div>
-    <div style="font-size:10px;color:var(--text3);margin-top:3px"><i class="ti ti-chevron-down" style="font-size:10px"></i> Tap to see score breakdown</div>
+    <div style="font-size:15px;font-weight:600;color:#BA7517">Needs attention</div>
+    <div style="font-size:11px;color:var(--text2);margin-top:2px">488 kcal logged · 1,988 kcal remaining</div>
+    <div style="font-size:10px;color:var(--text3);margin-top:2px">+321 kcal workout credit · target 2,155</div>
   </div>
-  <div style="text-align:center;flex-shrink:0"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">7-day</div><div id="wkScore" style="font-size:18px;font-weight:600;color:var(--text3)">—</div></div>
-</div>
-<div class="score-explain" id="score-explain">
-  <button class="xbtn" onclick="cli('score-explain',document.getElementById('scoreRingCard'))"><i class="ti ti-x"></i></button>
-  <p class="panel-title">How your nutrition score is calculated</p>
-  <p class="panel-body" style="margin-bottom:8px">Score 0–100, weighted by impact on your specific health goals. Tap any tile below for details.</p>
-  <div id="scoreBreakdownRows"></div>
-</div>
-<div class="score-bd">
-  <div class="sbc" id="sbc-f" onclick="tgl('sei-fiber',this)"><div class="scv" id="sc-f">—</div><div class="scl">Fiber</div></div>
-  <div class="sbc" id="sbc-s" onclick="tgl('sei-sugar',this)"><div class="scv" id="sc-s">—</div><div class="scl">Sugar</div></div>
-  <div class="sbc" id="sbc-p" onclick="tgl('sei-prot',this)"><div class="scv" id="sc-p">—</div><div class="scl">Protein</div></div>
-  <div class="sbc" id="sbc-pr" onclick="tgl('sei-proc',this)"><div class="scv" id="sc-pr">—</div><div class="scl">Process</div></div>
-  <div class="sbc" id="sbc-c" onclick="tgl('sei-cal',this)"><div class="scv" id="sc-c">—</div><div class="scl">Calories</div></div>
-</div>
-<div class="panel" id="sei-fiber"><button class="xbtn" onclick="cli('sei-fiber',document.getElementById('sbc-f'))"><i class="ti ti-x"></i></button><p class="panel-title">Fiber — 25% of score</p><p class="panel-body">Highest weight because fiber simultaneously improves blood sugar, lowers LDL, and reduces triglycerides — all three of your primary health targets. Score = (grams ÷ 38g) × 100.</p><p class="panel-you" id="sei-fiber-you">Loading…</p></div>
-<div class="panel" id="sei-sugar"><button class="xbtn" onclick="cli('sei-sugar',document.getElementById('sbc-s'))"><i class="ti ti-x"></i></button><p class="panel-title">Added sugar — 20% of score</p><p class="panel-body">Scores 100 when under 25g. Every gram over 25g reduces score proportionally. Added sugars spike blood glucose and convert directly to triglycerides — directly harmful for HbA1c 5.8% and triglycerides 197.</p><p class="panel-you" id="sei-sugar-you">Loading…</p></div>
-<div class="panel" id="sei-prot"><button class="xbtn" onclick="cli('sei-prot',document.getElementById('sbc-p'))"><i class="ti ti-x"></i></button><p class="panel-title">Protein — 20% of score</p><p class="panel-body">Score = (grams ÷ 140g) × 100. Protein supports muscle repair, improves insulin sensitivity, and is the most satiating macro. With low-normal testosterone (414 ng/dL), hitting this target is especially important.</p><p class="panel-you" id="sei-prot-you">Loading…</p></div>
-<div class="panel" id="sei-proc"><button class="xbtn" onclick="cli('sei-proc',document.getElementById('sbc-pr'))"><i class="ti ti-x"></i></button><p class="panel-title">Processing — 20% of score</p><p class="panel-body">Starts at 100. Each ultra-processed serving deducts 25 points. Each processed (not ultra) serving deducts 5 points. Ultra-processed foods link to 53% higher diabetes risk independent of macro content.</p><p class="panel-you" id="sei-proc-you">Loading…</p></div>
-<div class="panel" id="sei-cal"><button class="xbtn" onclick="cli('sei-cal',document.getElementById('sbc-c'))"><i class="ti ti-x"></i></button><p class="panel-title">Calories — 15% of score</p><p class="panel-body">Score rises proportionally from 0→100 as you approach 2,100 kcal. Exceeding target reduces score symmetrically. Under-eating is also penalized — it extends recovery time and impairs HRV rebound.</p><p class="panel-you" id="sei-cal-you">Loading…</p></div>
-
-<!-- HYDRATION -->
-<hr class="divider"/>
-<p class="sl">Hydration — <span id="hydTitle" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px">0 / 125 oz</span></p>
-<div class="ring-row card-click" id="hydRingCard" onclick="tgl('hyd-explain',this)">
-  <svg width="62" height="62" viewBox="0 0 62 62"><circle cx="31" cy="31" r="26" fill="none" stroke="#E4E2DE" stroke-width="5"/><circle id="waterArcPath" cx="31" cy="31" r="26" fill="none" stroke="#378ADD" stroke-width="5" stroke-dasharray="163.4" stroke-dashoffset="163.4" stroke-linecap="round" transform="rotate(-90 31 31)"/><text id="waterPctTxt" x="31" y="36" text-anchor="middle" font-size="13" font-weight="600" fill="#378ADD">0%</text></svg>
-  <div style="flex:1">
-    <div id="waterLbl" style="font-size:16px;font-weight:600;color:var(--text)">No fluid logged</div>
-    <div style="font-size:11px;color:var(--text2);margin-top:2px"><span id="wTot" style="font-weight:600;color:#378ADD">0</span> oz &nbsp;·&nbsp; <span id="wLeft" style="font-weight:600">125</span> oz to go</div>
-    <div style="font-size:10px;color:var(--text3);margin-top:2px" id="wBreak">Food/drinks: 0 oz · Added: 0 oz</div>
-    <div style="font-size:10px;color:var(--text3);margin-top:2px"><i class="ti ti-chevron-down" style="font-size:10px"></i> Tap for hydration details</div>
-  </div>
-  <div style="text-align:center;flex-shrink:0"><div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Run +</div><div style="font-size:14px;font-weight:600;color:var(--warn)">20 oz</div><div style="font-size:9px;color:var(--text3)">today</div></div>
-</div>
-<div class="panel" id="hyd-explain"><button class="xbtn" onclick="cli('hyd-explain',document.getElementById('hydRingCard'))"><i class="ti ti-x"></i></button><p class="panel-title">How hydration is tracked</p><p class="panel-body">Target: 125 oz/day. Three sources: beverages you log, fluid auto-credited from foods (coffee = 100%, almond milk = 100%, yogurt = 75%, fruit/veg = 85–96%), and water you add manually.</p><p class="panel-you" id="hyd-explain-you">Loading…</p></div>
-
-<p style="font-size:10px;color:var(--text3);margin:0 0 6px"><i class="ti ti-droplet"></i> Quick-add water</p>
-<div class="wqg">
-  <button class="wqb" onclick="addWater(8)">8 oz</button>
-  <button class="wqb" onclick="addWater(12)">12 oz</button>
-  <button class="wqb" onclick="addWater(16)">16 oz</button>
-  <button class="wqb" onclick="addWater(24)">24 oz</button>
-</div>
-<div style="display:grid;grid-template-columns:1fr 50px auto;gap:6px;align-items:end;margin-bottom:8px">
-  <input type="text" id="wName" placeholder="e.g. tea, sports drink"/>
-  <input type="number" id="wOz" placeholder="oz"/>
-  <button onclick="addCustomWater()" style="padding:0 10px">Add</button>
-</div>
-<div id="waterLog"></div>
-
-<!-- MACROS -->
-<hr class="divider"/>
-<p class="sl">Macros vs targets</p>
-<p style="font-size:10px;color:var(--text3);margin:0 0 8px"><i class="ti ti-info-circle"></i> Tap name for definition and your personal context</p>
-<div class="mrow"><span class="mname" onclick="tgl('mi-carb')">Carbohydrates</span><div class="mtrack"><div class="mbar" id="carbBar" style="width:0%;background:#378ADD"></div></div><span class="mnums" id="carbN">0/210g</span></div>
-<div class="panel" id="mi-carb"><button class="xbtn" onclick="cli('mi-carb')"><i class="ti ti-x"></i></button><p class="panel-title">Carbohydrates — 210g/day</p><span class="bdg bwn">Monitor carefully</span><p class="panel-body">~40% of 2,100 kcal. Complex carbs digest slowly; refined carbs spike blood sugar.</p><p class="panel-you">With HbA1c 5.8%, always pair carbs with protein or fat. Post-run (within 30–45 min) is the ideal carb window.</p></div>
-<div class="mrow"><span class="mname" onclick="tgl('mi-prot')">Protein</span><div class="mtrack"><div class="mbar" id="protBar" style="width:0%;background:#1D9E75"></div></div><span class="mnums" id="protN">0/140g</span></div>
-<div class="panel" id="mi-prot"><button class="xbtn" onclick="cli('mi-prot')"><i class="ti ti-x"></i></button><p class="panel-title">Protein — 140g/day</p><span class="bdg bok">Priority macro</span><p class="panel-body">~0.8g per lb bodyweight. Most satiating macro, minimal blood sugar impact. Essential for muscle repair.</p><p class="panel-you">With low-normal testosterone (414 ng/dL), adequate protein is especially important for muscle recovery from your 20 mi/week training load.</p></div>
-<div class="mrow"><span class="mname" onclick="tgl('mi-fat')">Total fat</span><div class="mtrack"><div class="mbar" id="fatBar" style="width:0%;background:#BA7517"></div></div><span class="mnums" id="fatN">0/70g</span></div>
-<div class="panel" id="mi-fat"><button class="xbtn" onclick="cli('mi-fat')"><i class="ti ti-x"></i></button><p class="panel-title">Total fat — 70g/day</p><span class="bdg bwn">Type matters most</span><p class="panel-body">Unsaturated fats improve cholesterol; saturated raise LDL. Trans fats harmful at any amount.</p><p class="panel-you">With LDL 128, shift all cooking fat to olive oil. Add oily fish 2–3×/week for EPA/DHA omega-3s to directly reduce triglycerides (197).</p></div>
-<div class="mrow"><span class="mname" onclick="tgl('mi-fib')">Fiber</span><div class="mtrack"><div class="mbar" id="fibBar" style="width:0%;background:#639922"></div></div><span class="mnums" id="fibN">0/38g</span></div>
-<div class="panel" id="mi-fib"><button class="xbtn" onclick="cli('mi-fib')"><i class="ti ti-x"></i></button><p class="panel-title">Fiber — 38g/day</p><span class="bdg bok">Critical for your goals</span><p class="panel-body">Soluble fiber slows digestion, blunts blood sugar, and directly lowers LDL. Most Americans get under 15g.</p><p class="panel-you">Hitting 38g daily could reduce LDL by 8–15 points over 3 months without medication. Legumes at lunch and whole grains + vegetables at dinner close most of the gap.</p></div>
-<div class="mrow"><span class="mname" onclick="tgl('mi-sug')">Added sugars</span><div class="mtrack"><div class="mbar" id="sugBar" style="width:0%;background:#E24B4A"></div></div><span class="mnums" id="sugN">0/25g</span></div>
-<div class="panel" id="mi-sug"><button class="xbtn" onclick="cli('mi-sug')"><i class="ti ti-x"></i></button><p class="panel-title">Added sugars — under 25g/day</p><span class="bdg bwn">Limit strictly</span><p class="panel-body">Added sugars spike blood glucose and directly raise triglycerides via liver fructose conversion.</p><p class="panel-you">With triglycerides 197 and HbA1c 5.8%, zero added sugar days are your single most powerful daily lever.</p></div>
-<div class="mrow"><span class="mname" onclick="tgl('mi-proc')">Processing</span><div class="mtrack"><div class="mbar" id="procBar" style="width:0%;background:#1D9E75"></div></div><span class="mnums" id="procN">0 ultra</span></div>
-<div class="panel" id="mi-proc"><button class="xbtn" onclick="cli('mi-proc')"><i class="ti ti-x"></i></button><p class="panel-title">Ultra-processed foods — zero per day</p><span class="bdg bdn">Avoid</span><p class="panel-body">Link to 53% higher diabetes risk — independent of calories and macros.</p><p class="panel-you">With borderline ALT (42), ultra-processed foods add direct liver burden. Keep daily ultra count at zero.</p></div>
-<div class="mrow"><span class="mname" onclick="tgl('mi-hyd')" style="color:#378ADD">Hydration</span><div class="mtrack"><div class="mbar" id="hydBar" style="width:0%;background:#378ADD"></div></div><span class="mnums" id="hydN">0/125oz</span></div>
-<div class="panel" id="mi-hyd"><button class="xbtn" onclick="cli('mi-hyd')"><i class="ti ti-x"></i></button><p class="panel-title">Hydration — 125 oz/day</p><span class="bdg bin">Track daily</span><p class="panel-body">Target 125 oz from all sources. Coffee counts at 100%. Running adds ~20 oz extra today.</p><p class="panel-you">BUN/Creatinine was 22 at May 29 labs — a classic dehydration marker. Consistent 125 oz days will resolve this and support kidney health (eGFR 82).</p></div>
-
-<!-- FOOD LOG -->
-<hr class="divider"/>
-<p class="sl">Food log</p>
-<div id="foodList" style="margin-bottom:.75rem"></div>
-<div class="lga">
-  <p class="ht"><i class="ti ti-edit"></i> Log food — processing level auto-detected from name</p>
-  <div style="display:grid;grid-template-columns:1fr 52px;gap:6px;margin-bottom:6px">
-    <input type="text" id="foodName" placeholder="e.g. grilled salmon, oatmeal, Big Mac"/>
-    <input type="number" id="foodCal" placeholder="kcal"/>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-bottom:8px">
-    <input type="number" id="fPro" placeholder="P g"/>
-    <input type="number" id="fCarb" placeholder="C g"/>
-    <input type="number" id="fFat" placeholder="F g"/>
-    <input type="number" id="fFib" placeholder="Fi g"/>
-    <input type="number" id="fSug" placeholder="Su g"/>
-  </div>
-  <button onclick="addFood()" style="width:100%">Add food</button>
-</div>
-
-<!-- SAVED RECIPES -->
-<hr class="divider"/>
-<p class="sl">Saved recipes</p>
-<div id="recipeList"></div>
-<div style="margin-bottom:1rem">
-  <button onclick="showRec()" class="secondary" style="width:100%;font-size:11px"><i class="ti ti-plus"></i> Save new recipe</button>
-  <div id="recPanel" style="display:none;margin-top:8px;background:var(--bg2);border-radius:var(--radius-sm);padding:10px">
-    <input type="text" id="rName" placeholder="Recipe name" style="margin-bottom:6px"/>
-    <div class="g2" style="margin-bottom:6px"><input type="number" id="rCal" placeholder="kcal"/><input type="number" id="rPro" placeholder="protein g"/></div>
-    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-bottom:6px"><input type="number" id="rCarb" placeholder="carbs g"/><input type="number" id="rFat" placeholder="fat g"/><input type="number" id="rFib" placeholder="fiber g"/></div>
-    <div class="g2" style="margin-bottom:7px"><input type="number" id="rSug" placeholder="sugar g"/><input type="number" id="rFlu" placeholder="fluid oz"/></div>
-    <div style="display:flex;gap:6px"><button onclick="saveRec()" style="flex:1">Save</button><button onclick="hideRec()" class="secondary">Cancel</button></div>
+  <div style="text-align:center;flex-shrink:0">
+    <div style="font-size:9px;color:var(--text3);margin-bottom:1px">7-day avg</div>
+    <div style="font-size:15px;font-weight:600;color:var(--text3)">60</div>
   </div>
 </div>
-
-<!-- WEEKLY TREND -->
-<hr class="divider"/>
-<p class="sl">Weekly nutrition trend</p>
-<div class="wkb" id="weekBars"></div>
-
-<!-- MEDICAL LABS -->
-<hr class="divider"/>
-<p class="sl">Medical labs — May 29, 2026</p>
-<p class="disc"><i class="ti ti-alert-circle"></i> For reference only. Always interpret results with Dr. George.</p>
-<div class="lab-grid">
-  <div class="lc fr" id="lc-a1c" onclick="tglL('li-a1c','lc-a1c')"><p class="lname"><i class="ti ti-alert-circle" style="font-size:11px;color:var(--danger)"></i> HbA1c</p><p class="lval" style="color:var(--danger)">5.8%</p><p class="lrange">Normal: 4.8–5.6%</p><span class="lstat ls-r"><i class="ti ti-alert-circle" style="font-size:9px"></i> Prediabetes</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fa" id="lc-glc" onclick="tglL('li-glc','lc-glc')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:11px;color:var(--warn)"></i> Fasting glucose</p><p class="lval" style="color:var(--warn)">103</p><p class="lrange">Normal: 70–99 mg/dL</p><span class="lstat ls-a"><i class="ti ti-alert-triangle" style="font-size:9px"></i> High</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fr" id="lc-ldl" onclick="tglL('li-ldl','lc-ldl')"><p class="lname"><i class="ti ti-alert-circle" style="font-size:11px;color:var(--danger)"></i> LDL</p><p class="lval" style="color:var(--danger)">128</p><p class="lrange">Optimal: &lt;100 mg/dL</p><span class="lstat ls-r"><i class="ti ti-alert-circle" style="font-size:9px"></i> High</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fr" id="lc-trg" onclick="tglL('li-trg','lc-trg')"><p class="lname"><i class="ti ti-alert-circle" style="font-size:11px;color:var(--danger)"></i> Triglycerides</p><p class="lval" style="color:var(--danger)">197</p><p class="lrange">Normal: &lt;149 mg/dL</p><span class="lstat ls-r"><i class="ti ti-alert-circle" style="font-size:9px"></i> High</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fa" id="lc-hdl" onclick="tglL('li-hdl','lc-hdl')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:11px;color:var(--warn)"></i> HDL</p><p class="lval" style="color:var(--warn)">39</p><p class="lrange">Want: &gt;39 mg/dL</p><span class="lstat ls-a"><i class="ti ti-alert-triangle" style="font-size:9px"></i> Low</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fa" id="lc-alt" onclick="tglL('li-alt','lc-alt')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:11px;color:var(--warn)"></i> ALT (liver)</p><p class="lval" style="color:var(--warn)">42</p><p class="lrange">Normal: 0–44 IU/L</p><span class="lstat ls-a"><i class="ti ti-alert-triangle" style="font-size:9px"></i> Watch</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fg" id="lc-egf" onclick="tglL('li-egf','lc-egf')"><p class="lname"><i class="ti ti-check" style="font-size:11px;color:var(--ok)"></i> eGFR (kidney)</p><p class="lval" style="color:var(--ok)">82</p><p class="lrange">Normal: &gt;59</p><span class="lstat ls-g"><i class="ti ti-check" style="font-size:9px"></i> Normal</span><p class="ldate">May 29, 2026</p></div>
-  <div class="lc fa" id="lc-tst" onclick="tglL('li-tst','lc-tst')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:11px;color:var(--warn)"></i> Testosterone</p><p class="lval" style="color:var(--warn)">414</p><p class="lrange">Range: 264–916 ng/dL</p><span class="lstat ls-a"><i class="ti ti-alert-triangle" style="font-size:9px"></i> Low-normal</span><p class="ldate">Sep 10, 2025</p></div>
-  <div class="lc fe" id="lc-bp" onclick="tglL('li-bp','lc-bp')" style="grid-column:span 2"><p class="lname"><i class="ti ti-activity" style="font-size:11px;color:var(--text3)"></i> Blood pressure</p><p class="lval" id="bpDisp" style="color:var(--text3);font-size:16px">— / —</p><p class="lrange">Normal: &lt;120/80 mmHg</p><span class="lstat ls-e" id="bpStat"><i class="ti ti-plus" style="font-size:9px"></i> Log reading</span><p class="ldate" id="bpDate">No readings yet — tap to log</p></div>
+<div class="xp" id="nutPanel">
+  <button class="xbtn" onclick="cli('nutPanel',document.getElementById('nutCard'))"><i class="ti ti-x"></i></button>
+  <p class="xp-title">Alma score — 60/100</p>
+  <span class="bdg bwn">Needs attention</span>
+  <p class="xp-body">Alma's diet quality score across 10 categories: vegetables, fruit, whole grains, nuts/legumes, omega-3s, healthy fats, processed meats, added sugar, sodium, alcohol.</p>
+  <p class="xp-you">Strongest: Omega-3s (flaxseed — full marks). Zero added sugar — excellent for HbA1c 5.8% and triglycerides 197. Weakest: no vegetables or fruit logged yet. A serving of broccoli or spinach at dinner will meaningfully move this score and directly support your LDL (128) and blood sugar targets.</p>
 </div>
 
-<div class="panel" id="li-a1c"><button class="xbtn" onclick="cliL('li-a1c','lc-a1c')"><i class="ti ti-x"></i></button><p class="panel-title">HbA1c — 5.8%</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Prediabetes confirmed.</strong> Each 0.1% increase brings you closer to a diabetes diagnosis. HbA1c reflects your 90-day blood sugar average.<div class="ffixes"><div class="ffix"><span>→</span><span>Cut added sugars and refined carbs — your #1 lever.</span></div><div class="ffix"><span>→</span><span>Soluble fiber at every meal blunts glucose absorption.</span></div><div class="ffix"><span>→</span><span>Running consistently reduces HbA1c by 0.3–0.7%.</span></div></div></div></div></div>
-<div class="panel" id="li-glc"><button class="xbtn" onclick="cliL('li-glc','lc-glc')"><i class="ti ti-x"></i></button><p class="panel-title">Fasting glucose — 103 mg/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Impaired fasting glucose.</strong> Normal is under 99. Responds faster than HbA1c — dietary changes can move this in weeks.<div class="ffixes"><div class="ffix"><span>→</span><span>Never eat carbs alone — always pair with protein or fat.</span></div><div class="ffix"><span>→</span><span>A 10–15 min walk after meals reduces post-meal glucose by 20–30%.</span></div><div class="ffix"><span>→</span><span>Staying hydrated (125 oz) directly reduces blood glucose concentration.</span></div></div></div></div></div>
-<div class="panel" id="li-ldl"><button class="xbtn" onclick="cliL('li-ldl','lc-ldl')"><i class="ti ti-x"></i></button><p class="panel-title">LDL — 128 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Significantly above optimal (&lt;100).</strong> Combined with low HDL and high triglycerides, cardiovascular risk is elevated. Dr. George has flagged potentially increasing your statin.<div class="ffixes"><div class="ffix"><span>→</span><span>Soluble fiber 5–10g/day reduces LDL by 5–11 points.</span></div><div class="ffix"><span>→</span><span>Replace saturated fat with unsaturated (olive oil, avocado, nuts, oily fish).</span></div><div class="ffix"><span>→</span><span>1.5 cups oats/day = 3g beta-glucan → lowers LDL 5–10%.</span></div></div></div></div></div>
-<div class="panel" id="li-trg"><button class="xbtn" onclick="cliL('li-trg','lc-trg')"><i class="ti ti-x"></i></button><p class="panel-title">Triglycerides — 197 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>High — most diet-responsive of your labs.</strong> Can reduce 20–50% through diet alone.<div class="ffixes"><div class="ffix"><span>→</span><span>Eliminate added sugars and refined carbs — fructose converts directly to triglycerides.</span></div><div class="ffix"><span>→</span><span>Oily fish EPA/DHA omega-3s reduce triglycerides 15–30%.</span></div><div class="ffix"><span>→</span><span>Eliminate alcohol entirely.</span></div></div></div></div></div>
-<div class="panel" id="li-hdl"><button class="xbtn" onclick="cliL('li-hdl','lc-hdl')"><i class="ti ti-x"></i></button><p class="panel-title">HDL — 39 mg/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>At the floor of acceptable.</strong> HDL carries LDL away from arteries — harder to raise than LDL is to lower.<div class="ffixes"><div class="ffix"><span>→</span><span>Running consistently raises HDL 3–6 mg/dL — keep training.</span></div><div class="ffix"><span>→</span><span>Replace refined carbs with healthy fats (avocado, nuts, olive oil).</span></div><div class="ffix"><span>→</span><span>Niacin (B3) is the most potent nutritional HDL-raiser — discuss with Dr. George.</span></div></div></div></div></div>
-<div class="panel" id="li-alt"><button class="xbtn" onclick="cliL('li-alt','lc-alt')"><i class="ti ti-x"></i></button><p class="panel-title">ALT — 42 IU/L</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Borderline — 42 of 44 max.</strong> In context of high triglycerides and prediabetes, may signal early NAFLD.<div class="ffixes"><div class="ffix"><span>→</span><span>Reducing added sugars and refined carbs is the most effective intervention.</span></div><div class="ffix"><span>→</span><span>Avoid large doses of acetaminophen and be cautious with alcohol.</span></div><div class="ffix"><span>→</span><span>Request repeat ALT at next labs.</span></div></div></div></div></div>
-<div class="panel" id="li-egf"><button class="xbtn" onclick="cliL('li-egf','lc-egf')"><i class="ti ti-x"></i></button><p class="panel-title">eGFR — 82 mL/min/1.73m²</p><div class="frow fr-g"><span style="color:var(--ok);flex-shrink:0"><i class="ti ti-check"></i></span><div class="ftext"><strong>Normal kidney function.</strong> Your mildly high BUN/Creatinine ratio (22) likely reflects mild dehydration — not a kidney issue.<div class="ffixes"><div class="ffix"><span>→</span><span>Protect this by controlling blood glucose — diabetic nephropathy is the leading cause of kidney disease.</span></div><div class="ffix"><span>→</span><span>Your 125 oz daily hydration target will normalize BUN/Creatinine.</span></div></div></div></div></div>
-<div class="panel" id="li-tst"><button class="xbtn" onclick="cliL('li-tst','lc-tst')"><i class="ti ti-x"></i></button><p class="panel-title">Testosterone — 414 ng/dL total, 87 pg/mL free</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Low-normal — lower third of range.</strong> Reduces muscle synthesis efficiency. Sep 2025 result — 9 months old.<div class="ffixes"><div class="ffix"><span>→</span><span>Zinc and vitamin D deficiency are the most common correctable causes — ask Dr. George to test.</span></div><div class="ffix"><span>→</span><span>Resistance training is a proven natural testosterone-supporting intervention.</span></div><div class="ffix"><span>→</span><span>Deep sleep is when testosterone is produced — your 64 min/night may be a contributing factor.</span></div><div class="ffix"><span>→</span><span>Request a repeat test — 9 months is a long gap.</span></div></div></div></div></div>
-<div class="panel" id="li-bp">
-  <button class="xbtn" onclick="cliL('li-bp','lc-bp')"><i class="ti ti-x"></i></button>
-  <p class="panel-title">Blood pressure</p>
-  <div class="frow fr-e" id="bpInsRow"><span style="color:var(--text3);flex-shrink:0"><i class="ti ti-activity"></i></span><div class="ftext" id="bpInsTxt"><strong>No readings yet.</strong> Log your first reading below.<div class="ffixes"><div class="ffix"><span>→</span><span>Optimal &lt;120/80. Elevated: 120–129/&lt;80. Stage 1: 130–139/80–89.</span></div><div class="ffix"><span>→</span><span>Best time: morning before eating, after 5 min rest, same arm each time.</span></div></div></div></div>
-  <div class="bp-form">
-    <p style="font-size:11px;font-weight:600;color:var(--text);margin:0 0 7px">Log a reading</p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:6px;align-items:end">
-      <div><div style="font-size:9px;color:var(--text3);margin-bottom:2px">Systolic</div><input type="number" id="bpSys" placeholder="118"/></div>
-      <div><div style="font-size:9px;color:var(--text3);margin-bottom:2px">Diastolic</div><input type="number" id="bpDia" placeholder="76"/></div>
-      <div><div style="font-size:9px;color:var(--text3);margin-bottom:2px">Pulse</div><input type="number" id="bpPls" placeholder="bpm"/></div>
-      <button onclick="logBP()" style="padding:0 8px;align-self:end">Save</button>
+<!-- Calorie summary card -->
+<div class="card" style="margin-bottom:.875rem;background:var(--bg2)">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+    <div style="font-size:12px;font-weight:600">Calorie budget</div>
+    <div style="font-size:10px;color:var(--text3)">Workout-adjusted</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;text-align:center">
+    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px">
+      <div style="font-size:16px;font-weight:600">2,155</div>
+      <div style="font-size:9px;color:var(--text3)">Target</div>
+    </div>
+    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px">
+      <div style="font-size:16px;font-weight:600;color:var(--info)">+321</div>
+      <div style="font-size:9px;color:var(--text3)">Workout earned</div>
+    </div>
+    <div style="background:#fff;border-radius:var(--rs);padding:8px 4px">
+      <div style="font-size:16px;font-weight:600;color:var(--ok)">1,988</div>
+      <div style="font-size:9px;color:var(--text3)">Remaining</div>
     </div>
   </div>
-  <div id="bpHist" style="margin-top:8px"></div>
 </div>
 
-<!-- ADVICE -->
+<!-- Macro bars -->
+<p style="font-size:10px;color:var(--text3);margin:0 0 8px"><i class="ti ti-info-circle"></i> Tap macro name for context</p>
+<div class="mrow"><span class="mname" onclick="tgl('mCalP')">Calories</span><div class="mtrack"><div class="mbar" style="width:23%;background:#378ADD"></div></div><span class="mnum">488/2,155</span></div>
+<div class="xp" id="mCalP"><button class="xbtn" onclick="cli('mCalP')"><i class="ti ti-x"></i></button><p class="xp-title">Calories — 488 of 2,155 kcal</p><span class="bdg bwn">22% of target</span><p class="xp-body">Alma's target is 2,155 kcal/day based on your TDEE (2,477) minus a 322 kcal deficit for your 5 lb weight loss goal.</p><p class="xp-you">Early in the day — 1,988 kcal remaining after workout credit. Don't undereat today: with readiness at 52/100 and an interval session this morning, adequate fueling accelerates HRV recovery. Target 700–800 kcal at both lunch and dinner.</p></div>
+
+<div class="mrow"><span class="mname" onclick="tgl('mProtP')">Protein</span><div class="mtrack"><div class="mbar" style="width:49%;background:#1D9E75"></div></div><span class="mnum">62.7/127g</span></div>
+<div class="xp" id="mProtP"><button class="xbtn" onclick="cli('mProtP')"><i class="ti ti-x"></i></button><p class="xp-title">Protein — 62.7g of 127g</p><span class="bdg bwn">49% — needs 64g more</span><p class="xp-body">Alma's target: 127g/day. Most satiating macro, minimal blood sugar impact. Critical for muscle repair after running.</p><p class="xp-you">Good start — 62.7g already from your morning shake and grilled chicken lunch. Need 64g more today. A large salmon fillet (40g) + Greek yogurt (17g) at dinner would close the gap. With low-normal testosterone (414 ng/dL), hitting this daily target is especially important.</p></div>
+
+<div class="mrow"><span class="mname" onclick="tgl('mCarbP')">Carbs</span><div class="mtrack"><div class="mbar" style="width:10%;background:#BA7517"></div></div><span class="mnum">23.5/235g</span></div>
+<div class="xp" id="mCarbP"><button class="xbtn" onclick="cli('mCarbP')"><i class="ti ti-x"></i></button><p class="xp-title">Carbohydrates — 23.5g of 235g</p><span class="bdg bwn">10% — very low so far</span><p class="xp-body">Alma's target: 235g/day. Complex carbs (oats, legumes, sweet potato) digest slowly and fuel endurance training. Refined carbs spike blood sugar.</p><p class="xp-you">Only 23.5g so far — well under target. With an interval session this morning, your glycogen needs replenishment. Post-workout is the ideal carb window — sweet potato, brown rice, or oats at lunch/dinner will restore glycogen without the blood sugar spike. With HbA1c 5.8%, always pair carbs with protein.</p></div>
+
+<div class="mrow"><span class="mname" onclick="tgl('mFatP')">Total fat</span><div class="mtrack"><div class="mbar" style="width:18%;background:#639922"></div></div><span class="mnum">13.9/78g</span></div>
+<div class="xp" id="mFatP"><button class="xbtn" onclick="cli('mFatP')"><i class="ti ti-x"></i></button><p class="xp-title">Total fat — 13.9g of 78g</p><span class="bdg bwn">18% — room to add</span><p class="xp-body">Alma's target: 78g/day. Type matters most — unsaturated fats improve cholesterol; saturated raise LDL.</p><p class="xp-you">With LDL at 128, prioritize olive oil, avocado, and nuts over saturated sources. Your flaxseed adds excellent ALA omega-3s. Add oily fish 2–3×/week for EPA/DHA to more directly reduce triglycerides (197).</p></div>
+
+<div class="mrow"><span class="mname" onclick="tgl('mFibP')">Fiber</span><div class="mtrack"><div class="mbar" style="width:10%;background:#639922"></div></div><span class="mnum">3.9/38g</span></div>
+<div class="xp" id="mFibP"><button class="xbtn" onclick="cli('mFibP')"><i class="ti ti-x"></i></button><p class="xp-title">Fiber — 3.9g of 38g</p><span class="bdg bdn">10% — critical gap</span><p class="xp-body">Target 38g/day. Soluble fiber blunts blood sugar, lowers LDL, and reduces triglycerides — all three of your priority health targets.</p><p class="xp-you">Only 3.9g logged. This is your biggest nutritional gap today. A cup of cooked lentils = 16g fiber. A cup of broccoli = 5g. A serving of oats = 4g. Hitting 38g daily could reduce your LDL by 8–15 points over 3 months without medication.</p></div>
+
+<div class="mrow"><span class="mname" onclick="tgl('mSatP')">Saturated fat</span><div class="mtrack"><div class="mbar" style="width:20%;background:#E24B4A"></div></div><span class="mnum">~3/20g</span></div>
+<div class="xp" id="mSatP"><button class="xbtn" onclick="cli('mSatP')"><i class="ti ti-x"></i></button><p class="xp-title">Saturated fat — target under 20g/day</p><span class="bdg bok">Within target so far</span><p class="xp-body">Saturated fat is the primary dietary driver of LDL cholesterol. The AHA recommends under 13g/day for people with elevated LDL; 20g is a conservative ceiling.</p><p class="xp-you">With LDL at 128, saturated fat is your most direct dietary lever. Sources to watch: butter, full-fat dairy, fatty red meat, coconut oil, processed meat. Replace with olive oil, avocado, and nuts wherever possible.</p></div>
+
+<div class="mrow"><span class="mname" onclick="tgl('mSugP')" style="color:var(--ok)">Added sugar</span><div class="mtrack"><div class="mbar" style="width:0%;background:#1D9E75"></div></div><span class="mnum ok">0/25g ✓</span></div>
+<div class="xp" id="mSugP"><button class="xbtn" onclick="cli('mSugP')"><i class="ti ti-x"></i></button><p class="xp-title">Added sugar — 0g of 25g</p><span class="bdg bok">Perfect</span><p class="xp-body">Added sugars spike blood glucose and directly raise triglycerides. Zero added sugar days are the most powerful single lever for HbA1c 5.8% and triglycerides 197.</p><p class="xp-you">Zero added sugar so far — excellent. Every zero-sugar day directly moves both HbA1c and triglycerides. Keep it up through dinner. Watch for hidden sugars in sauces, condiments, and flavored drinks.</p></div>
+
+<!-- Alma category tiles -->
+<div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px;margin-bottom:.875rem">
+  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catVegP')"><div style="font-size:12px;font-weight:600;color:var(--danger)">0</div><div style="font-size:9px;color:var(--text3)">Veg</div></div>
+  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catFruitP')"><div style="font-size:12px;font-weight:600;color:var(--danger)">0</div><div style="font-size:9px;color:var(--text3)">Fruit</div></div>
+  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catGrainP')"><div style="font-size:12px;font-weight:600;color:var(--danger)">8</div><div style="font-size:9px;color:var(--text3)">Grains</div></div>
+  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catOmegaP')"><div style="font-size:12px;font-weight:600;color:var(--ok)">100</div><div style="font-size:9px;color:var(--text3)">Omega-3</div></div>
+  <div style="background:var(--bg2);border-radius:var(--rs);padding:5px 3px;text-align:center;cursor:pointer" onclick="tgl('catSugarP')"><div style="font-size:12px;font-weight:600;color:var(--ok)">100</div><div style="font-size:9px;color:var(--text3)">Sugar</div></div>
+</div>
+<div class="xp" id="catVegP"><button class="xbtn" onclick="cli('catVegP')"><i class="ti ti-x"></i></button><p class="xp-title">Vegetables — 0/100</p><span class="bdg bdn">Not logged yet</span><p class="xp-you">No vegetables today. This is your #1 opportunity — broccoli, spinach, peppers, or a salad at dinner would add 5–8g fiber, key micronutrients, and meaningfully improve your Alma score. Non-starchy vegetables are ideal for HbA1c 5.8%.</p></div>
+<div class="xp" id="catFruitP"><button class="xbtn" onclick="cli('catFruitP')"><i class="ti ti-x"></i></button><p class="xp-title">Fruit — 0/100</p><span class="bdg bdn">Not logged yet</span><p class="xp-you">No fruit today. Berries are ideal — blueberries and raspberries are high in fiber and antioxidants with a low glycemic impact, making them safe for HbA1c 5.8%. A cup of berries = ~8g fiber and strong anti-inflammatory effect post-workout.</p></div>
+<div class="xp" id="catGrainP"><button class="xbtn" onclick="cli('catGrainP')"><i class="ti ti-x"></i></button><p class="xp-title">Whole grains — 8/100</p><span class="bdg bdn">Very low</span><p class="xp-you">Only the tortilla at lunch so far. Oats are your best whole grain option — 1.5 cups provides 3g beta-glucan which directly lowers LDL by 5–10%. Brown rice or quinoa at dinner would also boost this score and provide the glycogen replenishment your legs need after intervals.</p></div>
+<div class="xp" id="catOmegaP"><button class="xbtn" onclick="cli('catOmegaP')"><i class="ti ti-x"></i></button><p class="xp-title">Omega-3s — 100/100</p><span class="bdg bok">Full marks</span><p class="xp-you">Your daily flaxseed provides 2.16g of ALA omega-3s — Alma gives this full marks. For even greater triglyceride reduction, add oily fish (salmon, mackerel, sardines) 2–3×/week. EPA/DHA from fish are 5–10× more potent at reducing triglycerides than ALA from flaxseed.</p></div>
+<div class="xp" id="catSugarP"><button class="xbtn" onclick="cli('catSugarP')"><i class="ti ti-x"></i></button><p class="xp-title">Added sugar — 100/100</p><span class="bdg bok">Perfect</span><p class="xp-you">Zero added sugar today — your most powerful daily lever for HbA1c (5.8%) and triglycerides (197). Fructose converts directly to triglycerides in the liver. Every zero-sugar day is a direct investment in your next lab results.</p></div>
+
+<!-- Today's food log -->
+<p class="sl" style="margin-top:.25rem">Today's food log <span class="source-badge">Alma</span></p>
+<div class="card" style="margin-bottom:.875rem">
+  <div class="meal-hdr"><i class="ti ti-sun" style="font-size:9px"></i> Breakfast · 8:20 AM</div>
+  <div class="food-row"><span>Whey Protein Isolate</span><span style="color:var(--text3);font-size:10px">130 kcal · P28g</span></div>
+  <div class="food-row"><span>Almond milk unsweetened</span><span style="color:var(--text3);font-size:10px">46 kcal · F3.7g</span></div>
+  <div class="food-row"><span>Ground flaxseed</span><span style="color:var(--text3);font-size:10px">44 kcal · Ω2.16g</span></div>
+  <div class="food-row"><span>Coffee with milk</span><span style="color:var(--text3);font-size:10px">65 kcal</span></div>
+  <div class="meal-hdr"><i class="ti ti-sun-high" style="font-size:9px"></i> Lunch · 2:21 PM</div>
+  <div class="food-row"><span>Carb smart whole wheat tortilla</span><span style="color:var(--text3);font-size:10px">64 kcal · Fi2g</span></div>
+  <div class="food-row"><span>Grilled chicken</span><span style="color:var(--text3);font-size:10px">139 kcal · P25.8g</span></div>
+  <div style="display:flex;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:0.5px solid var(--border);font-size:11px;font-weight:600">
+    <span>Total logged</span><span>488 kcal · P62.7g · C23.5g · F13.9g · Fi3.9g</span>
+  </div>
+</div>
+
+<!-- ── MEDICAL LABS ── -->
 <hr class="divider"/>
-<p class="sl">Personalized advice</p>
-<div class="acd"><p class="act"><span class="dot" style="background:#1D9E75"></span> Morning baseline logged</p><p class="acb">Protein fiber shake + coffee pre-loaded: 260 kcal · 33g protein · 5g fiber · 0g added sugar · ~16.5oz fluid. Log everything else as you eat throughout the day — it syncs instantly to the cloud.</p></div>
-<div class="acd"><p class="act"><span class="dot" style="background:#BA7517"></span> Recovery priority today</p><p class="acb">Readiness 52/100 with a training deficit. Rest or active recovery only. Hit protein target (140g) with leucine-rich foods. Anti-inflammatory foods (berries, fatty fish, leafy greens) reduce exercise-induced inflammation.</p></div>
-<div class="acd"><p class="act"><span class="dot" style="background:#A32D2D"></span> Lab action summary</p><p class="acb">Four labs need attention: HbA1c 5.8%, LDL 128, triglycerides 197, HDL 39. All four respond to the same interventions: zero added sugar, 38g fiber, oily fish 3×/week, no refined carbs, continue running.</p></div>
-
-<div style="margin-top:.75rem;padding-bottom:1rem">
-  <button onclick="alert('Open Claude and paste: Based on my health dashboard data — readiness 52/100, HbA1c 5.8%, LDL 128, triglycerides 197, HDL 39 — give me a 30-day action plan.')" style="width:100%;font-size:12px">Ask Claude for a 30-day action plan ↗</button>
+<p class="sl">Medical labs <span class="source-badge">May 29, 2026</span></p>
+<p class="disc"><i class="ti ti-alert-circle"></i> For reference only. Always interpret results with Dr. George.</p>
+<div class="lab-grid">
+  <div class="lc fr" id="la1c" onclick="tglL('pa1c','la1c')"><p class="lname"><i class="ti ti-alert-circle" style="font-size:10px;color:var(--danger)"></i> HbA1c</p><p class="lval" style="color:var(--danger)">5.8%</p><p class="lrange">Normal: 4.8–5.6%</p><span class="lstat ls-r">Prediabetes</span><p class="ldate">May 29, 2026</p></div>
+  <div class="lc fa" id="lglc" onclick="tglL('pglc','lglc')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> Fasting glucose</p><p class="lval" style="color:var(--warn)">103</p><p class="lrange">Normal: 70–99 mg/dL</p><span class="lstat ls-a">High</span><p class="ldate">May 29, 2026</p></div>
+  <div class="lc fr" id="lldl" onclick="tglL('pldl','lldl')"><p class="lname"><i class="ti ti-alert-circle" style="font-size:10px;color:var(--danger)"></i> LDL</p><p class="lval" style="color:var(--danger)">128</p><p class="lrange">Optimal: &lt;100 mg/dL</p><span class="lstat ls-r">High</span><p class="ldate">May 29, 2026</p></div>
+  <div class="lc fr" id="ltrg" onclick="tglL('ptrg','ltrg')"><p class="lname"><i class="ti ti-alert-circle" style="font-size:10px;color:var(--danger)"></i> Triglycerides</p><p class="lval" style="color:var(--danger)">197</p><p class="lrange">Normal: &lt;149 mg/dL</p><span class="lstat ls-r">High</span><p class="ldate">May 29, 2026</p></div>
+  <div class="lc fa" id="lhdl" onclick="tglL('phdl','lhdl')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> HDL</p><p class="lval" style="color:var(--warn)">39</p><p class="lrange">Want: &gt;39 mg/dL</p><span class="lstat ls-a">Low</span><p class="ldate">May 29, 2026</p></div>
+  <div class="lc fa" id="lalt" onclick="tglL('palt','lalt')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> ALT (liver)</p><p class="lval" style="color:var(--warn)">42</p><p class="lrange">Normal: 0–44 IU/L</p><span class="lstat ls-a">Watch</span><p class="ldate">May 29, 2026</p></div>
+  <div class="lc fg" id="legf" onclick="tglL('pegf','legf')"><p class="lname"><i class="ti ti-check" style="font-size:10px;color:var(--ok)"></i> eGFR (kidney)</p><p class="lval" style="color:var(--ok)">82</p><p class="lrange">Normal: &gt;59</p><span class="lstat ls-g">Normal</span><p class="ldate">May 29, 2026</p></div>
+  <div class="lc fa" id="ltst" onclick="tglL('ptst','ltst')"><p class="lname"><i class="ti ti-alert-triangle" style="font-size:10px;color:var(--warn)"></i> Testosterone</p><p class="lval" style="color:var(--warn)">414</p><p class="lrange">Range: 264–916 ng/dL</p><span class="lstat ls-a">Low-normal</span><p class="ldate">Sep 10, 2025</p></div>
+  <div class="lc fe" id="lbp" onclick="tglL('pbp','lbp')" style="grid-column:span 2">
+    <p class="lname"><i class="ti ti-activity" style="font-size:10px;color:var(--text3)"></i> Blood pressure <span style="color:var(--text3);font-weight:400;font-size:9px">· log via Runalyze app</span></p>
+    <p class="lval" id="bpVal" style="color:var(--text3);font-size:15px">— / —</p>
+    <p class="lrange">Normal: &lt;120/80 mmHg</p>
+    <span class="lstat ls-e" id="bpStat"><i class="ti ti-plus" style="font-size:9px"></i> No readings yet</span>
+    <p class="ldate" id="bpDate">Log in Runalyze → syncs here on next refresh</p>
+  </div>
 </div>
 
-<!-- FIREBASE + APP SCRIPT -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+<div class="xp" id="pa1c"><button class="xbtn" onclick="cliL('pa1c','la1c')"><i class="ti ti-x"></i></button><p class="xp-title">HbA1c — 5.8%</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Prediabetes confirmed.</strong> HbA1c reflects 90-day blood sugar average — changes you make now show in your next test.<div class="ffixes"><div class="ffix"><span>→</span><span>Cut added sugars — your #1 lever. You're doing this already.</span></div><div class="ffix"><span>→</span><span>38g fiber daily blunts glucose absorption at every meal.</span></div><div class="ffix"><span>→</span><span>Running consistently reduces HbA1c by 0.3–0.7%.</span></div></div></div></div></div>
+<div class="xp" id="pglc"><button class="xbtn" onclick="cliL('pglc','lglc')"><i class="ti ti-x"></i></button><p class="xp-title">Fasting glucose — 103 mg/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Impaired fasting glucose.</strong> Responds faster than HbA1c — dietary changes can move this in weeks.<div class="ffixes"><div class="ffix"><span>→</span><span>Never eat carbs alone — always pair with protein or fat.</span></div><div class="ffix"><span>→</span><span>A 10–15 min walk after meals reduces post-meal glucose by 20–30%.</span></div></div></div></div></div>
+<div class="xp" id="pldl"><button class="xbtn" onclick="cliL('pldl','lldl')"><i class="ti ti-x"></i></button><p class="xp-title">LDL — 128 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>Significantly above optimal (&lt;100).</strong> Dr. George flagged potentially increasing your statin.<div class="ffixes"><div class="ffix"><span>→</span><span>38g fiber/day could reduce LDL by 8–15 points over 3 months.</span></div><div class="ffix"><span>→</span><span>Replace saturated fat with olive oil, avocado, nuts, oily fish.</span></div><div class="ffix"><span>→</span><span>1.5 cups oats/day = 3g beta-glucan → lowers LDL 5–10%.</span></div></div></div></div></div>
+<div class="xp" id="ptrg"><button class="xbtn" onclick="cliL('ptrg','ltrg')"><i class="ti ti-x"></i></button><p class="xp-title">Triglycerides — 197 mg/dL</p><div class="frow fr-r"><span style="color:var(--danger);flex-shrink:0"><i class="ti ti-alert-circle"></i></span><div class="ftext"><strong>High — most diet-responsive of your labs.</strong> Can reduce 20–50% through diet alone.<div class="ffixes"><div class="ffix"><span>→</span><span>Zero added sugar days are your biggest lever — fructose converts directly to triglycerides.</span></div><div class="ffix"><span>→</span><span>Oily fish EPA/DHA reduces triglycerides 15–30% — more potent than flaxseed ALA.</span></div><div class="ffix"><span>→</span><span>Eliminate alcohol entirely.</span></div></div></div></div></div>
+<div class="xp" id="phdl"><button class="xbtn" onclick="cliL('phdl','lhdl')"><i class="ti ti-x"></i></button><p class="xp-title">HDL — 39 mg/dL</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>At the floor of acceptable.</strong><div class="ffixes"><div class="ffix"><span>→</span><span>Running consistently raises HDL 3–6 mg/dL — keep training.</span></div><div class="ffix"><span>→</span><span>Replace refined carbs with healthy fats (avocado, nuts, olive oil).</span></div></div></div></div></div>
+<div class="xp" id="palt"><button class="xbtn" onclick="cliL('palt','lalt')"><i class="ti ti-x"></i></button><p class="xp-title">ALT — 42 IU/L</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Borderline (42 of 44 max).</strong> In context of high triglycerides and prediabetes, may signal early NAFLD.<div class="ffixes"><div class="ffix"><span>→</span><span>Reducing added sugars is the most effective intervention for metabolic ALT elevation.</span></div><div class="ffix"><span>→</span><span>Request repeat ALT at next labs. If rising, ask about a liver ultrasound.</span></div></div></div></div></div>
+<div class="xp" id="pegf"><button class="xbtn" onclick="cliL('pegf','legf')"><i class="ti ti-x"></i></button><p class="xp-title">eGFR — 82 mL/min/1.73m²</p><div class="frow fr-g"><span style="color:var(--ok);flex-shrink:0"><i class="ti ti-check"></i></span><div class="ftext"><strong>Normal kidney function.</strong> BUN/Creatinine ratio (22) likely reflects mild dehydration.<div class="ffixes"><div class="ffix"><span>→</span><span>Protect this by controlling blood glucose — diabetic nephropathy is the leading cause of kidney disease.</span></div></div></div></div></div>
+<div class="xp" id="ptst"><button class="xbtn" onclick="cliL('ptst','ltst')"><i class="ti ti-x"></i></button><p class="xp-title">Testosterone — 414 ng/dL · 87 pg/mL free</p><div class="frow fr-a"><span style="color:var(--warn);flex-shrink:0"><i class="ti ti-alert-triangle"></i></span><div class="ftext"><strong>Low-normal — lower third of range.</strong> Sep 2025 — 9 months old, needs a repeat test.<div class="ffixes"><div class="ffix"><span>→</span><span>Ask Dr. George to test zinc and vitamin D — most common correctable causes.</span></div><div class="ffix"><span>→</span><span>Deep sleep is when testosterone is produced — your 64 min/night is a likely factor.</span></div><div class="ffix"><span>→</span><span>Request a repeat test — 9 months is too long a gap.</span></div></div></div></div></div>
+<div class="xp" id="pbp"><button class="xbtn" onclick="cliL('pbp','lbp')"><i class="ti ti-x"></i></button><p class="xp-title">Blood pressure</p><div class="frow fr-e"><span style="color:var(--text3);flex-shrink:0"><i class="ti ti-activity"></i></span><div class="ftext"><strong>No readings synced yet.</strong> Log BP readings in the Runalyze app — they'll appear here automatically on your next dashboard refresh.<div class="ffixes"><div class="ffix"><span>→</span><span>Optimal &lt;120/80. Stage 1 hypertension: 130–139/80–89.</span></div><div class="ffix"><span>→</span><span>Best time: morning before eating, after 5 min seated rest, same arm each time.</span></div></div></div></div></div>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDaMbdMQ7UG7PFmjeVtK8F3q0tEG8sTPLA",
-  authDomain: "health-dashboard-6519b.firebaseapp.com",
-  projectId: "health-dashboard-6519b",
-  storageBucket: "health-dashboard-6519b.firebasestorage.app",
-  messagingSenderId: "267619259387",
-  appId: "1:267619259387:web:81209e39142f649499715e",
-  measurementId: "G-LCCWB0YYH5"
-};
+<!-- ── WEEKLY TRENDS ── -->
+<hr class="divider"/>
+<p class="sl">Weekly nutrition trend</p>
+<div class="wkb">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Mon</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Tue</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Wed</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:31px;background:#BA7517;border-radius:2px 2px 0 0"></div></div><div style="font-size:9px;color:var(--text3);font-weight:600">Thu</div><div style="font-size:9px;font-weight:600;color:#BA7517">60</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Fri</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Sat</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.4"></div></div><div style="font-size:9px;color:var(--text3)">Sun</div><div style="font-size:9px;color:#8A8880">—</div></div>
+</div>
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+<div style="padding-bottom:.5rem">
+  <button onclick="window.open('https://claude.ai','_blank')" style="width:100%;font-size:12px;background:var(--info)">Open Claude to sync latest data ↗</button>
+</div>
 
-const USER_ID = "emaad";
-const CAL=2100, WTGT=125;
-const TGT={carbs:210,protein:140,fat:70,fiber:38,sugar:25};
-const PL=['Whole','Processed','Ultra'];
-const DAYS=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-
-function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
-function ts(){const now=new Date(),h=now.getHours(),m=now.getMinutes(),ap=h>=12?'PM':'AM';return(h%12||12)+':'+String(m).padStart(2,'0')+' '+ap;}
-
-function setSyncStatus(state, msg) {
-  const dot = document.getElementById('syncDot');
-  const txt = document.getElementById('syncMsg');
-  dot.className = 'sync-dot ' + state;
-  txt.textContent = msg;
+<script>
+function tgl(id, triggerEl) {
+  const p = document.getElementById(id);
+  if (!p) return;
+  const open = p.classList.contains('vis');
+  if (triggerEl) open ? triggerEl.classList.remove('open') : triggerEl.classList.add('open');
+  open ? p.classList.remove('vis') : p.classList.add('vis');
+  if (!open) setTimeout(() => p.scrollIntoView({behavior:'smooth',block:'nearest'}), 50);
 }
-
-const ULTRA=['mcdonald','burger king','wendy','kfc','taco bell','subway','pizza hut','domino','popeye','chick-fil','five guys','shake shack','hot dog','sausage','pepperoni','salami','bologna','spam','nugget','fish stick','ramen','instant noodle','chips','potato chip','doritos','cheetos','lays','pringles','cheez-it','oreo','cookie','cracker','pop tart','cereal','frosted flakes','fruit loop','lucky charm','cocoa puff','captain crunch','candy','chocolate bar','snicker','kitkat','twix','skittles','gummy','donut','muffin','soda','diet soda','cola','sprite','fanta','mountain dew','gatorade','powerade','energy drink','red bull','monster','frappuccino','chocolate milk','milkshake','ice cream','frozen yogurt','popsicle','pudding','velveeta','kraft','american cheese','margarine','ketchup','ranch dressing','bbq sauce','flavored yogurt','lunchable','frozen meal','frozen pizza','tv dinner','microwave meal','processed meat','deli meat'];
-const PROC=['bread','sourdough','pita','tortilla','wrap','pasta','rice cake','canned','jarred','smoked','pickled','cheese','cheddar','mozzarella','parmesan','feta','brie','cottage cheese','greek yogurt','yogurt','kefir','butter','cream','bacon','prosciutto','jerky','dried fruit','peanut butter','almond butter','tahini','hummus','salsa','pasta sauce','stock','broth','soy sauce','miso','protein powder','whey protein','protein shake','granola'];
-const WHOLE=['egg','chicken breast','chicken thigh','turkey','salmon','tuna','tilapia','cod','shrimp','steak','ground beef','lamb','tofu','tempeh','lentil','bean','chickpea','black bean','edamame','oat','oatmeal','quinoa','brown rice','sweet potato','potato','broccoli','spinach','kale','lettuce','arugula','cucumber','tomato','pepper','carrot','celery','mushroom','zucchini','asparagus','green bean','avocado','apple','banana','orange','berry','strawberry','blueberry','raspberry','mango','peach','grape','watermelon','almond','walnut','cashew','pecan','pistachio','flaxseed','chia','olive oil','almond milk','oat milk','milk','water','coffee','tea'];
-
-function classify(name){const n=name.toLowerCase();for(const t of ULTRA){if(n.includes(t))return 2;}for(const t of PROC){if(n.includes(t))return 1;}for(const t of WHOLE){if(n.includes(t))return 0;}if(n.includes('fried'))return 1;if(n.includes('grilled')||n.includes('roasted')||n.includes('baked')||n.includes('fresh')||n.includes('raw'))return 0;if(n.includes('sauce')||n.includes('dressing'))return 1;return 0;}
-const FM={water:1,coffee:1,tea:1,almond:1,milk:.87,oat:.9,soy:.9,juice:.89,smoothie:.85,protein:.87,shake:.87,soup:.9,broth:.95,yogurt:.75,watermelon:.92,cucumber:.96,strawberr:.91,berry:.85,orange:.86,apple:.86,melon:.9,lettuce:.95,celery:.95,tomato:.94,spinach:.91,fruit:.85,vegetable:.87,salad:.9};
-function estFluid(n,cal){const nl=n.toLowerCase();for(const[k,v]of Object.entries(FM)){if(nl.includes(k)){if(nl.includes('cup')||nl.includes('glass')||nl.includes('mug'))return Math.round(8*v);return Math.round(cal/8*v);}}return 0;}
-
-// Default data
-let recipes=[{id:'pfs',name:'Protein fiber shake',cal:240,protein:32,carbs:8,fat:9,fiber:5,sugar:0,proc:1,fl:8.5,ing:'TL Whey · flaxseed · almond milk'}];
-let foods=[
-  {id:'f1',name:'Protein fiber shake',cal:240,protein:32,carbs:8,fat:9,fiber:5,sugar:0,proc:1,time:'8:05 AM',rec:true,fl:8.5},
-  {id:'f2',name:'Coffee with milk',cal:20,protein:1,carbs:1,fat:1,fiber:0,sugar:0,proc:0,time:'8:30 AM',rec:false,fl:8.0}
-];
-let waterLog=[], bpLog=[], weekScores=[null,null,null,null,null,null,null];
-
-// Firebase doc refs
-const todayDocRef = () => doc(db, 'users', USER_ID, 'days', today());
-const recipesDocRef = doc(db, 'users', USER_ID, 'meta', 'recipes');
-const bpDocRef = doc(db, 'users', USER_ID, 'meta', 'bloodpressure');
-
-async function saveToFirebase() {
-  setSyncStatus('syncing', 'Saving…');
-  try {
-    await setDoc(todayDocRef(), { foods, waterLog, weekScores, updatedAt: new Date().toISOString() });
-    await setDoc(recipesDocRef, { recipes, updatedAt: new Date().toISOString() });
-    setSyncStatus('ok', 'Saved to cloud · ' + ts());
-  } catch(e) {
-    setSyncStatus('err', 'Save failed — check connection');
-    console.error(e);
-  }
+function cli(id, triggerEl) {
+  const p = document.getElementById(id);
+  if (p) p.classList.remove('vis');
+  if (triggerEl) triggerEl.classList.remove('open');
 }
-
-async function saveBP() {
-  try { await setDoc(bpDocRef, { bpLog, updatedAt: new Date().toISOString() }); } catch(e) { console.error(e); }
+function tglL(panelId, cardId) {
+  const p = document.getElementById(panelId), c = document.getElementById(cardId);
+  if (!p) return;
+  const open = p.classList.contains('vis');
+  if (open) { p.classList.remove('vis'); if(c) c.classList.remove('open'); }
+  else { p.classList.add('vis'); if(c) c.classList.add('open'); setTimeout(() => p.scrollIntoView({behavior:'smooth',block:'nearest'}), 50); }
 }
-
-async function loadFromFirebase() {
-  setSyncStatus('syncing', 'Loading from cloud…');
-  try {
-    // Load today's data
-    const todaySnap = await getDoc(todayDocRef());
-    if (todaySnap.exists()) {
-      const d = todaySnap.data();
-      if (d.foods) foods = d.foods;
-      if (d.waterLog) waterLog = d.waterLog;
-      if (d.weekScores) weekScores = d.weekScores;
-    }
-    // Load recipes
-    const recSnap = await getDoc(recipesDocRef);
-    if (recSnap.exists() && recSnap.data().recipes) recipes = recSnap.data().recipes;
-    // Load BP
-    const bpSnap = await getDoc(bpDocRef);
-    if (bpSnap.exists() && bpSnap.data().bpLog) bpLog = bpSnap.data().bpLog;
-    setSyncStatus('ok', 'Synced · ' + ts());
-  } catch(e) {
-    setSyncStatus('err', 'Could not connect — showing local data');
-    console.error(e);
-  }
-  renderRecipes(); renderBP(); render();
+function cliL(panelId, cardId) {
+  const p = document.getElementById(panelId); if(p) p.classList.remove('vis');
+  const c = document.getElementById(cardId); if(c) c.classList.remove('open');
 }
-
-// Real-time listener for today's data (so iPhone and PC stay in sync)
-function startRealtimeSync() {
-  onSnapshot(todayDocRef(), (snap) => {
-    if (snap.exists()) {
-      const d = snap.data();
-      if (d.foods) foods = d.foods;
-      if (d.waterLog) waterLog = d.waterLog;
-      if (d.weekScores) weekScores = d.weekScores;
-      setSyncStatus('ok', 'Live · ' + ts());
-      render();
-    }
-  }, (err) => { setSyncStatus('err', 'Sync error'); });
-}
-
-// WATER
-window.addWater = function(oz){waterLog.push({id:'w'+Date.now(),label:'Water',oz,time:ts()});saveToFirebase();render();}
-window.addCustomWater = function(){const n=document.getElementById('wName').value.trim()||'Water';const oz=parseFloat(document.getElementById('wOz').value)||0;if(!oz)return;waterLog.push({id:'w'+Date.now(),label:n,oz,time:ts()});document.getElementById('wName').value='';document.getElementById('wOz').value='';saveToFirebase();render();}
-window.removeWater = function(id){waterLog=waterLog.filter(w=>w.id!==id);saveToFirebase();render();}
-
-// RECIPES
-window.showRec = function(){document.getElementById('recPanel').style.display='block';}
-window.hideRec = function(){document.getElementById('recPanel').style.display='none';}
-window.saveRec = function(){
-  const name=document.getElementById('rName').value.trim(),cal=parseInt(document.getElementById('rCal').value)||0;
-  if(!name||!cal)return;
-  const fl=parseFloat(document.getElementById('rFlu').value)||estFluid(name,cal);
-  recipes.push({id:'r'+Date.now(),name,cal,protein:parseInt(document.getElementById('rPro').value)||0,carbs:parseInt(document.getElementById('rCarb').value)||0,fat:parseInt(document.getElementById('rFat').value)||0,fiber:parseInt(document.getElementById('rFib').value)||0,sugar:parseInt(document.getElementById('rSug').value)||0,proc:classify(name),fl,ing:''});
-  ['rName','rCal','rPro','rCarb','rFat','rFib','rSug','rFlu'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  saveToFirebase();window.hideRec();renderRecipes();
-}
-window.logRec = function(id){const r=recipes.find(x=>x.id===id);if(!r)return;foods.push({id:'f'+Date.now(),name:r.name,cal:r.cal,protein:r.protein,carbs:r.carbs,fat:r.fat,fiber:r.fiber,sugar:r.sugar,proc:r.proc,time:ts(),rec:true,fl:r.fl||0});saveToFirebase();render();}
-window.delRec = function(id){recipes=recipes.filter(r=>r.id!==id);saveToFirebase();renderRecipes();}
-
-// FOOD
-window.addFood = function(){
-  const name=document.getElementById('foodName').value.trim(),cal=parseInt(document.getElementById('foodCal').value)||0;
-  if(!name||!cal)return;
-  foods.push({id:'f'+Date.now(),name,cal,time:ts(),rec:false,fl:estFluid(name,cal),proc:classify(name),
-    protein:parseInt(document.getElementById('fPro').value)||0,
-    carbs:parseInt(document.getElementById('fCarb').value)||0,
-    fat:parseInt(document.getElementById('fFat').value)||0,
-    fiber:parseInt(document.getElementById('fFib').value)||0,
-    sugar:parseInt(document.getElementById('fSug').value)||0
-  });
-  ['foodName','foodCal','fPro','fCarb','fFat','fFib','fSug'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  saveToFirebase();render();
-}
-window.removeFood = function(id){foods=foods.filter(f=>f.id!==id);saveToFirebase();render();}
-
-// BP
-function bpCat(s,d){
-  if(s<120&&d<80)return{label:'Normal',cls:'fg',lstat:'ls-g',icon:'ti-check',tc:'var(--ok)',fcls:'fr-g'};
-  if(s<130&&d<80)return{label:'Elevated',cls:'fa',lstat:'ls-a',icon:'ti-alert-triangle',tc:'var(--warn)',fcls:'fr-a'};
-  if(s<140||d<90)return{label:'Stage 1 high',cls:'fr',lstat:'ls-r',icon:'ti-alert-circle',tc:'var(--danger)',fcls:'fr-r'};
-  return{label:'Stage 2 high',cls:'fr',lstat:'ls-r',icon:'ti-alert-circle',tc:'var(--danger)',fcls:'fr-r'};
-}
-function bpIns(s,d){const c=bpCat(s,d);if(c.label==='Normal')return`<strong>${s}/${d} mmHg — Normal.</strong> A positive sign given your elevated LDL, triglycerides, and prediabetes.<div class="ffixes"><div class="ffix"><span>→</span><span>Keep monitoring — morning readings, same arm, after 5 min rest.</span></div></div>`;if(c.label==='Elevated')return`<strong>${s}/${d} mmHg — Elevated.</strong> Not hypertension yet but a signal to act.<div class="ffixes"><div class="ffix"><span>→</span><span>Reduce sodium under 2,300mg/day.</span></div><div class="ffix"><span>→</span><span>Continue aerobic exercise — one of the most effective BP-lowering interventions.</span></div></div>`;return`<strong>${s}/${d} mmHg — ${c.label} hypertension.</strong> Discuss with Dr. George alongside LDL 128, triglycerides 197, and HbA1c 5.8%.<div class="ffixes"><div class="ffix"><span>→</span><span>Contact Dr. George — medication may be appropriate at this level.</span></div></div>`;}
-window.logBP = function(){
-  const s=parseInt(document.getElementById('bpSys').value),d=parseInt(document.getElementById('bpDia').value),p=parseInt(document.getElementById('bpPls').value)||null;
-  if(!s||!d||s<60||s>220||d<40||d>140)return;
-  bpLog.unshift({id:'bp'+Date.now(),s,d,p,date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})});
-  ['bpSys','bpDia','bpPls'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-  saveBP();renderBP();
-}
-window.removeBP = function(id){bpLog=bpLog.filter(b=>b.id!==id);saveBP();renderBP();}
-
-function renderBP(){
-  const card=document.getElementById('lc-bp'),disp=document.getElementById('bpDisp'),stat=document.getElementById('bpStat'),dateEl=document.getElementById('bpDate'),insRow=document.getElementById('bpInsRow'),insTxt=document.getElementById('bpInsTxt');
-  if(!bpLog.length){card.className='lc fe';disp.textContent='— / —';disp.style.fontSize='16px';disp.style.color='var(--text3)';stat.className='lstat ls-e';stat.innerHTML='<i class="ti ti-plus" style="font-size:9px"></i> Log reading';dateEl.textContent='No readings yet — tap to log';insRow.className='frow fr-e';insRow.querySelector('span').style.color='var(--text3)';insRow.querySelector('span i').className='ti ti-activity';insTxt.innerHTML='<strong>No readings yet.</strong> Log your first reading below.<div class="ffixes"><div class="ffix"><span>→</span><span>Optimal &lt;120/80. Stage 1 hypertension: 130–139/80–89.</span></div><div class="ffix"><span>→</span><span>Best time: morning before eating, after 5 min rest, same arm.</span></div></div>';document.getElementById('bpHist').innerHTML='';return;}
-  const r=bpLog[0],c=bpCat(r.s,r.d);
-  card.className='lc '+c.cls;disp.textContent=r.s+'/'+r.d;disp.style.fontSize='18px';disp.style.color=c.tc;stat.className='lstat '+c.lstat;stat.innerHTML=`<i class="ti ${c.icon}" style="font-size:9px"></i> ${c.label}`;dateEl.textContent=r.date+(r.p?' · '+r.p+'bpm':'');insRow.className='frow '+c.fcls;insRow.querySelector('span').style.color=c.tc;insRow.querySelector('span i').className='ti '+c.icon;insTxt.innerHTML=bpIns(r.s,r.d);
-  const hist=document.getElementById('bpHist');hist.innerHTML=bpLog.length>1?'<p style="font-size:10px;font-weight:600;color:var(--text2);margin:8px 0 5px">History</p>'+bpLog.map(x=>{const cc=bpCat(x.s,x.d);return`<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 0;border-bottom:0.5px solid var(--border);font-size:11px"><span style="color:var(--text3);font-size:10px">${x.date}</span><span style="display:flex;align-items:center;gap:6px"><span style="font-weight:600;color:${cc.tc}">${x.s}/${x.d}</span>${x.p?`<span style="color:var(--text3);font-size:10px">${x.p}bpm</span>`:''}<button class="fdl" onclick="removeBP('${x.id}')"><i class="ti ti-x"></i></button></span></div>`;}).join(''):'';
-}
-
-function calcTotals(){return foods.reduce((a,f)=>({cal:a.cal+f.cal,carbs:a.carbs+f.carbs,protein:a.protein+f.protein,fat:a.fat+f.fat,fiber:a.fiber+f.fiber,sugar:a.sugar+f.sugar,ultra:a.ultra+(f.proc===2?1:0),proc:a.proc+(f.proc>=1?1:0),fl:a.fl+(f.fl||0)}),{cal:0,carbs:0,protein:0,fat:0,fiber:0,sugar:0,ultra:0,proc:0,fl:0});}
-function calcScore(t){if(t.cal===0)return{total:null,f:null,s:null,p:null,pr:null,c:null};const f=Math.min(100,Math.round(t.fiber/TGT.fiber*100));const s=Math.round(Math.max(0,100-Math.max(0,(t.sugar-TGT.sugar)/TGT.sugar*100)));const p=Math.min(100,Math.round(t.protein/TGT.protein*100));const cr=t.cal/CAL,c=Math.round(cr<=1?cr*100:Math.max(0,(2-cr)*100));const pr=Math.round(Math.max(0,Math.max(0,100-t.ultra*25)-(t.proc-t.ultra)*5));return{total:Math.round(f*0.25+s*0.20+p*0.20+pr*0.20+c*0.15),f,s,p,pr,c};}
-function sc(v){if(v===null||v===undefined)return'#8A8880';if(v>=75)return'#1D9E75';if(v>=50)return'#BA7517';return'#A32D2D';}
-function sl(v){if(v===null)return'No data yet';if(v>=75)return'On track';if(v>=50)return'Needs attention';return'Off target';}
-function wLabel(oz){if(oz>=WTGT)return'Hydrated';if(oz>=WTGT*0.66)return'On pace';if(oz>=WTGT*0.25)return'Drink more';if(oz>0)return'Just getting started';return'No fluid logged';}
-function wc(oz){if(oz>=WTGT*0.66)return'#1D9E75';if(oz>=WTGT*0.25)return'#BA7517';return'#A32D2D';}
-
-function updateScoreExplain(sc_,t){
-  const el=document.getElementById('scoreBreakdownRows');
-  if(!el||sc_.total===null){if(el)el.innerHTML='';return;}
-  const rows=[{name:'Fiber (25%)',v:sc_.f,raw:`${t.fiber}g of 38g`,color:'#639922'},{name:'Added sugar (20%)',v:sc_.s,raw:t.sugar<=25?`${t.sugar}g — under limit ✓`:`${t.sugar}g — ${t.sugar-25}g over`,color:'#E24B4A'},{name:'Protein (20%)',v:sc_.p,raw:`${t.protein}g of 140g`,color:'#1D9E75'},{name:'Processing (20%)',v:sc_.pr,raw:`${t.ultra} ultra, ${t.proc-t.ultra} proc`,color:'#D85A30'},{name:'Calories (15%)',v:sc_.c,raw:`${t.cal} of 2,100`,color:'#BA7517'}];
-  el.innerHTML=rows.map(r=>`<div class="se-row"><span class="se-name">${r.name}</span><div class="se-bw"><div class="se-b" style="width:${r.v||0}%;background:${r.color}"></div></div><span class="se-v" style="color:${sc(r.v)}">${r.v!==null?r.v:'—'}</span><span style="font-size:9px;color:var(--text3);flex-shrink:0;margin-left:4px">${r.raw}</span></div>`).join('');
-  const fy=document.getElementById('sei-fiber-you');if(fy){if(sc_.f===100)fy.textContent='Fiber target hit — 38g+ logged. Your LDL and blood sugar are benefiting from every gram.';else if(sc_.f>=50)fy.textContent=`${t.fiber}g of 38g logged — ${38-t.fiber}g to go. Add legumes at lunch or whole grains at dinner.`;else fy.textContent=`Only ${t.fiber}g of 38g logged — ${38-t.fiber}g remaining. A cup of lentils = ~16g. A serving of oats = ~4g. Fiber simultaneously lowers LDL, reduces triglycerides, and blunts blood sugar.`;}
-  const sy=document.getElementById('sei-sugar-you');if(sy){if(t.sugar===0)sy.textContent='Zero added sugar today — the best possible result for HbA1c (5.8%) and triglycerides (197).';else if(t.sugar<=25)sy.textContent=`${t.sugar}g added sugar — within the 25g limit. ${25-t.sugar}g of headroom remaining.`;else sy.textContent=`${t.sugar}g added sugar — ${t.sugar-25}g over the limit. This directly raises triglycerides and spikes blood glucose.`;}
-  const py=document.getElementById('sei-prot-you');if(py){const rem=Math.max(0,140-t.protein);if(t.protein>=140)py.textContent=`Protein target hit — ${t.protein}g logged. Muscle repair well-supported.`;else if(t.protein>=70)py.textContent=`${t.protein}g of 140g — ${rem}g to go. Aim for 40–50g at your next meal.`;else py.textContent=`${t.protein}g of 140g — ${rem}g remaining. Make your next two meals protein-heavy.`;}
-  const pry=document.getElementById('sei-proc-you');if(pry){if(t.ultra===0&&t.proc<=1)pry.textContent='Zero ultra-processed servings today. Ideal for your pre-diabetes and borderline ALT (42).';else if(t.ultra===0)pry.textContent=`${t.proc} processed serving${t.proc!==1?'s':''} but zero ultra-processed — good.`;else pry.textContent=`${t.ultra} ultra-processed serving${t.ultra!==1?'s':''} logged. Each deducts 25 points from this component.`;}
-  const cy=document.getElementById('sei-cal-you');if(cy){const rem=Math.max(0,CAL-t.cal);if(t.cal>=CAL*0.95&&t.cal<=CAL*1.05)cy.textContent=`${t.cal} kcal — right on the 2,100 target.`;else if(t.cal<CAL*0.5)cy.textContent=`${t.cal} kcal — ${rem} kcal remaining. With readiness at 52/100, under-fueling will slow HRV recovery.`;else if(t.cal<CAL)cy.textContent=`${t.cal} kcal — ${rem} kcal remaining. On track.`;else cy.textContent=`${t.cal} kcal — ${t.cal-CAL} over your 2,100 target.`;}
-  const hy=document.getElementById('hyd-explain-you');if(hy){const wman=waterLog.reduce((a,w)=>a+w.oz,0);const t2=calcTotals();const wTot=Math.round((wman+t2.fl)*10)/10;const pct=Math.round(wTot/WTGT*100);if(wTot===0)hy.textContent='No fluid logged yet. Log food and drinks to start auto-crediting fluid.';else hy.textContent=`${wTot} oz logged (${pct}% of 125 oz). ~${Math.round(t2.fl*10)/10} oz auto-credited from food/drinks, ${Math.round(wman*10)/10} oz manually added. You need ${Math.max(0,Math.round((WTGT-wTot)*10)/10)} oz more today.`;}
-}
-
-function renderRecipes(){
-  const rl=document.getElementById('recipeList');
-  if(!recipes.length){rl.innerHTML='<p style="font-size:11px;color:var(--text3);font-style:italic;margin-bottom:.75rem">No saved recipes</p>';return;}
-  rl.innerHTML=recipes.map(r=>`<div class="rcd"><div style="display:flex;align-items:center;justify-content:space-between"><div><div class="rcn"><i class="ti ti-bookmark" style="font-size:11px;margin-right:3px"></i>${r.name}</div>${r.ing?`<div style="font-size:10px;color:var(--text3);margin-top:1px">${r.ing}</div>`:''}</div><div style="display:flex;gap:4px"><button style="font-size:10px;padding:3px 8px" onclick="logRec('${r.id}')">Log</button><button class="fdl" onclick="delRec('${r.id}')"><i class="ti ti-trash"></i></button></div></div><div class="rcm"><span class="rm"><span>${r.cal}</span>kcal</span><span class="rm">P<span>${r.protein}g</span></span><span class="rm">Fi<span>${r.fiber}g</span></span><span class="rm">Su<span>${r.sugar}g</span></span><span class="rm"><i class="ti ti-droplet" style="font-size:10px;color:#378ADD"></i><span>${Math.round(r.fl*10)/10}</span>oz</span><span class="pp pp${r.proc}">${PL[r.proc]}</span></div></div>`).join('');
-}
-
-function render(){
-  const t=calcTotals(),sc_=calcScore(t),s=sc_.total,col=sc(s);
-  const ap=document.getElementById('scoreArcPath');ap.setAttribute('stroke-dashoffset',s!==null?(163.4*(1-s/100)).toFixed(1):'163.4');ap.setAttribute('stroke',s!==null?col:'#D8D6D2');
-  document.getElementById('scoreTxt').textContent=s!==null?s:'—';document.getElementById('scoreTxt').setAttribute('fill',s!==null?col:'#8A8880');
-  document.getElementById('scoreLbl').textContent=sl(s);document.getElementById('scoreLbl').style.color=s!==null?col:'var(--text)';
-  const rem=Math.max(0,CAL-t.cal);
-  document.getElementById('calC').textContent=t.cal.toLocaleString();document.getElementById('calC').style.color=t.cal>CAL?'var(--danger)':'var(--text)';
-  document.getElementById('calR').textContent=rem.toLocaleString();document.getElementById('calR').style.color=rem<200?'var(--warn)':'var(--ok)';
-  [{id:'sc-f',v:sc_.f},{id:'sc-s',v:sc_.s},{id:'sc-p',v:sc_.p},{id:'sc-pr',v:sc_.pr},{id:'sc-c',v:sc_.c}].forEach(x=>{const el=document.getElementById(x.id);if(el){el.textContent=x.v!==null?x.v:'—';el.style.color=sc(x.v);}});
-  [{id:'carb',v:t.carbs,tgt:TGT.carbs,c:'#378ADD'},{id:'prot',v:t.protein,tgt:TGT.protein,c:'#1D9E75'},{id:'fat',v:t.fat,tgt:TGT.fat,c:'#BA7517'},{id:'fib',v:t.fiber,tgt:TGT.fiber,c:'#639922'},{id:'sug',v:t.sugar,tgt:TGT.sugar,c:'#E24B4A'}].forEach(m=>{const pct=Math.min(100,Math.round(m.v/m.tgt*100));const b=document.getElementById(m.id+'Bar');if(b){b.style.width=pct+'%';b.style.background=(m.id==='sug'&&m.v>m.tgt)?'#A32D2D':m.c;}const n=document.getElementById(m.id+'N');if(n)n.textContent=m.v+'/'+m.tgt+'g';});
-  const pb=document.getElementById('procBar');if(pb){pb.style.width=Math.min(100,Math.round(t.ultra/4*100))+'%';pb.style.background=t.ultra>0?'#D85A30':'#1D9E75';}
-  const pn=document.getElementById('procN');if(pn)pn.textContent=t.ultra+' ultra';
-  const wman=waterLog.reduce((a,w)=>a+w.oz,0),wTot=Math.round((wman+t.fl)*10)/10,wLeft=Math.max(0,WTGT-wTot);
-  const wa=document.getElementById('waterArcPath'),wp=Math.min(1,wTot/WTGT);wa.setAttribute('stroke-dashoffset',(163.4*(1-wp)).toFixed(1));wa.setAttribute('stroke',wc(wTot));
-  document.getElementById('waterPctTxt').textContent=Math.round(wp*100)+'%';document.getElementById('waterPctTxt').setAttribute('fill',wc(wTot));
-  document.getElementById('waterLbl').textContent=wLabel(wTot);document.getElementById('waterLbl').style.color=wc(wTot);
-  document.getElementById('wTot').textContent=Math.round(wTot*10)/10;document.getElementById('wTot').style.color=wc(wTot);
-  document.getElementById('wLeft').textContent=Math.round(wLeft*10)/10;
-  document.getElementById('hydTitle').textContent=Math.round(wTot*10)/10+' / '+WTGT+' oz';
-  document.getElementById('wBreak').textContent='Food/drinks: '+Math.round(t.fl*10)/10+' oz · Added: '+Math.round(wman*10)/10+' oz';
-  const hb=document.getElementById('hydBar');if(hb){hb.style.width=Math.min(100,Math.round(wp*100))+'%';hb.style.background=wc(wTot);}
-  const hn=document.getElementById('hydN');if(hn)hn.textContent=Math.round(wTot)+'/'+WTGT+'oz';
-  const fl=document.getElementById('foodList');fl.innerHTML=foods.length?foods.map(f=>`<div class="fi"><span style="display:flex;align-items:center;gap:4px;flex:1;min-width:0"><span class="pp pp${f.proc}">${PL[f.proc]}</span>${f.time?`<span style="font-size:9px;color:var(--text3)">${f.time}</span>`:''}<span style="color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.name}</span>${f.fl>0?`<span style="font-size:9px;color:#378ADD;flex-shrink:0"><i class="ti ti-droplet"></i>${Math.round(f.fl*10)/10}oz</span>`:''}</span><span style="display:flex;align-items:center;gap:5px;flex-shrink:0"><span style="color:var(--text3);font-size:10px">${f.cal}kcal</span><button class="fdl" onclick="removeFood('${f.id}')"><i class="ti ti-x"></i></button></span></div>`).join(''):'<p style="font-size:11px;color:var(--text3);font-style:italic;padding:4px 0">No foods logged</p>';
-  const wlog=document.getElementById('waterLog');wlog.innerHTML=waterLog.length?waterLog.map(w=>`<div class="wli"><span style="display:flex;align-items:center;gap:5px"><i class="ti ti-droplet" style="color:#378ADD;font-size:12px"></i><span style="font-size:9px;color:var(--text3)">${w.time}</span><span style="color:var(--text)">${w.label}</span></span><span style="display:flex;align-items:center;gap:5px"><span style="color:#378ADD;font-weight:600">${Math.round(w.oz*10)/10} oz</span><button class="fdl" onclick="removeWater('${w.id}')"><i class="ti ti-x"></i></button></span></div>`).join(''):'<p style="font-size:10px;color:var(--text3);font-style:italic;padding:3px 0">No water logged yet</p>';
-  if(s!==null)weekScores[3]=s;
-  const ws=weekScores.filter(x=>x!==null),wAvg=ws.length?Math.round(ws.reduce((a,b)=>a+b,0)/ws.length):null;
-  document.getElementById('wkScore').textContent=wAvg!==null?wAvg:'—';document.getElementById('wkScore').style.color=sc(wAvg);
-  document.getElementById('weekBars').innerHTML=DAYS.map((d,i)=>{const sv=weekScores[i],h=sv!==null?Math.max(4,Math.round(sv*0.52)):3,col2=sc(sv),it=i===3;return`<div class="wkd"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:${h}px;background:${col2};border-radius:2px 2px 0 0;opacity:${it?1:0.5}"></div></div><div style="font-size:9px;color:var(--text3);font-weight:${it?600:400}">${d}</div><div style="font-size:9px;font-weight:600;color:${col2}">${sv!==null?sv:'—'}</div></div>`;}).join('');
-  updateScoreExplain(sc_,t);
-}
-
-window.tgl = function(id,triggerEl){const p=document.getElementById(id);if(!p)return;const open=p.classList.contains('vis');if(triggerEl&&triggerEl.classList){open?triggerEl.classList.remove('active'):triggerEl.classList.add('active');}open?p.classList.remove('vis'):p.classList.add('vis');if(!open)setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}
-window.cli = function(id,triggerEl){const p=document.getElementById(id);if(p)p.classList.remove('vis');if(triggerEl&&triggerEl.classList)triggerEl.classList.remove('active');}
-window.tglL = function(panelId,cardId){const p=document.getElementById(panelId),c=document.getElementById(cardId);if(!p)return;const open=p.classList.contains('vis');if(open){p.classList.remove('vis');if(c)c.classList.remove('active');}else{p.classList.add('vis');if(c)c.classList.add('active');setTimeout(()=>p.scrollIntoView({behavior:'smooth',block:'nearest'}),50);}}
-window.cliL = function(panelId,cardId){const p=document.getElementById(panelId);if(p)p.classList.remove('vis');const c=document.getElementById(cardId);if(c)c.classList.remove('active');}
-
-// Init
-loadFromFirebase().then(() => startRealtimeSync());
-
 </script>
 </body>
 </html>
