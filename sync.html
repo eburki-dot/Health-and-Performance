@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Syncing…</title>
+<style>
+body{font-family:-apple-system,sans-serif;background:#F7F6F2;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;padding:20px;box-sizing:border-box}
+.card{background:#fff;border-radius:16px;padding:32px 24px;text-align:center;max-width:320px;width:100%;box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+.icon{font-size:48px;margin-bottom:16px}
+h2{font-size:20px;font-weight:600;color:#1A1916;margin:0 0 8px}
+p{font-size:14px;color:#4A4845;margin:0 0 20px;line-height:1.5}
+.btn{display:block;background:#1A1916;color:#fff;border-radius:10px;padding:14px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;border:none;width:100%}
+.btn.ok{background:#1D9E75}
+.btn.err{background:#A32D2D}
+.spinner{width:32px;height:32px;border:3px solid #E4E2DE;border-top-color:#1A1916;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="spinner" id="spinner"></div>
+  <h2 id="title">Syncing your data…</h2>
+  <p id="msg">Sending to your health dashboard</p>
+</div>
+<script>
+const WORKER = 'https://health-sync.eburki.workers.dev';
+const SECRET = 'health-dashboard-secret-2026';
+const DASHBOARD = 'https://emaadburki.github.io/Health-and-Performance/dashboard.html';
+
+async function sync() {
+  try {
+    // Get data from URL
+    const params = new URLSearchParams(window.location.search);
+    const encoded = params.get('d');
+    if (!encoded) throw new Error('No data provided');
+    
+    const payload = JSON.parse(decodeURIComponent(atob(encoded)));
+    
+    const resp = await fetch(WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Secret': SECRET },
+      body: JSON.stringify(payload)
+    });
+    
+    const result = await resp.json();
+    
+    if (result.success) {
+      document.getElementById('spinner').style.display = 'none';
+      document.getElementById('card').innerHTML = `
+        <div class="icon">✅</div>
+        <h2>Dashboard updated!</h2>
+        <p>Your Alma nutrition data has been synced successfully.</p>
+        <a href="${DASHBOARD}" class="btn ok">Open Dashboard</a>
+      `;
+    } else {
+      throw new Error('Worker returned failure');
+    }
+  } catch(e) {
+    document.getElementById('spinner').style.display = 'none';
+    document.getElementById('card').innerHTML = `
+      <div class="icon">❌</div>
+      <h2>Sync failed</h2>
+      <p>${e.message}</p>
+      <a href="${DASHBOARD}" class="btn err">Go to Dashboard</a>
+    `;
+  }
+}
+
+sync();
+</script>
+</body>
+</html>
