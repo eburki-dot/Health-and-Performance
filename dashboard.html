@@ -320,19 +320,9 @@ button:hover{opacity:.85}
 <div class="xp" id="mSugP"><button class="xbtn" onclick="cli('mSugP')"><i class="ti ti-x"></i></button><p class="xp-title">Added sugar — 0g</p><span class="bdg bok">Perfect</span><p class="xp-you">True added sugar today is 0g. The 22g showing in the food log total is natural sugars from banana (14g fructose/glucose) and plain Fage yogurt (8g lactose) — neither contains added sugar. Zero added sugar days are your most powerful lever for HbA1c (5.8%) and triglycerides (197).</p></div>
 
 <!-- Food log -->
-<p class="sl" style="margin-top:.25rem">Today's food log <span class="src">Jun 4</span></p>
-<div class="card" style="margin-bottom:.875rem">
-  <div class="meal-hdr"><i class="ti ti-sun" style="font-size:9px"></i> Morning</div>
-  <div class="food-row"><span>TL Whey + almond milk + flaxseed</span><span style="color:var(--text3);font-size:10px">240 kcal · P31.5g · Fi3.8g</span></div>
-  <div class="food-row"><span>Coffee with splash milk (×2)</span><span style="color:var(--text3);font-size:10px">30 kcal · P1.6g</span></div>
-  <div class="meal-hdr"><i class="ti ti-sun-high" style="font-size:9px"></i> Afternoon</div>
-  <div class="food-row"><span>2 boiled eggs</span><span style="color:var(--text3);font-size:10px">155 kcal · P12.6g</span></div>
-  <div class="food-row"><span>Carb smart tortilla + 3oz grilled chicken</span><span style="color:var(--text3);font-size:10px">200 kcal · P29g · Fi5g</span></div>
-  <div class="food-row"><span>Banana (medium)</span><span style="color:var(--text3);font-size:10px">105 kcal · C27g · Fi3.1g</span></div>
-  <div class="food-row"><span>Fage 2% + 0.2 scoop TL Whey</span><span style="color:var(--text3);font-size:10px">146 kcal · P22.6g</span></div>
-  <div style="display:flex;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:0.5px solid var(--border);font-size:11px;font-weight:600">
-    <span>Total</span><span>876 kcal · P98.6g · C54.2g · F28.4g · Fi12.4g</span>
-  </div>
+<p class="sl" style="margin-top:.25rem">Today's food log <span class="src" id="foodLogSrc">live · Firebase</span></p>
+<div class="card" style="margin-bottom:.875rem;min-height:60px" id="foodLogCard">
+  <div style="font-size:11px;color:var(--text3);padding:4px 0;font-style:italic" id="foodLogEmpty">Loading…</div>
 </div>
 
 <!-- ══════════════════════════════════════
@@ -407,6 +397,132 @@ button:hover{opacity:.85}
   <button onclick="window.open('https://claude.ai','_blank')" style="width:100%;font-size:12px;background:var(--info)">Open Claude to sync · say "sync my dashboard" ↗</button>
 </div>
 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDaMbdMQ7UG7PFmjeVtK8F3q0tEG8sTPLA",
+  authDomain: "health-dashboard-6519b.firebaseapp.com",
+  projectId: "health-dashboard-6519b",
+  storageBucket: "health-dashboard-6519b.firebasestorage.app",
+  messagingSenderId: "267619259387",
+  appId: "1:267619259387:web:81209e39142f649499715e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const CAL_TGT = 2155, PROT_TGT = 127, CARB_TGT = 235, FAT_TGT = 78, FIB_TGT = 38, SAT_TGT = 20;
+
+function today() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
+function sc(v) {
+  if (v===null||v===undefined) return '#8A8880';
+  if (v>=75) return '#1D9E75';
+  if (v>=50) return '#BA7517';
+  return '#A32D2D';
+}
+
+function renderFoodLog(foods) {
+  const card = document.getElementById('foodLogCard');
+  const src = document.getElementById('foodLogSrc');
+  if (!foods || !foods.length) {
+    card.innerHTML = '<div style="font-size:11px;color:var(--text3);padding:4px 0;font-style:italic">No food logged yet today. Tell Claude what you ate to add items.</div>';
+    src.textContent = 'live · Firebase';
+    return;
+  }
+
+  // Group by time buckets
+  let rows = foods.map(f => `
+    <div class="food-row">
+      <span style="display:flex;align-items:center;gap:5px;flex:1;min-width:0">
+        ${f.time ? `<span style="font-size:9px;color:var(--text3);flex-shrink:0">${f.time}</span>` : ''}
+        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.name}</span>
+      </span>
+      <span style="color:var(--text3);font-size:10px;flex-shrink:0;margin-left:6px">${f.cal} kcal · P${Math.round(f.protein||0)}g${f.fiber ? ' · Fi'+Math.round(f.fiber)+'g' : ''}</span>
+    </div>
+  `).join('');
+
+  // Totals
+  const totals = foods.reduce((a, f) => ({
+    cal: a.cal + (f.cal||0),
+    protein: a.protein + (f.protein||0),
+    carbs: a.carbs + (f.carbs||0),
+    fat: a.fat + (f.fat||0),
+    fiber: a.fiber + (f.fiber||0),
+    sat_fat: a.sat_fat + (f.sat_fat||0),
+    added_sugar: a.added_sugar + (f.added_sugar||0)
+  }), {cal:0,protein:0,carbs:0,fat:0,fiber:0,sat_fat:0,added_sugar:0});
+
+  card.innerHTML = rows + `
+    <div style="display:flex;justify-content:space-between;padding-top:8px;margin-top:4px;border-top:0.5px solid var(--border);font-size:11px;font-weight:600">
+      <span>Total (${foods.length} items)</span>
+      <span>${Math.round(totals.cal)} kcal · P${Math.round(totals.protein)}g · Fi${Math.round(totals.fiber)}g</span>
+    </div>
+  `;
+
+  // Update macro bars dynamically
+  updateMacroBars(totals);
+
+  // Update calorie remaining
+  const remaining = Math.max(0, CAL_TGT - totals.cal + 321); // +321 workout credit
+  const calRem = document.querySelector('.rring');
+
+  src.textContent = `live · ${foods.length} items · ${Math.round(totals.cal)} kcal`;
+}
+
+function updateMacroBars(t) {
+  const bars = [
+    {id:'mCalP', bar:null, num:null, v:t.cal, tgt:CAL_TGT, label:'Calories', fmt:`${Math.round(t.cal)}/2,155`},
+    {id:'mProtP', v:t.protein, tgt:PROT_TGT, fmt:`${Math.round(t.protein)}/127g`},
+    {id:'mCarbP', v:t.carbs, tgt:CARB_TGT, fmt:`${Math.round(t.carbs)}/235g`},
+    {id:'mFatP', v:t.fat, tgt:FAT_TGT, fmt:`${Math.round(t.fat)}/78g`},
+    {id:'mFibP', v:t.fiber, tgt:FIB_TGT, fmt:`${Math.round(t.fiber)}/38g`},
+    {id:'mSatP', v:t.sat_fat, tgt:SAT_TGT, fmt:`${Math.round(t.sat_fat)}/20g`},
+  ];
+
+  // Update the macro bar widths and numbers
+  const mrows = document.querySelectorAll('.mrow');
+  // We target by position — cal=1, protein=2, carbs=3, fat=4, fiber=5, sat=6, sugar=7
+  const targets = [
+    {pct: Math.min(100,Math.round(t.cal/CAL_TGT*100)), num: `${Math.round(t.cal)}/2,155`},
+    {pct: Math.min(100,Math.round(t.protein/PROT_TGT*100)), num: `${Math.round(t.protein)}/127g`},
+    {pct: Math.min(100,Math.round(t.carbs/CARB_TGT*100)), num: `${Math.round(t.carbs)}/235g`},
+    {pct: Math.min(100,Math.round(t.fat/FAT_TGT*100)), num: `${Math.round(t.fat)}/78g`},
+    {pct: Math.min(100,Math.round(t.fiber/FIB_TGT*100)), num: `${Math.round(t.fiber)}/38g`},
+    {pct: Math.min(100,Math.round(t.sat_fat/SAT_TGT*100)), num: `${Math.round(t.sat_fat)}/20g`},
+    {pct: Math.min(100,Math.round((t.added_sugar||0)/25*100)), num: `${Math.round(t.added_sugar||0)}g added`},
+  ];
+
+  mrows.forEach((row, i) => {
+    if (i >= targets.length) return;
+    const bar = row.querySelector('.mbar');
+    const num = row.querySelector('.mnum');
+    if (bar) bar.style.width = targets[i].pct + '%';
+    if (num) num.textContent = targets[i].num;
+  });
+
+  // Update calorie budget card
+  const remaining = Math.max(0, CAL_TGT + 321 - t.cal);
+  const remEl = document.querySelector('.card .\\ok');
+}
+
+// Real-time listener
+onSnapshot(doc(db, 'users', 'emaad', 'days', today()), (snap) => {
+  if (snap.exists()) {
+    const data = snap.data();
+    const foods = data.foods || [];
+    renderFoodLog(foods);
+  } else {
+    renderFoodLog([]);
+  }
+});
+
+</script>
 <script>
 function toggleAssess(id) {
   const card = document.getElementById(id);

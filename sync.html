@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Syncing…</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,sans-serif;background:#F7F6F2;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.card{background:#fff;border-radius:16px;padding:28px 22px;text-align:center;max-width:340px;width:100%;box-shadow:0 2px 20px rgba(0,0,0,0.08)}
+.icon{font-size:44px;margin-bottom:14px}
+h2{font-size:18px;font-weight:600;color:#1A1916;margin:0 0 8px}
+p{font-size:13px;color:#4A4845;margin:0 0 18px;line-height:1.5}
+.btn{display:block;border-radius:10px;padding:13px;font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;border:none;width:100%;margin-bottom:8px}
+.btn-ok{background:#1D9E75;color:#fff}
+.btn-dash{background:#1A1916;color:#fff}
+.btn-err{background:#A32D2D;color:#fff}
+.spinner{width:36px;height:36px;border:3px solid #E4E2DE;border-top-color:#1A1916;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.detail{font-size:11px;color:#8A8880;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="spinner" id="spinner"></div>
+  <h2 id="title">Syncing…</h2>
+  <p id="msg">Sending to your health dashboard</p>
+</div>
+<script>
+const WORKER = 'https://health-sync.eburki.workers.dev';
+const SECRET = 'health-dashboard-secret-2026';
+const DASHBOARD = 'https://emaadburki.github.io/Health-and-Performance/dashboard.html';
+
+async function sync() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const encoded = params.get('d');
+    if (!encoded) throw new Error('No data in URL');
+
+    const payload = JSON.parse(atob(decodeURIComponent(encoded)));
+    const { type, date, data, mode } = payload;
+
+    document.getElementById('title').textContent = mode === 'add' ? 'Adding food…' : 'Syncing dashboard…';
+
+    // If mode is 'add', merge with existing day data first
+    if (mode === 'add') {
+      await mergeAndSave(type, date, data);
+    } else {
+      await writeToWorker({ type, date, data });
+    }
+
+    document.getElementById('card').innerHTML = `
+      <div class="icon">✅</div>
+      <h2>Synced!</h2>
+      <p>${mode === 'add' ? 'Food added to your log.' : 'Dashboard updated with latest data.'}</p>
+      <a href="${DASHBOARD}" class="btn btn-dash">Open Dashboard</a>
+      <div class="detail">Data saved to Firebase · dashboard updates automatically</div>
+    `;
+  } catch(e) {
+    document.getElementById('card').innerHTML = `
+      <div class="icon">❌</div>
+      <h2>Sync failed</h2>
+      <p>${e.message}</p>
+      <a href="${DASHBOARD}" class="btn btn-err">Go to Dashboard</a>
+    `;
+  }
+}
+
+async function writeToWorker(payload) {
+  const resp = await fetch(WORKER, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Secret': SECRET },
+    body: JSON.stringify(payload)
+  });
+  const result = await resp.json();
+  if (!result.success) throw new Error('Worker returned failure: ' + JSON.stringify(result));
+  return result;
+}
+
+async function mergeAndSave(type, date, newData) {
+  // For food additions, we need to read existing day data from Firebase first
+  // We do this via the Firebase REST API directly from the browser
+  const PROJECT_ID = 'health-dashboard-6519b';
+  const API_KEY = 'AIzaSyDaMbdMQ7UG7PFmjeVtK8F3q0tEG8sTPLA';
+  const USER_ID = 'emaad';
+
+  // Try to get existing day document
+  let existing = { foods: [], waterLog: [], weekScores: [null,null,null,null,null,null,null] };
+  try {
+    const getUrl = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/${USER_ID}/days/${date}?key=${API_KEY}`;
+    const getResp = await fetch(getUrl);
+    if (getResp.ok) {
+      const doc = await getResp.json();
+      if (doc.fields) {
+        existing = fromFirestore(doc.fields);
+      }
+    }
+  } catch(e) {
+    // No existing doc — start fresh
+  }
+
+  // Merge new foods into existing
+  if (newData.foods) {
+    existing.foods = [...(existing.foods || []), ...newData.foods];
+  }
+  if (newData.waterLog) {
+    existing.waterLog = [...(existing.waterLog || []), ...newData.waterLog];
+  }
+  // Merge other fields
+  const merged = { ...existing, ...newData, foods: existing.foods, waterLog: existing.waterLog };
+
+  await writeToWorker({ type, date, data: merged });
+}
+
+function fromFirestore(fields) {
+  const result = {};
+  for (const [k, v] of Object.entries(fields)) {
+    result[k] = parseValue(v);
+  }
+  return result;
+}
+
+function parseValue(v) {
+  if (v.stringValue !== undefined) return v.stringValue;
+  if (v.doubleValue !== undefined) return v.doubleValue;
+  if (v.integerValue !== undefined) return parseInt(v.integerValue);
+  if (v.booleanValue !== undefined) return v.booleanValue;
+  if (v.nullValue !== undefined) return null;
+  if (v.arrayValue) return (v.arrayValue.values || []).map(parseValue);
+  if (v.mapValue) return fromFirestore(v.mapValue.fields || {});
+  return null;
+}
+
+sync();
+</script>
+</body>
+</html>
