@@ -129,16 +129,7 @@ button:hover{opacity:.85}
     </div>
     <i class="ti ti-chevron-down assess-chevron"></i>
   </div>
-  <div class="assess-body-wrap">
-    <p class="assess-body"><strong>Strong day overall.</strong> 1,480 kcal consumed with 996 kcal remaining after 321 kcal workout credit. Protein target crushed at 145g (target 127g). Zero added sugar all day — excellent for HbA1c 5.8% and triglycerides 197.</p>
-    <div class="assess-bullets">
-      <div class="assess-bullet"><span>→</span><span><strong>Fiber: 18.2g of 30g.</strong> Short by 11.8g. Broccoli (3g) and dumplings (1.2g) helped. Tomorrow add lentils or oats to close the gap — fiber is your most direct lever for LDL (128).</span></div>
-      <div class="assess-bullet"><span>→</span><span><strong>Vegetables:</strong> Broccoli 4oz counted — good. For your LDL and blood sugar goals, aim for 2–3 vegetable servings daily.</span></div>
-      <div class="assess-bullet"><span>→</span><span><strong>Omega-3s:</strong> Flaxseed ALA daily + haddock tonight. Excellent combination — directly targets triglycerides (197). Continue oily fish 2–3x/week.</span></div>
-      <div class="assess-bullet"><span>→</span><span><strong>Calories:</strong> 1,480 kcal is slightly under target on a training day. With Ultra in 16 days and readiness at 52/100, eating at or slightly above target tomorrow supports HRV recovery.</span></div>
-      <div class="assess-bullet"><span>→</span><span><strong>For HbA1c 5.8%:</strong> Zero added sugar today is your best daily lever. Walk 10–15 min after your next meal to reduce post-meal glucose 20–30%.</span></div>
-    </div>
-  </div>
+  <div class="assess-body-wrap"></div>
 </div>
 
 <div class="assess-card amber" id="ac2">
@@ -263,14 +254,14 @@ button:hover{opacity:.85}
   <div style="flex:1">
     <div id="nutLabel" style="font-size:15px;font-weight:600;color:#1D9E75">On track</div>
     <div id="nutCalLine" style="font-size:11px;color:var(--text2);margin-top:2px">1,480 kcal · 996 remaining</div>
-    <div id="nutScoreLine" style="font-size:10px;color:var(--text3);margin-top:2px">+321 kcal workout · score 75/100</div>
+
   </div>
   <div style="text-align:center;flex-shrink:0">
     <div style="font-size:9px;color:var(--text3);margin-bottom:1px">7-day</div>
     <div style="font-size:15px;font-weight:600;color:var(--text3)">75</div>
   </div>
 </div>
-<div class="xp" id="nutPanel"><button class="xbtn" onclick="cli('nutPanel',document.getElementById('nutCard'))"><i class="ti ti-x"></i></button><p class="xp-title">Nutrition score — 75/100</p><span class="bdg bok">On track</span><p class="xp-body">Score: fiber in grams (25%), added sugar in grams (20%), protein vs target (20%), food quality (20%), calories vs target (15%).</p><p class="xp-you">Strong day: 145g protein (target 127g), 0g added sugar, 18.2g fiber (target 30g), oily fish + flaxseed for omega-3s, broccoli as a vegetable. Fiber is the main gap — 11.8g short of 30g target.</p></div>
+<div class="xp" id="nutPanel"><button class="xbtn" onclick="cli('nutPanel',document.getElementById('nutCard'))"><i class="ti ti-x"></i></button><p class="xp-title">Nutrition score — 75/100</p><span class="bdg bok">On track</span><p class="xp-body">Score: fiber in grams (25%), added sugar in grams (20%), protein vs target (20%), food quality (20%), calories vs target (15%).</p></div>
 
 <div class="card" style="margin-bottom:.875rem">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
@@ -286,7 +277,7 @@ button:hover{opacity:.85}
 
 <p style="font-size:10px;color:var(--text3);margin:0 0 8px"><i class="ti ti-info-circle"></i> Tap name for context · updates live as you add food</p>
 <div class="mrow"><span class="mname" onclick="tgl('mCalP')">Calories</span><div class="mtrack"><div class="mbar" style="width:69%;background:#378ADD"></div></div><span class="mnum">1480/2,155</span></div>
-<div class="xp" id="mCalP"><button class="xbtn" onclick="cli('mCalP')"><i class="ti ti-x"></i></button><p class="xp-title">Calories — 1,480 of 2,155</p><span class="bdg bwn">69%</span><p class="xp-you">996 kcal remaining after workout credit. Slightly under target on a training day — eating at or above target tomorrow supports HRV recovery.</p></div>
+<div class="xp" id="mCalP"><button class="xbtn" onclick="cli('mCalP')"><i class="ti ti-x"></i></button><p class="xp-title">Calories — 1,480 of 2,155</p><span class="bdg bwn">69%</span></div>
 
 <div class="mrow"><span class="mname" onclick="tgl('mProtP')">Protein</span><div class="mtrack"><div class="mbar" style="width:100%;background:#1D9E75"></div></div><span class="mnum ok">145/127g ✅</span></div>
 <div class="xp" id="mProtP"><button class="xbtn" onclick="cli('mProtP')"><i class="ti ti-x"></i></button><p class="xp-title">Protein — 145g (target 127g)</p><span class="bdg bok">Target exceeded ✅</span><p class="xp-you">Excellent — 145g exceeds your 127g target. Critical for muscle repair post-intervals and with low-normal testosterone (414 ng/dL). Keep this up daily.</p></div>
@@ -305,6 +296,10 @@ button:hover{opacity:.85}
 
 <div class="mrow"><span class="mname ok" onclick="tgl('mSugP')">Added sugar</span><div class="mtrack"><div class="mbar" style="width:0%;background:#1D9E75"></div></div><span class="mnum ok">0g ✅</span></div>
 <div class="xp" id="mSugP"><button class="xbtn" onclick="cli('mSugP')"><i class="ti ti-x"></i></button><p class="xp-title">Added sugar — 0g</p><span class="bdg bok">Perfect ✅</span><p class="xp-you">Zero added sugar today. Natural sugars from banana and plain Fage yogurt (lactose) are not added sugar. This is your most powerful daily lever for HbA1c (5.8%) and triglycerides (197). Every zero-added-sugar day is a direct investment in your next labs.</p></div>
+
+<div style="height:0.5px;background:var(--border);margin:10px 0 10px"></div>
+<div class="mrow" id="waterRow"><span class="mname" onclick="tgl('mWaterP')" style="color:var(--info)"><i class="ti ti-droplet" style="font-size:11px;margin-right:2px"></i>Water</span><div class="mtrack"><div class="mbar" id="waterBar" style="width:0%;background:#378ADD"></div></div><span class="mnum" id="waterNum" style="color:var(--text3)">0/125oz</span></div>
+<div class="xp" id="mWaterP"><button class="xbtn" onclick="cli('mWaterP')"><i class="ti ti-x"></i></button><p class="xp-title" id="mWaterTitle">Water — 0 of 125oz</p><span class="bdg bwn" id="mWaterBadge">0%</span><p class="xp-you" id="mWaterDetail">Includes direct water + credits from coffee, tea, soup, and other hydrating foods.</p></div>
 
 <!-- FOOD LOG — live Firebase -->
 <p class="sl" style="margin-top:.25rem">Today's food log <span class="src" id="foodLogSrc">live · Firebase</span></p>
@@ -402,7 +397,20 @@ const app = initializeApp({
 });
 const db = getFirestore(app);
 
-const CAL_TGT=2155, PROT_TGT=127, CARB_TGT=235, FAT_TGT=78, FIB_TGT=30, SAT_TGT=20, WORKOUT_CAL=321;
+const CAL_TGT=2155, PROT_TGT=127, CARB_TGT=235, FAT_TGT=78, FIB_TGT=30, SAT_TGT=20, WATER_TGT=125;
+
+function foodWaterCredit(name){
+  const n=(name||'').toLowerCase();
+  if(/\bcoffee\b/.test(n)) return 8;
+  if(/\btea\b/.test(n)) return 8;
+  if(/\bespresso\b/.test(n)) return 2;
+  if(/\blatte\b|\bcappuccino\b|\bamericano\b/.test(n)) return 8;
+  if(/\bsoup\b|\bbroth\b|\bstew\b/.test(n)) return 12;
+  if(/\bsmoothie\b|\bjuice\b|\bmilk\b/.test(n)) return 8;
+  if(/\byogurt\b/.test(n)) return 3;
+  if(/\boatmeal\b|\bporridge\b/.test(n)) return 6;
+  return 0;
+}
 
 function today(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
 
@@ -417,7 +425,24 @@ function calcScore(t){
 
 function col(s){return s>=75?'#1D9E75':s>=50?'#BA7517':'#A32D2D';}
 
-function updateAll(foods){
+function updateAll(foods, water_oz){
+  // Water: direct logged oz + auto-credits from food names
+  water_oz = water_oz || 0;
+  const foodWater = (foods||[]).reduce((s,f)=>s+foodWaterCredit(f.name),0);
+  const totalWater = Math.round(water_oz + foodWater);
+  const waterPct = Math.min(100, Math.round(totalWater/WATER_TGT*100));
+  const waterBar = document.getElementById('waterBar');
+  const waterNum = document.getElementById('waterNum');
+  const waterTitle = document.getElementById('mWaterTitle');
+  const waterBadge = document.getElementById('mWaterBadge');
+  const waterDetail = document.getElementById('mWaterDetail');
+  if(waterBar){waterBar.style.width=waterPct+'%';waterBar.style.background=waterPct>=100?'#1D9E75':waterPct>=60?'#378ADD':'#BA7517';}
+  if(waterNum){waterNum.textContent=totalWater+'/125oz'+(waterPct>=100?' ✅':'');waterNum.style.color=waterPct>=100?'var(--ok)':waterPct>=60?'var(--info)':'var(--text3)';}
+  if(waterTitle) waterTitle.textContent='Water — '+totalWater+' of 125oz';
+  if(waterBadge) waterBadge.textContent=waterPct+'%';
+  if(waterDetail && foodWater>0) waterDetail.textContent='Direct: '+water_oz+'oz logged · Food credits: '+foodWater+'oz (coffee, tea, etc.) · Total: '+totalWater+'oz of 125oz target.';
+  else if(waterDetail) waterDetail.textContent='No food credits yet. Auto-credits include: coffee +8oz, tea +8oz, soup +12oz, smoothie/juice/milk +8oz.';
+
   if(!foods||!foods.length){
     document.getElementById('foodLogCard').innerHTML='<div style="font-size:11px;color:var(--text3);padding:4px 0;font-style:italic">No food logged yet. Tell Claude what you ate to add items.</div>';
     document.getElementById('foodLogSrc').textContent='live · Firebase';
@@ -431,7 +456,7 @@ function updateAll(foods){
     added_sugar:a.added_sugar+(f.added_sugar||0)
   }),{cal:0,protein:0,carbs:0,fat:0,fiber:0,sat_fat:0,added_sugar:0});
 
-  const remaining=Math.max(0,CAL_TGT-t.cal+WORKOUT_CAL);
+  const remaining=Math.max(0,CAL_TGT-t.cal);
   const score=calcScore(t);
   const c=col(score);
 
@@ -446,8 +471,7 @@ function updateAll(foods){
   if(nl){nl.textContent=score>=75?'On track':score>=50?'Needs attention':'Off target';nl.style.color=c;}
   const nc=document.getElementById('nutCalLine');
   if(nc)nc.textContent=`${Math.round(t.cal)} kcal · ${Math.round(remaining)} remaining`;
-  const ns=document.getElementById('nutScoreLine');
-  if(ns)ns.textContent=`+${WORKOUT_CAL} kcal workout · score ${score}/100`;
+
 
   // Calorie budget
   const cc=document.getElementById('calConsumed');
@@ -503,7 +527,8 @@ function updateAll(foods){
 }
 
 onSnapshot(doc(db,'users','emaad','days',today()),(snap)=>{
-  updateAll(snap.exists()?snap.data().foods||[]:[]);
+  const data=snap.exists()?snap.data():{};
+  updateAll(data.foods||[], data.water_oz||0);
 });
 
 onSnapshot(doc(db,'users','emaad','meta','fitness'),(snap)=>{
