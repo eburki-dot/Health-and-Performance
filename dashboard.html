@@ -121,19 +121,7 @@ button:hover{opacity:.85}
 <div class="sync-bar"><span class="sync-dot"></span>Runalyze + Claude nutrition · Food log live from Firebase · Say "sync my dashboard" in Claude to refresh</div>
 
 <!-- ASK CLAUDE -->
-<p class="sl">Ask Claude <span class="src">tap to copy prompt</span></p>
 <div class="race-chip"><i class="ti ti-flag" style="font-size:10px"></i> Ultra Marathon — 15 days · Jun 20 · C race</div>
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
-  <button class="claude-prompt-btn" onclick="copyPrompt(this,'How is my nutrition looking today? Review my food log, macros, fiber, added sugar, and water intake against my targets.')">
-    <i class="ti ti-apple" style="font-size:14px;margin-bottom:4px;display:block"></i>
-    Nutrition today
-  </button>
-  <button class="claude-prompt-btn" onclick="copyPrompt(this,'What should I eat for my next meal? Consider my remaining macro targets for today and my pre-diabetes and cholesterol goals.')">
-    <i class="ti ti-chef-hat" style="font-size:14px;margin-bottom:4px;display:block"></i>
-    What to eat next
-  </button>
-</div>
 
 <div class="assess-card amber" id="ac2">
   <div class="assess-header" onclick="toggleAssess('ac2')">
@@ -235,6 +223,17 @@ button:hover{opacity:.85}
 <hr class="divider"/>
 <!-- NUTRITION -->
 <p class="sl">Nutrition <span class="src">Claude calc · live Firebase</span></p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+  <button class="claude-prompt-btn" onclick="copyPrompt(this,'How is my nutrition looking today? Review my food log, macros, fiber, added sugar, and water intake against my targets.')">
+    <i class="ti ti-apple" style="font-size:14px;margin-bottom:4px;display:block"></i>
+    Nutrition today
+  </button>
+  <button class="claude-prompt-btn" onclick="copyPrompt(this,'What should I eat for my next meal? Consider my remaining macro targets for today and my pre-diabetes and cholesterol goals.')">
+    <i class="ti ti-chef-hat" style="font-size:14px;margin-bottom:4px;display:block"></i>
+    What to eat next
+  </button>
+</div>
+
 <div class="rring tap" id="nutCard" onclick="tgl('nutPanel',this)">
   <svg width="60" height="60" viewBox="0 0 60 60">
     <circle cx="30" cy="30" r="25" fill="none" stroke="#E4E2DE" stroke-width="5"/>
