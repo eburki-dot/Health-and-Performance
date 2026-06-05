@@ -629,7 +629,7 @@ function updateFitness(f){
   set('rdPanelText','HRV '+(hrv||'—')+'ms '+(hrv>=hrvBaseline?'above':'below')+' your '+hrvBaseline.toFixed(0)+'ms baseline. RHR '+(rhr||'—')+'bpm. Sleep '+(sleepTotal||'—')+'min total, '+(deepSleep||'—')+'min deep. '+(score>=50?'On track for training.':'Recovery priority today.'));
 
   // Sync label
-  if(f.syncDate){const d=document.querySelector(\'.sl .src\');if(d&&d.textContent.includes(\'live\'))d.textContent='Runalyze · '+f.syncDate;}
+  if(f.syncDate){const d=document.querySelector('.sl .src');if(d&&d.textContent.includes('live'))d.textContent='Runalyze · '+f.syncDate;}
 }
 </script>
 <script>
