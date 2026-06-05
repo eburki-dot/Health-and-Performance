@@ -30,6 +30,9 @@ p{font-size:13px;color:#4A4845;margin:0 0 18px;line-height:1.5}
 const WORKER = 'https://health-sync.eburki.workers.dev';
 const SECRET = 'health-dashboard-secret-2026';
 const DASHBOARD = 'https://eburki-dot.github.io/Health-and-Performance/dashboard.html';
+const PROJECT_ID = 'health-dashboard-6519b';
+const API_KEY = 'AIzaSyDaMbdMQ7UG7PFmjeVtK8F3q0tEG8sTPLA';
+const USER_ID = 'emaad';
 
 async function sync() {
   try {
@@ -40,9 +43,10 @@ async function sync() {
     const payload = JSON.parse(atob(decodeURIComponent(encoded)));
     const { type, date, data, mode } = payload;
 
-    document.getElementById('title').textContent = type === 'fitness' ? 'Syncing fitness…' : mode === 'add' ? 'Adding food…' : 'Syncing dashboard…';
+    document.getElementById('title').textContent =
+      type === 'fitness' ? 'Syncing fitness…' :
+      mode === 'add' ? 'Adding to log…' : 'Syncing dashboard…';
 
-    // Fitness data writes through Worker
     if (type === 'fitness') {
       await writeToWorker({ type: 'fitness', date: date || 'meta', data });
     } else if (mode === 'add') {
@@ -51,10 +55,11 @@ async function sync() {
       await writeToWorker({ type, date, data });
     }
 
+    const isWater = data && data.water_oz && !data.foods;
     document.getElementById('card').innerHTML = `
       <div class="icon">✅</div>
       <h2>Synced!</h2>
-      <p>${type === 'fitness' ? 'Fitness metrics updated on dashboard.' : mode === 'add' ? 'Food added to your log.' : 'Dashboard updated with latest data.'}</p>
+      <p>${type === 'fitness' ? 'Fitness metrics updated.' : isWater ? 'Water logged on dashboard.' : mode === 'add' ? 'Food added to your log.' : 'Dashboard updated.'}</p>
       <a href="${DASHBOARD}" class="btn btn-dash">Open Dashboard</a>
       <div class="detail">Data saved to Firebase · dashboard updates automatically</div>
     `;
@@ -68,37 +73,37 @@ async function sync() {
   }
 }
 
-async function writeFitnessToFirestore(data) {
-  const PROJECT_ID = 'health-dashboard-6519b';
-  const API_KEY = 'AIzaSyDaMbdMQ7UG7PFmjeVtK8F3q0tEG8sTPLA';
-  const USER_ID = 'emaad';
-  const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/${USER_ID}/meta/fitness?key=${API_KEY}`;
+async function getExistingDay(date) {
+  try {
+    const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/${USER_ID}/days/${date}?key=${API_KEY}`;
+    const resp = await fetch(url);
+    if (resp.ok) {
+      const doc = await resp.json();
+      if (doc.fields) return fromFirestore(doc.fields);
+    }
+  } catch(e) {}
+  return { foods: [], water_oz: 0 };
+}
 
-  function toFirestoreValue(v) {
-    if (v === null || v === undefined) return { nullValue: null };
-    if (typeof v === 'boolean') return { booleanValue: v };
-    if (typeof v === 'number') return Number.isInteger(v) ? { integerValue: String(v) } : { doubleValue: v };
-    if (typeof v === 'string') return { stringValue: v };
-    if (Array.isArray(v)) return { arrayValue: { values: v.map(toFirestoreValue) } };
-    if (typeof v === 'object') return { mapValue: { fields: Object.fromEntries(Object.entries(v).map(([k,val]) => [k, toFirestoreValue(val)])) } };
-    return { stringValue: String(v) };
+async function mergeAndSave(type, date, newData) {
+  const existing = await getExistingDay(date);
+
+  // Merge foods (append)
+  if (newData.foods) {
+    existing.foods = [...(existing.foods || []), ...newData.foods];
   }
 
-  const fields = Object.fromEntries(Object.entries(data).map(([k, v]) => [k, toFirestoreValue(v)]));
-  const resp = await fetch(url, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fields })
-  });
-  const responseText = await resp.text();
-  if (!resp.ok) {
-    throw new Error('Firestore error ' + resp.status + ': ' + responseText);
+  // Merge water_oz (additive)
+  if (newData.water_oz) {
+    existing.water_oz = (existing.water_oz || 0) + newData.water_oz;
   }
-  // Also verify the response looks right
-  const result = JSON.parse(responseText);
-  if (!result.name) {
-    throw new Error('Unexpected Firestore response: ' + responseText);
-  }
+
+  // Merge any other scalar fields
+  const merged = { ...existing };
+  if (newData.foods) merged.foods = existing.foods;
+  if (newData.water_oz) merged.water_oz = existing.water_oz;
+
+  await writeToWorker({ type, date, data: merged });
 }
 
 async function writeToWorker(payload) {
@@ -110,41 +115,6 @@ async function writeToWorker(payload) {
   const result = await resp.json();
   if (!result.success) throw new Error('Worker returned failure: ' + JSON.stringify(result));
   return result;
-}
-
-async function mergeAndSave(type, date, newData) {
-  // For food additions, we need to read existing day data from Firebase first
-  // We do this via the Firebase REST API directly from the browser
-  const PROJECT_ID = 'health-dashboard-6519b';
-  const API_KEY = 'AIzaSyDaMbdMQ7UG7PFmjeVtK8F3q0tEG8sTPLA';
-  const USER_ID = 'emaad';
-
-  // Try to get existing day document
-  let existing = { foods: [], waterLog: [], weekScores: [null,null,null,null,null,null,null] };
-  try {
-    const getUrl = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/${USER_ID}/days/${date}?key=${API_KEY}`;
-    const getResp = await fetch(getUrl);
-    if (getResp.ok) {
-      const doc = await getResp.json();
-      if (doc.fields) {
-        existing = fromFirestore(doc.fields);
-      }
-    }
-  } catch(e) {
-    // No existing doc — start fresh
-  }
-
-  // Merge new foods into existing
-  if (newData.foods) {
-    existing.foods = [...(existing.foods || []), ...newData.foods];
-  }
-  if (newData.waterLog) {
-    existing.waterLog = [...(existing.waterLog || []), ...newData.waterLog];
-  }
-  // Merge other fields
-  const merged = { ...existing, ...newData, foods: existing.foods, waterLog: existing.waterLog };
-
-  await writeToWorker({ type, date, data: merged });
 }
 
 function fromFirestore(fields) {
