@@ -113,13 +113,13 @@ button:hover{opacity:.85}
 
 <div class="hdr">
   <div class="hdr-title"><i class="ti ti-heart-rate-monitor"></i> Health</div>
-  <div style="font-size:10px;color:var(--text3);text-align:right">Thu Jun 4, 2026<br/>Synced 8:45 PM</div>
+  <div style="font-size:10px;color:var(--text3);text-align:right">Fri Jun 5, 2026<br/>Synced 9:00 AM</div>
 </div>
 <div class="sync-bar"><span class="sync-dot"></span>Runalyze + Claude nutrition · Food log live from Firebase · Say "sync my dashboard" in Claude to refresh</div>
 
 <!-- ASSESSMENT -->
-<p class="sl">Claude's assessment <span class="src">Jun 4 · end of day</span></p>
-<div class="race-chip"><i class="ti ti-flag" style="font-size:10px"></i> Ultra Marathon — 16 days · Jun 20 · C race</div>
+<p class="sl">Claude's assessment <span class="src">Jun 5 · morning</span></p>
+<div class="race-chip"><i class="ti ti-flag" style="font-size:10px"></i> Ultra Marathon — 15 days · Jun 20 · C race</div>
 
 <div class="assess-card amber" id="ac1">
   <div class="assess-header" onclick="toggleAssess('ac1')">
@@ -145,15 +145,15 @@ button:hover{opacity:.85}
   <div class="assess-header" onclick="toggleAssess('ac2')">
     <div>
       <p class="assess-title"><i class="ti ti-run" style="font-size:12px"></i> Training assessment</p>
-      <p class="assess-summary">26.2 mi · 7 sessions · taper window · HRV above baseline</p>
+      <p class="assess-summary">Rest day today · 26.2 mi last 7 days · HRV 31ms · taper begins</p>
     </div>
     <i class="ti ti-chevron-down assess-chevron"></i>
   </div>
   <div class="assess-body-wrap">
     <p class="assess-body"><strong>Training load is appropriate for your level</strong> — 26.2 miles across 7 days is within your normal 25–30 mi/week range. The density (no rest day) is worth addressing given race timing, but this is not overreach for an experienced ultra runner.</p>
     <div class="assess-bullets">
-      <div class="assess-bullet"><span>→</span><span><strong>HRV context:</strong> 30ms is above your 26ms baseline — a positive signal. The week's trend (35→34→29→30ms) shows normal training fluctuation, not dangerous suppression.</span></div>
-      <div class="assess-bullet"><span>→</span><span><strong>Tomorrow (Jun 5):</strong> Rest day or easy 20–30 min walk. One recovery day now protects HRV for race week.</span></div>
+      <div class="assess-bullet"><span>→</span><span><strong>HRV context:</strong> 31ms is above your 26ms baseline — a positive signal. Zepp readings (30, 31ms) consistent with prior Whoop data. Normal taper entry.</span></div>
+      <div class="assess-bullet"><span>→</span><span><strong>Today (Jun 5) is your rest day</strong> — good execution. One rest day now protects HRV heading into the final 15 days before your Ultra.</span></div>
       <div class="assess-bullet"><span>→</span><span><strong>Jun 6–12:</strong> 2–3 easy Zone 2 runs (4–5 mi each), 1 rest day. Total under 15 mi. This is a normal taper for a C race training run.</span></div>
       <div class="assess-bullet"><span>→</span><span><strong>What's working:</strong> Interval splits improving (6:50→5:59→5:49). VO2max 45.1 — up from 44.7. Aerobic decoupling 0.1% — excellent aerobic efficiency.</span></div>
     </div>
@@ -183,56 +183,56 @@ button:hover{opacity:.85}
   <div class="assess-header" onclick="toggleAssess('ac4')">
     <div>
       <p class="assess-title"><i class="ti ti-heart" style="font-size:12px"></i> What you're doing right</p>
-      <p class="assess-summary">145g protein ✅ · 0g added sugar ✅ · HRV above baseline · VO2max improving</p>
+      <p class="assess-summary">145g protein ✅ · 0g added sugar ✅ · HRV 31ms above baseline · VO2max improving</p>
     </div>
     <i class="ti ti-chevron-down assess-chevron"></i>
   </div>
   <div class="assess-body-wrap">
-    <p class="assess-body">Protein target exceeded (145g vs 127g target) · Zero added sugar all day · Omega-3s from flaxseed + haddock · Broccoli for fiber and micronutrients · HRV 30ms above your 26ms baseline · RHR stable at 58bpm · VO2max improving 44.7→45.1 · Aerobic decoupling excellent at 0.1% · Interval splits getting faster · Zero ultra-processed food all day</p>
+    <p class="assess-body">Protein target exceeded (145g vs 127g target) · Zero added sugar all day · Omega-3s from flaxseed + haddock · Broccoli for fiber and micronutrients · HRV 31ms above your 26ms baseline · RHR stable at 58bpm · Sleep 458 min quality 8/10 · VO2max improving 44.7→45.1 · Aerobic decoupling excellent at 0.1% · Rest day executed · Zero ultra-processed food</p>
   </div>
 </div>
 
 <hr class="divider"/>
-<!-- FITNESS -->
-<p class="sl">Fitness readiness <span class="src">Runalyze</span></p>
+<!-- FITNESS — live from Firebase meta/fitness -->
+<p class="sl">Fitness readiness <span class="src">Runalyze · live</span></p>
 <div class="rring tap" id="rdCard" onclick="tgl('rdPanel',this)">
   <svg width="60" height="60" viewBox="0 0 60 60">
     <circle cx="30" cy="30" r="25" fill="none" stroke="#E4E2DE" stroke-width="5"/>
-    <circle cx="30" cy="30" r="25" fill="none" stroke="#BA7517" stroke-width="5"
-      stroke-dasharray="157.08" stroke-dashoffset="75.4" stroke-linecap="round" transform="rotate(-90 30 30)"/>
-    <text x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="#BA7517">52</text>
+    <circle id="rdArc" cx="30" cy="30" r="25" fill="none" stroke="#8A8880" stroke-width="5"
+      stroke-dasharray="157.08" stroke-dashoffset="157.08" stroke-linecap="round" transform="rotate(-90 30 30)"/>
+    <text id="rdScore" x="30" y="35" text-anchor="middle" font-size="13" font-weight="600" fill="#8A8880">—</text>
   </svg>
   <div style="flex:1">
-    <div style="font-size:15px;font-weight:600;color:#BA7517">Moderate readiness</div>
-    <div style="font-size:11px;color:var(--text2);margin-top:2px">HRV 30ms · RHR 58bpm · Sleep 415min</div>
-    <div style="font-size:10px;color:var(--text3);margin-top:2px">Fatigue 6/10 · Stress 6/10 · Mood 5/10</div>
+    <div id="rdLabel" style="font-size:15px;font-weight:600;color:var(--text3)">Loading…</div>
+    <div id="rdSub" style="font-size:11px;color:var(--text2);margin-top:2px">—</div>
+    <div id="rdMood" style="font-size:10px;color:var(--text3);margin-top:2px">—</div>
   </div>
   <div style="text-align:center;flex-shrink:0">
     <div style="font-size:9px;color:var(--text3);margin-bottom:1px">Ultra</div>
-    <div style="font-size:15px;font-weight:600;color:var(--danger)">16d</div>
+    <div id="rdDays" style="font-size:15px;font-weight:600;color:var(--danger)">15d</div>
   </div>
 </div>
-<div class="xp" id="rdPanel"><button class="xbtn" onclick="cli('rdPanel',document.getElementById('rdCard'))"><i class="ti ti-x"></i></button><p class="xp-title">Readiness — 52/100</p><span class="bdg bwn">Moderate</span><p class="xp-body">Composite of HRV trend, resting HR, sleep quality, and subjective wellbeing.</p><p class="xp-you">HRV at 30ms is above your 26ms baseline — a positive signal. 7 consecutive training days but volume (26.2 mi) is within your normal range. Fatigue 6/10 suggests one rest day tomorrow is the right call heading into your Ultra taper.</p></div>
+<div class="xp" id="rdPanel"><button class="xbtn" onclick="cli('rdPanel',document.getElementById('rdCard'))"><i class="ti ti-x"></i></button><p class="xp-title" id="rdPanelTitle">Readiness</p><span class="bdg bwn" id="rdPanelBadge">—</span><p class="xp-body">Composite of HRV trend, resting HR, sleep quality, and subjective wellbeing.</p><p class="xp-you" id="rdPanelText">Sync fitness data to see your readiness assessment.</p></div>
 
 <div class="g2" style="margin-bottom:8px">
-  <div class="card tap" onclick="tgl('hrvP')"><p class="clabel"><i class="ti ti-activity" style="font-size:10px"></i> HRV (RMSSD)</p><p class="cval ok">30 <span style="font-size:11px;font-weight:400">ms</span></p><p class="csub">Baseline 26ms · above avg</p></div>
-  <div class="card tap" onclick="tgl('rhrP')"><p class="clabel"><i class="ti ti-heart" style="font-size:10px"></i> Resting HR</p><p class="cval ok">58 <span style="font-size:11px;font-weight:400">bpm</span></p><p class="csub">Normal · stable</p></div>
-  <div class="card tap" onclick="tgl('sleepP')"><p class="clabel"><i class="ti ti-moon" style="font-size:10px"></i> Deep sleep</p><p class="cval warn">64 <span style="font-size:11px;font-weight:400">min</span></p><p class="csub">Total 415min · Target 90+</p></div>
-  <div class="card tap" onclick="tgl('vo2P')"><p class="clabel"><i class="ti ti-lungs" style="font-size:10px"></i> VO₂max</p><p class="cval ok">45.1 <span style="font-size:11px;font-weight:400">ml/kg/min</span></p><p class="csub">↑ from 44.7 last week</p></div>
-  <div class="card tap" onclick="tgl('decP')"><p class="clabel"><i class="ti ti-wave-sine" style="font-size:10px"></i> Aerobic decoupling</p><p class="cval ok">0.1 <span style="font-size:11px;font-weight:400">%</span></p><p class="csub">Excellent · today's run</p></div>
-  <div class="card tap" onclick="tgl('wtP')"><p class="clabel"><i class="ti ti-scale" style="font-size:10px"></i> Weight</p><p class="cval">174 <span style="font-size:11px;font-weight:400">lb</span></p><p class="csub">Target 170 · Jun 3</p></div>
-  <div class="card tap" onclick="tgl('bodyP')"><p class="clabel"><i class="ti ti-body-scan" style="font-size:10px"></i> Body fat</p><p class="cval warn">24.7 <span style="font-size:11px;font-weight:400">%</span></p><p class="csub">Jun 3 reading</p></div>
-  <div class="card tap" onclick="tgl('volP')"><p class="clabel"><i class="ti ti-run" style="font-size:10px"></i> Weekly volume</p><p class="cval">26.2 <span style="font-size:11px;font-weight:400">mi</span></p><p class="csub">7 sessions · normal range</p></div>
+  <div class="card tap" onclick="tgl('hrvP')"><p class="clabel"><i class="ti ti-activity" style="font-size:10px"></i> HRV (RMSSD)</p><p class="cval ok" id="fHRV">— <span style="font-size:11px;font-weight:400">ms</span></p><p class="csub" id="fHRVsub">—</p></div>
+  <div class="card tap" onclick="tgl('rhrP')"><p class="clabel"><i class="ti ti-heart" style="font-size:10px"></i> Resting HR</p><p class="cval ok" id="fRHR">— <span style="font-size:11px;font-weight:400">bpm</span></p><p class="csub" id="fRHRsub">—</p></div>
+  <div class="card tap" onclick="tgl('sleepP')"><p class="clabel"><i class="ti ti-moon" style="font-size:10px"></i> Deep sleep</p><p class="cval" id="fDeepSleep">— <span style="font-size:11px;font-weight:400">min</span></p><p class="csub" id="fSleepSub">—</p></div>
+  <div class="card tap" onclick="tgl('vo2P')"><p class="clabel"><i class="ti ti-lungs" style="font-size:10px"></i> VO₂max</p><p class="cval ok" id="fVO2">— <span style="font-size:11px;font-weight:400">ml/kg/min</span></p><p class="csub" id="fVO2sub">—</p></div>
+  <div class="card tap" onclick="tgl('decP')"><p class="clabel"><i class="ti ti-wave-sine" style="font-size:10px"></i> Aerobic decoupling</p><p class="cval ok" id="fDec">— <span style="font-size:11px;font-weight:400">%</span></p><p class="csub" id="fDecSub">—</p></div>
+  <div class="card tap" onclick="tgl('wtP')"><p class="clabel"><i class="ti ti-scale" style="font-size:10px"></i> Weight</p><p class="cval" id="fWeight">— <span style="font-size:11px;font-weight:400">lb</span></p><p class="csub" id="fWeightSub">—</p></div>
+  <div class="card tap" onclick="tgl('bodyP')"><p class="clabel"><i class="ti ti-body-scan" style="font-size:10px"></i> Body fat</p><p class="cval" id="fBodyFat">— <span style="font-size:11px;font-weight:400">%</span></p><p class="csub" id="fBodyFatSub">—</p></div>
+  <div class="card tap" onclick="tgl('volP')"><p class="clabel"><i class="ti ti-run" style="font-size:10px"></i> Weekly volume</p><p class="cval" id="fVol">— <span style="font-size:11px;font-weight:400">mi</span></p><p class="csub" id="fVolSub">—</p></div>
 </div>
 
-<div class="xp" id="hrvP"><button class="xbtn" onclick="cli('hrvP')"><i class="ti ti-x"></i></button><p class="xp-title">HRV — 30ms</p><span class="bdg bok">Above baseline</span><p class="xp-body">Your 30-day average on Garmin was 26ms. Amazfit likely reads higher — new baseline being established. 30ms is a positive signal today.</p><p class="xp-you">Week trend: 35→34→29→30ms — normal training fluctuation for an experienced ultra runner. Flag only if sustained 5+ day decline or drops below 22ms.</p></div>
-<div class="xp" id="rhrP"><button class="xbtn" onclick="cli('rhrP')"><i class="ti ti-x"></i></button><p class="xp-title">Resting HR — 58 bpm</p><span class="bdg bok">Normal</span><p class="xp-you">58 bpm — stable and within normal range. Watch for upward drift above 63 which would signal accumulated fatigue or illness.</p></div>
-<div class="xp" id="sleepP"><button class="xbtn" onclick="cli('sleepP')"><i class="ti ti-x"></i></button><p class="xp-title">Sleep — 415 min · 64 min deep</p><span class="bdg bwn">Below target</span><p class="xp-you">64 min deep sleep is below the 90 min target. Deep sleep is when testosterone is produced and muscle repairs. With low-normal testosterone (414 ng/dL), this matters. Aim for bed 30 min earlier tonight.</p></div>
-<div class="xp" id="vo2P"><button class="xbtn" onclick="cli('vo2P')"><i class="ti ti-x"></i></button><p class="xp-title">VO₂max — 45.1 ml/kg/min</p><span class="bdg bok">Improving</span><p class="xp-you">Up from 44.7 last week. Runalyze predicts marathon 4:15, half 2:03. The taper over 16 days will sharpen this further before your Ultra.</p></div>
-<div class="xp" id="decP"><button class="xbtn" onclick="cli('decP')"><i class="ti ti-x"></i></button><p class="xp-title">Aerobic decoupling — 0.1%</p><span class="bdg bok">Excellent</span><p class="xp-body">How much HR drifts relative to pace. Under 5% = strong aerobic base. Under 2% = excellent.</p><p class="xp-you">0.1% on today's treadmill intervals — outstanding aerobic efficiency. Your aerobic base is race-ready for the Ultra.</p></div>
-<div class="xp" id="wtP"><button class="xbtn" onclick="cli('wtP')"><i class="ti ti-x"></i></button><p class="xp-title">Weight — 174 lb</p><span class="bdg bwn">4 lb to goal</span><p class="xp-you">4 lb from 170 lb by July 17 — on pace at 0.6 lb/week. Don't restrict calories during Ultra prep — race performance over weight loss for the next 3 weeks.</p></div>
-<div class="xp" id="bodyP"><button class="xbtn" onclick="cli('bodyP')"><i class="ti ti-x"></i></button><p class="xp-title">Body fat — 24.7%</p><span class="bdg bwn">Above optimal</span><p class="xp-you">Every 1% reduction improves insulin sensitivity, raises HDL, and lowers triglycerides. Your running and nutrition plan address this directly.</p></div>
-<div class="xp" id="volP"><button class="xbtn" onclick="cli('volP')"><i class="ti ti-x"></i></button><p class="xp-title">Weekly volume — 26.2 mi</p><span class="bdg bok">Normal range</span><p class="xp-you">26.2 mi is within your normal 25–30 mi/week training range. Not overreach. The no-rest-day pattern is the only flag — one recovery day tomorrow before resuming normal training.</p></div>
+<div class="xp" id="hrvP"><button class="xbtn" onclick="cli('hrvP')"><i class="ti ti-x"></i></button><p class="xp-title" id="hrvPTitle">HRV</p><span class="bdg bok" id="hrvPBadge">—</span><p class="xp-body">Your Garmin 30-day average was 26ms. Amazfit likely reads higher — new baseline being established.</p><p class="xp-you" id="hrvPText">Sync fitness data to populate.</p></div>
+<div class="xp" id="rhrP"><button class="xbtn" onclick="cli('rhrP')"><i class="ti ti-x"></i></button><p class="xp-title" id="rhrPTitle">Resting HR</p><span class="bdg bok" id="rhrPBadge">—</span><p class="xp-you" id="rhrPText">Sync fitness data to populate.</p></div>
+<div class="xp" id="sleepP"><button class="xbtn" onclick="cli('sleepP')"><i class="ti ti-x"></i></button><p class="xp-title" id="sleepPTitle">Sleep</p><span class="bdg bwn" id="sleepPBadge">—</span><p class="xp-you" id="sleepPText">Sync fitness data to populate.</p></div>
+<div class="xp" id="vo2P"><button class="xbtn" onclick="cli('vo2P')"><i class="ti ti-x"></i></button><p class="xp-title" id="vo2PTitle">VO₂max</p><span class="bdg bok" id="vo2PBadge">—</span><p class="xp-you" id="vo2PText">Sync fitness data to populate.</p></div>
+<div class="xp" id="decP"><button class="xbtn" onclick="cli('decP')"><i class="ti ti-x"></i></button><p class="xp-title" id="decPTitle">Aerobic decoupling</p><span class="bdg bok" id="decPBadge">—</span><p class="xp-body">How much HR drifts relative to pace. Under 5% = strong aerobic base. Under 2% = excellent.</p><p class="xp-you" id="decPText">Sync fitness data to populate.</p></div>
+<div class="xp" id="wtP"><button class="xbtn" onclick="cli('wtP')"><i class="ti ti-x"></i></button><p class="xp-title" id="wtPTitle">Weight</p><span class="bdg bwn" id="wtPBadge">—</span><p class="xp-you" id="wtPText">Sync fitness data to populate.</p></div>
+<div class="xp" id="bodyP"><button class="xbtn" onclick="cli('bodyP')"><i class="ti ti-x"></i></button><p class="xp-title" id="bodyPTitle">Body fat</p><span class="bdg bwn" id="bodyPBadge">—</span><p class="xp-you" id="bodyPText">Every 1% reduction improves insulin sensitivity, raises HDL, and lowers triglycerides.</p></div>
+<div class="xp" id="volP"><button class="xbtn" onclick="cli('volP')"><i class="ti ti-x"></i></button><p class="xp-title" id="volPTitle">Weekly volume</p><span class="bdg bok" id="volPBadge">—</span><p class="xp-you" id="volPText">Sync fitness data to populate.</p></div>
 
 <hr class="divider"/>
 <p class="sl">This week's training <span class="src">Runalyze</span></p>
@@ -320,12 +320,20 @@ button:hover{opacity:.85}
     <thead><tr><th>Date</th><th>kcal</th><th>Protein</th><th>Fiber</th><th>Added sugar</th><th>Score</th></tr></thead>
     <tbody>
       <tr>
-        <td class="today">Jun 4</td>
-        <td class="today">1,480</td>
-        <td class="today" style="color:var(--ok)">145g ✅</td>
-        <td class="today">18.2g</td>
-        <td class="today" style="color:var(--ok)">0g ✅</td>
-        <td class="today" style="color:var(--ok)">75</td>
+        <td class="today">Jun 5</td>
+        <td class="today" id="histTodayCal">—</td>
+        <td class="today" id="histTodayProt">—</td>
+        <td class="today" id="histTodayFib">—</td>
+        <td class="today" id="histTodaySug">—</td>
+        <td class="today" id="histTodayScore">—</td>
+      </tr>
+      <tr>
+        <td>Jun 4</td>
+        <td>1,480</td>
+        <td style="color:var(--ok)">145g ✅</td>
+        <td>18.2g</td>
+        <td style="color:var(--ok)">0g ✅</td>
+        <td style="color:var(--ok)">75</td>
       </tr>
     </tbody>
   </table>
@@ -339,8 +347,8 @@ button:hover{opacity:.85}
   <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Mon</div><div style="font-size:9px;color:#8A8880">—</div></div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Tue</div><div style="font-size:9px;color:#8A8880">—</div></div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Wed</div><div style="font-size:9px;color:#8A8880">—</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:39px;background:#1D9E75;border-radius:2px 2px 0 0"></div></div><div style="font-size:9px;color:var(--text3);font-weight:600">Thu</div><div style="font-size:9px;font-weight:600;color:#1D9E75">75</div></div>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Fri</div><div style="font-size:9px;color:#8A8880">—</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:39px;background:#1D9E75;border-radius:2px 2px 0 0"></div></div><div style="font-size:9px;color:var(--text3)">Thu</div><div style="font-size:9px;color:#1D9E75">75</div></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div id="friBar" style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3);font-weight:600">Fri</div><div id="friScore" style="font-size:9px;color:#8A8880">—</div></div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Sat</div><div style="font-size:9px;color:#8A8880">—</div></div>
   <div style="display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;height:48px;display:flex;align-items:flex-end"><div style="width:100%;height:3px;background:#8A8880;border-radius:2px 2px 0 0;opacity:.3"></div></div><div style="font-size:9px;color:var(--text3)">Sun</div><div style="font-size:9px;color:#8A8880">—</div></div>
 </div>
@@ -481,11 +489,148 @@ function updateAll(foods){
     </div>`;
 
   document.getElementById('foodLogSrc').textContent=`live · ${foods.length} items · ${Math.round(t.cal)} kcal`;
+
+  // Update today's history row
+  const hc=document.getElementById('histTodayCal');if(hc)hc.textContent=t.cal>0?Math.round(t.cal).toLocaleString():'—';
+  const hp=document.getElementById('histTodayProt');if(hp){hp.textContent=t.protein>0?Math.round(t.protein)+'g'+(t.protein>=127?' ✅':''):'—';hp.style.color=t.protein>=127?'var(--ok)':'';}
+  const hf=document.getElementById('histTodayFib');if(hf)hf.textContent=t.fiber>0?t.fiber.toFixed(1)+'g':'—';
+  const hs=document.getElementById('histTodaySug');if(hs){hs.textContent=t.cal>0?(t.added_sugar||0)+'g'+((t.added_sugar||0)===0?' ✅':''):'—';hs.style.color=(t.added_sugar||0)===0&&t.cal>0?'var(--ok)':'';}
+  const hsc=document.getElementById('histTodayScore');if(hsc&&t.cal>0){hsc.textContent=score;hsc.style.color=col(score);}
+
+  // Update today's weekly bar (Friday)
+  const fb=document.getElementById('friBar');const fs=document.getElementById('friScore');
+  if(fb&&fs&&score>0){const h=Math.max(3,Math.round(score/100*48));fb.style.height=h+'px';fb.style.background=col(score);fb.style.opacity='1';fs.textContent=score;fs.style.color=col(score);fs.style.fontWeight='600';}
 }
 
 onSnapshot(doc(db,'users','emaad','days',today()),(snap)=>{
   updateAll(snap.exists()?snap.data().foods||[]:[]);
 });
+
+onSnapshot(doc(db,'users','emaad','meta','fitness'),(snap)=>{
+  if(snap.exists()) updateFitness(snap.data());
+});
+
+function updateFitness(f){
+  const ok='var(--ok)',warn='var(--warn)',danger='var(--danger)',muted='var(--text3)';
+  function set(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+  function col(id,c){const el=document.getElementById(id);if(el)el.style.color=c;}
+
+  // Race countdown
+  const race=new Date('2026-06-20');const today2=new Date();const daysLeft=Math.ceil((race-today2)/(1000*60*60*24));
+  set('rdDays',daysLeft+'d');
+
+  // HRV
+  const hrv=f.hrv||0;const hrvBaseline=f.hrvBaseline||26;
+  const hrvOk=hrv>=hrvBaseline;
+  set('fHRV',hrv+' ');document.getElementById('fHRV').innerHTML=hrv+' <span style="font-size:11px;font-weight:400">ms</span>';
+  col('fHRV',hrv>=hrvBaseline?ok:hrv>=(hrvBaseline*0.85)?warn:danger);
+  set('fHRVsub','Baseline '+(f.hrvBaseline?f.hrvBaseline.toFixed(0):26)+'ms · '+(hrv>=hrvBaseline?'above avg':'below avg'));
+  set('hrvPTitle','HRV — '+hrv+'ms');
+  set('hrvPBadge',hrv>=hrvBaseline?'Above baseline':'Below baseline');
+  document.getElementById('hrvPBadge').className='bdg '+(hrv>=hrvBaseline?'bok':'bwn');
+  set('hrvPText','Current: '+hrv+'ms vs '+hrvBaseline.toFixed(0)+'ms baseline. '+(hrv>=hrvBaseline?'Positive signal — autonomic recovery on track.':'Below baseline — monitor for further decline. Flag if 5+ day sustained drop below '+(hrvBaseline*0.85).toFixed(0)+'ms.'));
+
+  // RHR
+  const rhr=f.rhr||0;
+  document.getElementById('fRHR').innerHTML=rhr+' <span style="font-size:11px;font-weight:400">bpm</span>';
+  col('fRHR',rhr<=58?ok:rhr<=62?warn:danger);
+  set('fRHRsub',rhr<=58?'Normal · stable':rhr<=62?'Slightly elevated':'Elevated — monitor');
+  set('rhrPTitle','Resting HR — '+rhr+' bpm');
+  set('rhrPBadge',rhr<=58?'Normal':rhr<=62?'Slightly elevated':'Elevated');
+  document.getElementById('rhrPBadge').className='bdg '+(rhr<=58?'bok':rhr<=62?'bwn':'bdn');
+  set('rhrPText',rhr+' bpm. '+(rhr<=62?'Stable and within normal range. Watch for upward drift above 63 bpm which signals accumulated fatigue.':'Elevated above normal. Consider an easier day — could signal illness or accumulated fatigue.'));
+
+  // Sleep
+  const sleepTotal=f.sleepTotal||0;const deepSleep=f.deepSleep||0;const sleepQuality=f.sleepQuality||0;
+  const sleepHrs=Math.floor(sleepTotal/60);const sleepMin=sleepTotal%60;
+  document.getElementById('fDeepSleep').innerHTML=deepSleep+' <span style="font-size:11px;font-weight:400">min</span>';
+  col('fDeepSleep',deepSleep>=90?ok:deepSleep>=60?warn:danger);
+  set('fSleepSub','Total '+sleepTotal+'min · Target 90+ deep');
+  set('sleepPTitle','Sleep — '+sleepTotal+' min · '+deepSleep+' deep');
+  set('sleepPBadge',deepSleep>=90?'Good':'Deep below target');
+  document.getElementById('sleepPBadge').className='bdg '+(deepSleep>=90?'bok':'bwn');
+  set('sleepPText',sleepHrs+'h'+sleepMin+'m total (quality '+sleepQuality+'/10). Deep sleep: '+deepSleep+' min'+(f.remSleep?' · REM: '+f.remSleep+' min':'')+'. '+(deepSleep<90?'Below the 90 min target — deep sleep drives testosterone production and muscle repair. With low-normal testosterone (414 ng/dL), this is meaningful.':'Good deep sleep — supporting recovery and testosterone production.'));
+
+  // VO2max
+  const vo2=f.vo2max||0;
+  document.getElementById('fVO2').innerHTML=vo2.toFixed(1)+' <span style="font-size:11px;font-weight:400">ml/kg/min</span>';
+  col('fVO2',vo2>=45?ok:vo2>=42?warn:danger);
+  set('fVO2sub',vo2>=45?'Good for ultra runner':'Building');
+  set('vo2PTitle','VO₂max — '+vo2.toFixed(1)+' ml/kg/min');
+  set('vo2PBadge',vo2>=45?'Good':'Building');
+  document.getElementById('vo2PBadge').className='bdg '+(vo2>=45?'bok':'bwn');
+  set('vo2PText',vo2.toFixed(1)+' ml/kg/min. '+(f.vo2maxPrev?'Was '+f.vo2maxPrev.toFixed(1)+' previously. ':'')+'Taper phase will sharpen this further before your Ultra.');
+
+  // Decoupling
+  const dec=f.decoupling;
+  if(dec!=null&&dec!==undefined){
+    document.getElementById('fDec').innerHTML=dec.toFixed(1)+' <span style="font-size:11px;font-weight:400">%</span>';
+    col('fDec',dec<=2?ok:dec<=5?warn:danger);
+    set('fDecSub',dec<=2?'Excellent aerobic efficiency':dec<=5?'Good':'Needs attention');
+    set('decPTitle','Aerobic decoupling — '+dec.toFixed(1)+'%');
+    set('decPBadge',dec<=2?'Excellent':dec<=5?'Good':'High drift');
+    document.getElementById('decPBadge').className='bdg '+(dec<=2?'bok':dec<=5?'bwn':'bdn');
+    set('decPText',dec.toFixed(1)+'% on last run. '+(dec<=2?'Outstanding aerobic efficiency — your aerobic base is race-ready.':'Under 5% is strong. Continue Zone 2 work to improve.'));
+  }
+
+  // Weight (kg→lb)
+  if(f.weightKg){
+    const lb=Math.round(f.weightKg*2.20462);
+    document.getElementById('fWeight').innerHTML=lb+' <span style="font-size:11px;font-weight:400">lb</span>';
+    const diff=lb-170;
+    set('fWeightSub',diff>0?diff+' lb from goal 170':'At or below goal 170');
+    set('wtPTitle','Weight — '+lb+' lb');
+    set('wtPBadge',diff<=0?'At goal':diff<=5?diff+' lb to goal':'Above goal');
+    document.getElementById('wtPBadge').className='bdg '+(diff<=0?'bok':'bwn');
+    set('wtPText',lb+' lb. '+(diff>0?diff+' lb from 170 lb goal. Don\'t restrict calories during Ultra prep — race performance takes priority over weight loss.':'At or below goal weight. Maintain current nutrition approach.'));
+  }
+
+  // Body fat
+  if(f.bodyFat){
+    document.getElementById('fBodyFat').innerHTML=f.bodyFat.toFixed(1)+' <span style="font-size:11px;font-weight:400">%</span>';
+    col('fBodyFat',f.bodyFat<=20?ok:f.bodyFat<=25?warn:danger);
+    set('fBodyFatSub',f.bodyFat<=20?'Optimal range':'Above optimal');
+    set('bodyPTitle','Body fat — '+f.bodyFat.toFixed(1)+'%');
+    set('bodyPBadge',f.bodyFat<=20?'Optimal':'Above optimal');
+    document.getElementById('bodyPBadge').className='bdg '+(f.bodyFat<=20?'bok':'bwn');
+  }
+
+  // Weekly volume (km→mi)
+  if(f.weeklyKm){
+    const mi=(f.weeklyKm*0.621371).toFixed(1);
+    document.getElementById('fVol').innerHTML=mi+' <span style="font-size:11px;font-weight:400">mi</span>';
+    const sessions=f.weeklySessions||0;
+    set('fVolSub',sessions+' sessions · '+(parseFloat(mi)<=30?'normal range':'high volume'));
+    set('volPTitle','Weekly volume — '+mi+' mi');
+    set('volPBadge',parseFloat(mi)<=30?'Normal range':parseFloat(mi)<=40?'High':'Peak week');
+    document.getElementById('volPBadge').className='bdg '+(parseFloat(mi)<=30?'bok':'bwn');
+    set('volPText',mi+' mi across '+sessions+' sessions. '+(parseFloat(mi)<=30?'Within your normal 25–30 mi/week range.':parseFloat(mi)<=40?'Approaching peak volume — monitor recovery.':'Peak week territory — prioritize sleep and nutrition.'));
+  }
+
+  // Readiness score: HRV 35%, RHR 25%, sleep 25%, decoupling 15%
+  let score=0;
+  if(hrv>0){const hrvS=Math.min(100,Math.max(0,(hrv/Math.max(hrvBaseline,1))*100));score+=hrvS*0.35;}
+  if(rhr>0){const rhrS=rhr<=54?100:rhr<=58?90:rhr<=62?75:rhr<=66?55:30;score+=rhrS*0.25;}
+  if(deepSleep>0){const slS=deepSleep>=90?100:deepSleep>=70?80:deepSleep>=50?60:40;score+=slS*0.25;}
+  if(dec!=null){const decS=dec<=1?100:dec<=2?90:dec<=5?70:50;score+=decS*0.15;}
+  else{score=score/0.85;}// redistribute if no decoupling
+  score=Math.round(score);
+  const rdC=score>=70?ok:score>=50?warn:danger;
+  const rdLabel=score>=70?'Good readiness':score>=50?'Moderate readiness':'Low readiness';
+  const arc=document.getElementById('rdArc');
+  if(arc){arc.setAttribute('stroke-dashoffset',(157.08*(1-score/100)).toFixed(2));arc.setAttribute('stroke',rdC);}
+  const rdTxt=document.getElementById('rdScore');if(rdTxt){rdTxt.textContent=score;rdTxt.setAttribute('fill',rdC);}
+  const rdL=document.getElementById('rdLabel');if(rdL){rdL.textContent=rdLabel;rdL.style.color=rdC;}
+  set('rdSub','HRV '+(hrv||'—')+'ms · RHR '+(rhr||'—')+'bpm · Sleep '+(sleepTotal||'—')+'min');
+  set('rdMood',f.fatigue?'Fatigue '+f.fatigue+'/10 · Stress '+(f.stress||'—')+'/10 · Mood '+(f.mood||'—')+'/10':'Subjective: not logged');
+  set('rdPanelTitle','Readiness — '+score+'/100');
+  set('rdPanelBadge',score>=70?'Good':score>=50?'Moderate':'Low');
+  document.getElementById('rdPanelBadge').className='bdg '+(score>=70?'bok':score>=50?'bwn':'bdn');
+  set('rdPanelText','HRV '+(hrv||'—')+'ms '+(hrv>=hrvBaseline?'above':'below')+' your '+hrvBaseline.toFixed(0)+'ms baseline. RHR '+(rhr||'—')+'bpm. Sleep '+(sleepTotal||'—')+'min total, '+(deepSleep||'—')+'min deep. '+(score>=50?'On track for training.':'Recovery priority today.'));
+
+  // Sync label
+  if(f.syncDate){const d=document.querySelector(\'.sl .src\');if(d&&d.textContent.includes(\'live\'))d.textContent='Runalyze · '+f.syncDate;}
+}
 </script>
 <script>
 function toggleAssess(id){document.getElementById(id).classList.toggle('expanded');}
