@@ -475,40 +475,73 @@ function renderFoodLog(foods) {
   src.textContent = `live · ${foods.length} items · ${Math.round(totals.cal)} kcal`;
 }
 
-function updateMacroBars(t) {
-  const bars = [
-    {id:'mCalP', bar:null, num:null, v:t.cal, tgt:CAL_TGT, label:'Calories', fmt:`${Math.round(t.cal)}/2,155`},
-    {id:'mProtP', v:t.protein, tgt:PROT_TGT, fmt:`${Math.round(t.protein)}/127g`},
-    {id:'mCarbP', v:t.carbs, tgt:CARB_TGT, fmt:`${Math.round(t.carbs)}/235g`},
-    {id:'mFatP', v:t.fat, tgt:FAT_TGT, fmt:`${Math.round(t.fat)}/78g`},
-    {id:'mFibP', v:t.fiber, tgt:FIB_TGT, fmt:`${Math.round(t.fiber)}/38g`},
-    {id:'mSatP', v:t.sat_fat, tgt:SAT_TGT, fmt:`${Math.round(t.sat_fat)}/20g`},
-  ];
+function calcScore(t) {
+  // Fiber 25%, added sugar 20%, protein 20%, food quality 20%, calories 15%
+  const fiberScore = Math.min(100, (t.fiber / FIB_TGT) * 100) * 0.25;
+  const sugarScore = Math.max(0, 100 - ((t.added_sugar||0) / 25) * 100) * 0.20;
+  const protScore = Math.min(100, (t.protein / PROT_TGT) * 100) * 0.20;
+  const qualScore = 80 * 0.20; // assume decent quality — no ultra-processed flag
+  const calScore = t.cal > 0 ? Math.min(100, (t.cal / CAL_TGT) * 100) * 0.15 : 0;
+  return Math.round(fiberScore + sugarScore + protScore + qualScore + calScore);
+}
 
-  // Update the macro bar widths and numbers
-  const mrows = document.querySelectorAll('.mrow');
-  // We target by position — cal=1, protein=2, carbs=3, fat=4, fiber=5, sat=6, sugar=7
+function scoreColor(s) {
+  if (s >= 75) return '#1D9E75';
+  if (s >= 50) return '#BA7517';
+  return '#A32D2D';
+}
+
+function updateMacroBars(t) {
+  const WORKOUT_CAL = 321;
+  const remaining = Math.max(0, CAL_TGT + WORKOUT_CAL - t.cal);
+  const score = calcScore(t);
+  const col = scoreColor(score);
+
+  // Update score ring SVG
+  const ring = document.querySelector('#nutCard circle:last-child');
+  if (ring) {
+    const offset = (157.08 * (1 - score/100)).toFixed(2);
+    ring.setAttribute('stroke-dashoffset', offset);
+    ring.setAttribute('stroke', col);
+  }
+  const ringText = document.querySelector('#nutCard text');
+  if (ringText) { ringText.textContent = score; ringText.setAttribute('fill', col); }
+
+  // Update nutrition summary row
+  const nutSummary = document.querySelector('#nutCard .rring > div:first-child');
+  if (nutSummary) {
+    const lines = nutSummary.querySelectorAll('div');
+    if (lines[0]) lines[0].style.color = col;
+    if (lines[0]) lines[0].textContent = score >= 75 ? 'On track' : score >= 50 ? 'Needs attention' : 'Off target';
+    if (lines[1]) lines[1].textContent = `${Math.round(t.cal)} kcal · ${Math.round(remaining)} remaining`;
+    if (lines[2]) lines[2].textContent = `+${WORKOUT_CAL} kcal workout · score ${score}/100`;
+  }
+
+  // Update calorie budget card — 3 cells: Target / Workout / Remaining
+  const calCells = document.querySelectorAll('.card > div > div > div');
+  if (calCells.length >= 3) {
+    const remCell = calCells[2].querySelector('div:first-child');
+    if (remCell) { remCell.textContent = Math.round(remaining); remCell.style.color = remaining < 200 ? 'var(--warn)' : 'var(--ok)'; }
+  }
+
+  // Update macro bars
   const targets = [
     {pct: Math.min(100,Math.round(t.cal/CAL_TGT*100)), num: `${Math.round(t.cal)}/2,155`},
     {pct: Math.min(100,Math.round(t.protein/PROT_TGT*100)), num: `${Math.round(t.protein)}/127g`},
     {pct: Math.min(100,Math.round(t.carbs/CARB_TGT*100)), num: `${Math.round(t.carbs)}/235g`},
     {pct: Math.min(100,Math.round(t.fat/FAT_TGT*100)), num: `${Math.round(t.fat)}/78g`},
     {pct: Math.min(100,Math.round(t.fiber/FIB_TGT*100)), num: `${Math.round(t.fiber)}/38g`},
-    {pct: Math.min(100,Math.round(t.sat_fat/SAT_TGT*100)), num: `${Math.round(t.sat_fat)}/20g`},
+    {pct: Math.min(100,Math.round((t.sat_fat||0)/SAT_TGT*100)), num: `${Math.round(t.sat_fat||0)}/20g`},
     {pct: Math.min(100,Math.round((t.added_sugar||0)/25*100)), num: `${Math.round(t.added_sugar||0)}g added`},
   ];
 
-  mrows.forEach((row, i) => {
+  document.querySelectorAll('.mrow').forEach((row, i) => {
     if (i >= targets.length) return;
     const bar = row.querySelector('.mbar');
     const num = row.querySelector('.mnum');
     if (bar) bar.style.width = targets[i].pct + '%';
     if (num) num.textContent = targets[i].num;
   });
-
-  // Update calorie budget card
-  const remaining = Math.max(0, CAL_TGT + 321 - t.cal);
-  const remEl = document.querySelector('.card .\\ok');
 }
 
 // Real-time listener
