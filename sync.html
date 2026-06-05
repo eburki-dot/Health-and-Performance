@@ -42,9 +42,9 @@ async function sync() {
 
     document.getElementById('title').textContent = type === 'fitness' ? 'Syncing fitness…' : mode === 'add' ? 'Adding food…' : 'Syncing dashboard…';
 
-    // Fitness data writes through Worker to meta/fitness
+    // Fitness data writes through Worker
     if (type === 'fitness') {
-      await writeFitnessToFirestore(data);
+      await writeToWorker({ type: 'fitness', date: date || 'meta', data });
     } else if (mode === 'add') {
       await mergeAndSave(type, date, data);
     } else {
