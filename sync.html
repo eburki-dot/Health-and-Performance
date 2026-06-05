@@ -42,7 +42,7 @@ async function sync() {
 
     document.getElementById('title').textContent = type === 'fitness' ? 'Syncing fitness…' : mode === 'add' ? 'Adding food…' : 'Syncing dashboard…';
 
-    // Fitness data writes directly to Firestore meta/fitness
+    // Fitness data writes through Worker to meta/fitness
     if (type === 'fitness') {
       await writeFitnessToFirestore(data);
     } else if (mode === 'add') {
@@ -74,7 +74,6 @@ async function writeFitnessToFirestore(data) {
   const USER_ID = 'emaad';
   const url = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents/users/${USER_ID}/meta/fitness?key=${API_KEY}`;
 
-  // Convert JS object to Firestore field format
   function toFirestoreValue(v) {
     if (v === null || v === undefined) return { nullValue: null };
     if (typeof v === 'boolean') return { booleanValue: v };
@@ -91,9 +90,14 @@ async function writeFitnessToFirestore(data) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ fields })
   });
+  const responseText = await resp.text();
   if (!resp.ok) {
-    const err = await resp.text();
-    throw new Error('Firestore write failed: ' + err);
+    throw new Error('Firestore error ' + resp.status + ': ' + responseText);
+  }
+  // Also verify the response looks right
+  const result = JSON.parse(responseText);
+  if (!result.name) {
+    throw new Error('Unexpected Firestore response: ' + responseText);
   }
 }
 
