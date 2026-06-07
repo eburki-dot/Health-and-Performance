@@ -120,7 +120,7 @@ button:hover{opacity:.85}
     <div style="display:flex;justify-content:space-between;padding:3px 0"><span><strong>Deep sleep</strong> — vs 90 min target</span><span style="font-weight:600;color:var(--text)">10%</span></div>
   </div>
   <p class="xp-body" style="margin-top:6px">TSB dominates because it's the strongest performance predictor for trained endurance athletes (Banister impulse-response model). HRV trend captures daily recovery sensitivity. A:C ratio guards against injury risk. Sleep has the lowest weight — consumer devices measure it imprecisely and one bad night matters less than cumulative patterns.</p>
-  <p class="xp-you" id="rdDetail">Sync your dashboard to see today's readiness breakdown.</p>
+  <div id="rdDetail" style="font-size:11px;color:var(--text);line-height:1.6;padding:7px 9px;background:var(--bg2);border-radius:var(--rs);border-left:3px solid var(--info);border-top-left-radius:0;border-bottom-left-radius:0">Sync to see breakdown.</div>
 </div>
 
 <!-- METRICS -->
@@ -150,11 +150,7 @@ button:hover{opacity:.85}
     <p class="m-val" id="vDec" style="color:var(--text3)">—<span class="m-unit"> %</span></p>
     <p class="m-sub" id="sDec">Last run</p>
   </div>
-  <div class="metric" id="mWt" onclick="tgl('pWt',this)">
-    <p class="m-label">Weight</p>
-    <p class="m-val" id="vWt" style="color:var(--text3)">—<span class="m-unit"> lb</span></p>
-    <p class="m-sub" id="sWt">Goal 170</p>
-  </div>
+
 </div>
 
 <!-- Training load card -->
@@ -189,7 +185,7 @@ button:hover{opacity:.85}
 
 <div class="xp" id="pTSB"><button class="xbtn" onclick="cli('pTSB')"><i class="ti ti-x"></i></button><p class="xp-title">Form (TSB — Training Stress Balance)</p><span class="bdg bwn">Fitness minus Fatigue</span><p class="xp-body">TSB = CTL − ATL. It tells you how "fresh" you are. Negative = carrying fatigue. Positive = fresh and rested. The sweet spot for racing is +5 to +15 — fit but not rusty. Below -25 = high injury risk. Above +20 = detrained.</p><p class="xp-you">Your TSB is -12 — slightly fatigued, expected mid-taper. Runalyze calculates you're only 0.8 rest days from TSB=0. By Jun 20 Ultra, with easy training this week, you should arrive at +5 to +15 — the ideal racing window.</p></div>
 
-<div class="xp" id="pTRIMP"><button class="xbtn" onclick="cli('pTRIMP')"><i class="ti ti-x"></i></button><p class="xp-title">Weekly TRIMP (Training Impulse)</p><span class="bdg bin">True training load</span><p class="xp-body">TRIMP quantifies the actual physiological load of each session by combining duration and heart rate intensity. A 5-mile easy run (TRIMP ~40) and a 3-mile race (TRIMP 91) look similar by distance but TRIMP correctly shows the race was more than twice the load. It's a more accurate measure of training stress than miles alone.</p><p class="xp-you">Your week TRIMP is 362. Breakdown: Long run 58 + Easy runs 78 + Intervals 55 + Race 91 + Warm/cool 15 + Today 65 = 362. For taper week (Jun 8–12), target TRIMP under 150 — about 3 easy runs with no intensity. This lets TSB rise toward +10 by race day.</p></div>
+<div class="xp" id="pTRIMP"><button class="xbtn" onclick="cli('pTRIMP')"><i class="ti ti-x"></i></button><p class="xp-title">Weekly TRIMP (Training Impulse)</p><span class="bdg bin">True training load</span><p class="xp-body">TRIMP quantifies the actual physiological load of each session by combining duration and heart rate intensity. A 5-mile easy run (TRIMP ~40) and a 3-mile race (TRIMP 91) look similar by distance but TRIMP correctly shows the race was more than twice the load. It's a more accurate measure of training stress than miles alone.</p><div id="trimpDetail" style="font-size:11px;color:var(--text);line-height:1.6;padding:7px 9px;background:var(--bg2);border-radius:var(--rs);border-left:3px solid var(--info);border-top-left-radius:0;border-bottom-left-radius:0">Sync to see TRIMP breakdown.</div></div>
 
 <div class="xp" id="pAC"><button class="xbtn" onclick="cli('pAC')"><i class="ti ti-x"></i></button><p class="xp-title">A:C Ratio (Acute:Chronic Workload Ratio)</p><span class="bdg bok">Injury risk indicator</span><p class="xp-body">A:C = ATL ÷ CTL. Compares your recent load to your long-term load. Optimum range: 0.8–1.3. Below 0.8 = undertraining. Above 1.3 = elevated injury risk. Above 1.5 = high injury risk — avoid at all costs.</p><p class="xp-you">Your A:C is 1.22 — squarely in the optimum zone. You've been training hard relative to your base but not recklessly so. This is the "sweet spot" — building fitness without exceeding your body's ability to adapt. Maintain this range as you build toward Tesla Hertz in October.</p></div>
 
@@ -204,7 +200,6 @@ button:hover{opacity:.85}
 
 <div class="xp" id="pDec"><button class="xbtn" onclick="cli('pDec',document.getElementById('mDec'))"><i class="ti ti-x"></i></button><p class="xp-title">Aerobic decoupling</p><span class="bdg bin">Per run</span><p class="xp-body">How much HR drifts relative to pace over a run. Under 5% = strong aerobic base. Under 2% = excellent. The most direct predictor of ultra endurance performance — low decoupling means you hold pace efficiently over long distances.</p><p class="xp-you" id="dDec">—</p></div>
 
-<div class="xp" id="pWt"><button class="xbtn" onclick="cli('pWt',document.getElementById('mWt'))"><i class="ti ti-x"></i></button><p class="xp-title">Weight</p><span class="bdg bin">Goal: 170 lb</span><p class="xp-body">Each lb lost improves running economy ~2 sec/mile. At 174 vs goal 170, that's ~8 sec/mile potential gain — significant over 100 miles.</p><p class="xp-you" id="dWt">—</p></div>
 
 <!-- WORKOUTS -->
 <div class="wo-list">
@@ -339,16 +334,93 @@ onSnapshot(doc(db, 'users', 'emaad', 'meta', 'fitness'), (snap) => {
     if(el('dDec'))el('dDec').textContent=d.decNote||'';
   }
 
-  // Weight
-  if(d.weight){
-    const lb=Math.round(d.weight*2.20462);
-    setMetric('vWt','sWt',lb,'lb','Goal 170','');
-    el('vWt').style.color='var(--text)';
-    if(el('dWt'))el('dWt').textContent=d.weightNote||'';
+    const wDiff = lb - 170;
+    const wEl = el('dWt');
+    if(wEl) wEl.textContent = wDiff > 0
+      ? `${lb} lb — ${wDiff} lb from 170 lb goal. Each lb lost improves running economy ~2 sec/mile — ${wDiff} lb = ~${wDiff*2} sec/mile potential gain over time. Don't restrict calories during taper. Race performance over weight loss until after Jun 20.`
+      : `${lb} lb — goal reached! Maintain with consistent training and nutrition.`;
+  }
+
+  // Dynamic CTL/ATL/TSB/AC detail panels
+  if(d.ctl!==undefined) {
+    const ctlEl=el('dCTL');
+    if(ctlEl) ctlEl.textContent=`Your Fitness (CTL) is ${d.ctl}. Context: recreational runners 20–40, competitive age-groupers 50–80, elite ultra runners 100+. ${d.ctl>=50?'You sit in the competitive age-grouper range — solid fitness base for ultra running.':'Building toward competitive range.'} CTL will dip during taper — that's correct and expected.`;
+
+    const atlEl=el('dATL');
+    if(atlEl) atlEl.textContent=`Your Fatigue (ATL) is ${d.atl}${d.ctl?` — ${d.atl>d.ctl?`higher than your CTL of ${d.ctl}, meaning you've been training harder recently than your long-term average. Normal mid-training cycle.`:`lower than your CTL of ${d.ctl} — you're in recovery mode.`}`:''}. ATL drops quickly with easy training — a few easy days will bring this down noticeably.`;
+
+    const tsbEl=el('dTSB');
+    if(tsbEl) {
+      const nextRace = new Date('2026-06-20');
+      const today = new Date(); today.setHours(0,0,0,0);
+      const daysToRace = Math.round((nextRace-today)/86400000);
+      const targetTSB = '+5 to +15';
+      tsbEl.textContent=`Your Form (TSB) is ${d.tsb>0?'+':''}${d.tsb}. ${d.tsb<-20?'Significant fatigue — prioritize recovery.':d.tsb<0?`Slight fatigue — normal mid-taper. With easy training, TSB rises ~3–5 points per rest day.`:d.tsb<=15?'In the ideal racing window — fit and fresh.':'Very fresh — be careful not to undertrain before race day.'} ${daysToRace>0?`${daysToRace} days to Jun 20 Ultra — target TSB ${targetTSB} by race day.`:'Race day!'}`;
+    }
+
+    const acEl=el('dAC');
+    if(acEl && d.acRatio) {
+      const inZone = d.acRatio>=0.8 && d.acRatio<=1.3;
+      acEl.textContent=`Your A:C ratio is ${d.acRatio} — ${inZone?'squarely in the optimum 0.8–1.3 zone. Training hard relative to your base but not recklessly. This is the sweet spot — building fitness without exceeding your body's ability to adapt.':d.acRatio>1.3?`above optimum zone (1.3). Elevated injury risk — ease back on intensity.`:'below optimum (0.8) — slightly undertraining relative to your base.'} Maintain 0.8–1.3 as you build toward Tesla Hertz in October.`;
+    }
   }
 
   // Week miles
   if(d.weekMiles) el('weekMilesLabel').textContent=`${d.weekMiles} mi · TRIMP ${d.weekTrimp||'—'}`;
+
+  // Dynamic readiness breakdown
+  if(d.tsb!==undefined && d.acRatio!==undefined) {
+    const rdEl = document.getElementById('rdDetail');
+    if(rdEl) {
+      const tsbScore = Math.round(Math.max(0, Math.min(100, (d.tsb + 25) / 45 * 100)));
+      const hrvScore = d.hrvBaseline ? Math.round(Math.max(0, Math.min(100, (d.hrv - 24.1) / (30.0 - 24.1) * 100))) : 50;
+      const acScore = (d.acRatio >= 0.8 && d.acRatio <= 1.3) ? 100 : d.acRatio < 0.8 ? Math.round(d.acRatio / 0.8 * 100) : Math.round(Math.max(0, 100 - (d.acRatio - 1.3) / 0.7 * 100));
+      const sleepScore = Math.round(Math.min(100, (d.deepSleep || 0) / 90 * 100));
+      const tsbColor = tsbScore >= 60 ? 'var(--ok)' : tsbScore >= 35 ? 'var(--warn)' : 'var(--danger)';
+      const hrvColor = hrvScore >= 60 ? 'var(--ok)' : hrvScore >= 35 ? 'var(--warn)' : 'var(--danger)';
+      const acColor = acScore >= 80 ? 'var(--ok)' : 'var(--warn)';
+      const slColor = sleepScore >= 60 ? 'var(--ok)' : sleepScore >= 35 ? 'var(--warn)' : 'var(--danger)';
+      rdEl.innerHTML = `
+        <div style="display:grid;grid-template-columns:1fr auto auto;gap:4px 10px;align-items:center;margin-bottom:6px">
+          <div style="font-size:10px;font-weight:600;color:var(--text2)">Form (TSB ${d.tsb > 0 ? '+' : ''}${d.tsb})</div>
+          <div style="font-size:10px;color:var(--text3)">45%</div>
+          <div style="font-size:11px;font-weight:600;color:${tsbColor}">${tsbScore}/100</div>
+          <div style="font-size:10px;font-weight:600;color:var(--text2)">HRV ${d.hrv}ms (range 24–30ms)</div>
+          <div style="font-size:10px;color:var(--text3)">25%</div>
+          <div style="font-size:11px;font-weight:600;color:${hrvColor}">${hrvScore}/100</div>
+          <div style="font-size:10px;font-weight:600;color:var(--text2)">A:C ratio ${d.acRatio}</div>
+          <div style="font-size:10px;color:var(--text3)">20%</div>
+          <div style="font-size:11px;font-weight:600;color:${acColor}">${acScore}/100</div>
+          <div style="font-size:10px;font-weight:600;color:var(--text2)">Deep sleep ${d.deepSleep || 0}min / 90min</div>
+          <div style="font-size:10px;color:var(--text3)">10%</div>
+          <div style="font-size:11px;font-weight:600;color:${slColor}">${sleepScore}/100</div>
+        </div>
+        <div style="border-top:0.5px solid var(--border);padding-top:5px;font-size:10px;color:var(--text2)">
+          ${d.tsb <= -20 ? 'Carrying significant fatigue — prioritize recovery.' : d.tsb <= 0 ? 'Slight fatigue — taper will bring this up.' : 'Fresh and ready to race.'}
+          ${d.acRatio >= 0.8 && d.acRatio <= 1.3 ? ' A:C in optimum zone ✅' : d.acRatio > 1.3 ? ' A:C elevated — watch injury risk.' : ''}
+        </div>`;
+    }
+  }
+
+  // Dynamic TRIMP breakdown
+  if(d.weekTrimp && d.workouts) {
+    const trimpEl = document.getElementById('trimpDetail');
+    if(trimpEl) {
+      const rows = d.workouts
+        .filter(w => w.type !== 'rest')
+        .map(w => {
+          const t = w.sub && w.sub.match(/TRIMP (\d+)/);
+          return t ? `<div style="display:flex;justify-content:space-between;padding:2px 0;border-bottom:0.5px solid var(--border);font-size:10px"><span style="color:var(--text2)">${w.title}</span><span style="font-weight:600;color:var(--info)">${t[1]}</span></div>` : '';
+        }).filter(Boolean).join('');
+      const restDays = d.tsb !== undefined ? Math.max(0, 0.8).toFixed(1) : '—';
+      trimpEl.innerHTML = `
+        ${rows}
+        <div style="display:flex;justify-content:space-between;padding-top:5px;margin-top:2px;font-size:11px;font-weight:600;color:var(--text)"><span>Total</span><span style="color:var(--info)">${d.weekTrimp}</span></div>
+        <div style="margin-top:6px;font-size:10px;color:var(--text2);border-top:0.5px solid var(--border);padding-top:5px">
+          Taper week target: <strong>under 150 TRIMP</strong> — 3 easy runs, no intensity. Lets TSB rise toward +10 by race day.
+        </div>`;
+    }
+  }
 
   // Training load
   if(d.ctl!==undefined){
