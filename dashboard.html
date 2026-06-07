@@ -150,6 +150,32 @@ button:hover{opacity:.85}
   </div>
 </div>
 
+<!-- Training load card -->
+<div class="wo-list" style="margin-bottom:10px">
+  <div class="wo-hdr">
+    <span>Training load</span>
+    <span id="acLabel" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--text3)">A:C —</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;text-align:center">
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+      <div id="vCTL" style="font-size:16px;font-weight:600;color:var(--ok)">—</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px">Fitness</div>
+    </div>
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+      <div id="vATL" style="font-size:16px;font-weight:600;color:var(--warn)">—</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px">Fatigue</div>
+    </div>
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+      <div id="vTSB" style="font-size:16px;font-weight:600">—</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px">Form</div>
+    </div>
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+      <div id="vTRIMP" style="font-size:16px;font-weight:600;color:var(--info)">—</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px">Wk TRIMP</div>
+    </div>
+  </div>
+</div>
+
 <!-- Metric detail panels -->
 <div class="xp" id="pHRV"><button class="xbtn" onclick="cli('pHRV',document.getElementById('mHRV'))"><i class="ti ti-x"></i></button><p class="xp-title">HRV (RMSSD)</p><span class="bdg bin">Amazfit/Zepp</span><p class="xp-body">Your most sensitive daily recovery indicator. Higher = more recovered. Garmin 30-day baseline was 26ms — Amazfit typically reads higher, new baseline being established.</p><p class="xp-you" id="dHRV">—</p></div>
 
@@ -305,7 +331,26 @@ onSnapshot(doc(db, 'users', 'emaad', 'meta', 'fitness'), (snap) => {
   }
 
   // Week miles
-  if(d.weekMiles) el('weekMilesLabel').textContent=`${d.weekMiles} mi this week`;
+  if(d.weekMiles) el('weekMilesLabel').textContent=`${d.weekMiles} mi · TRIMP ${d.weekTrimp||'—'}`;
+
+  // Training load
+  if(d.ctl!==undefined){
+    const vCTL=el('vCTL'); if(vCTL)vCTL.textContent=d.ctl;
+    const vATL=el('vATL'); if(vATL)vATL.textContent=d.atl;
+    const vTSB=el('vTSB');
+    if(vTSB){
+      vTSB.textContent=(d.tsb>0?'+':'')+d.tsb;
+      vTSB.style.color=d.tsb>=5?'var(--ok)':d.tsb>=-15?'var(--warn)':'var(--danger)';
+    }
+    const vTRIMP=el('vTRIMP'); if(vTRIMP)vTRIMP.textContent=d.weekTrimp||'—';
+    const acLbl=el('acLabel');
+    if(acLbl&&d.acRatio){
+      const ac=d.acRatio;
+      const acCol=ac>=0.8&&ac<=1.3?'var(--ok)':ac<1.5?'var(--warn)':'var(--danger)';
+      acLbl.textContent=`A:C ${ac} ${ac>=0.8&&ac<=1.3?'✅':'⚠'}`;
+      acLbl.style.color=acCol;
+    }
+  }
 
   // Workouts
   if(d.workouts&&d.workouts.length){
