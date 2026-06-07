@@ -111,8 +111,15 @@ button:hover{opacity:.85}
 </div>
 <div class="xp" id="rdPanel">
   <button class="xbtn" onclick="cli('rdPanel')"><i class="ti ti-x"></i></button>
-  <p class="xp-title">Readiness score</p>
-  <p class="xp-body">Composite of HRV vs your 26ms baseline, resting HR, sleep quality, and training load. Calibrated for your ultra runner profile.</p>
+  <p class="xp-title">Readiness score — how it's calculated</p>
+  <p class="xp-body">Evidence-based formula validated for trained endurance athletes. Four inputs, weighted by predictive accuracy:</p>
+  <div style="margin:7px 0;font-size:11px;color:var(--text2);line-height:1.7">
+    <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:0.5px solid var(--border)"><span><strong>Form (TSB)</strong> — fitness minus fatigue</span><span style="font-weight:600;color:var(--text)">45%</span></div>
+    <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:0.5px solid var(--border)"><span><strong>HRV 7-day trend</strong> — vs your normal range</span><span style="font-weight:600;color:var(--text)">25%</span></div>
+    <div style="display:flex;justify-content:space-between;padding:3px 0;border-bottom:0.5px solid var(--border)"><span><strong>A:C ratio</strong> — load balance &amp; injury risk</span><span style="font-weight:600;color:var(--text)">20%</span></div>
+    <div style="display:flex;justify-content:space-between;padding:3px 0"><span><strong>Deep sleep</strong> — vs 90 min target</span><span style="font-weight:600;color:var(--text)">10%</span></div>
+  </div>
+  <p class="xp-body" style="margin-top:6px">TSB dominates because it's the strongest performance predictor for trained endurance athletes (Banister impulse-response model). HRV trend captures daily recovery sensitivity. A:C ratio guards against injury risk. Sleep has the lowest weight — consumer devices measure it imprecisely and one bad night matters less than cumulative patterns.</p>
   <p class="xp-you" id="rdDetail">Sync your dashboard to see today's readiness breakdown.</p>
 </div>
 
