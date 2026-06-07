@@ -81,7 +81,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:va
 .bdn{background:var(--danger-bg);color:var(--danger)}.bin{background:var(--info-bg);color:var(--info)}
 .skeleton{background:var(--bg3);border-radius:4px;height:14px;width:80%;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:.8}}
-button{font-family:inherit;background:var(--text);color:#fff;border:none;border-radius:var(--rs);padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer}
+button{font-family:inherit;cursor:pointer} .btn-primary{background:var(--text);color:#fff;border:none;border-radius:var(--rs);padding:8px 12px;font-size:12px;font-weight:600;width:100%}
 button:hover{opacity:.85}
 </style>
 </head>
@@ -161,25 +161,25 @@ button:hover{opacity:.85}
 <div class="wo-list" style="margin-bottom:10px">
   <div class="wo-hdr">
     <span>Training load</span>
-    <span id="acLabel" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--text3);cursor:pointer;text-decoration:underline;text-decoration-style:dotted" onclick="tgl('pAC')">A:C —</span>
+    <button onclick="tgl('pAC')" style="background:none;border:none;font-family:inherit;font-weight:400;font-size:10px;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;padding:0" id="acLabel">A:C —</button>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;text-align:center">
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pCTL')">
+    <button onclick="tgl('pCTL')" style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer;border:none;width:100%;font-family:inherit;text-align:center">
       <div id="vCTL" style="font-size:16px;font-weight:600;color:var(--ok)">—</div>
       <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Fitness</div>
-    </div>
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pATL')">
+    </button>
+    <button onclick="tgl('pATL')" style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer;border:none;width:100%;font-family:inherit;text-align:center">
       <div id="vATL" style="font-size:16px;font-weight:600;color:var(--warn)">—</div>
       <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Fatigue</div>
-    </div>
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pTSB')">
+    </button>
+    <button onclick="tgl('pTSB')" style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer;border:none;width:100%;font-family:inherit;text-align:center">
       <div id="vTSB" style="font-size:16px;font-weight:600">—</div>
       <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Form</div>
-    </div>
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pTRIMP')">
+    </button>
+    <button onclick="tgl('pTRIMP')" style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer;border:none;width:100%;font-family:inherit;text-align:center">
       <div id="vTRIMP" style="font-size:16px;font-weight:600;color:var(--info)">—</div>
       <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Wk TRIMP</div>
-    </div>
+    </button>
   </div>
 </div>
 
@@ -230,7 +230,7 @@ button:hover{opacity:.85}
 </div>
 
 <div style="margin-top:8px">
-  <button onclick="window.open('https://claude.ai','_blank')" style="width:100%;font-size:12px;background:var(--info)">Open Claude · say "sync my dashboard" ↗</button>
+  <button onclick="window.open('https://claude.ai','_blank')" class="btn-primary" style="font-size:12px;background:var(--info);color:#fff;border-radius:var(--rs);padding:8px 12px;font-weight:600">Open Claude · say "sync my dashboard" ↗</button>
 </div>
 
 <script type="module">
