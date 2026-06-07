@@ -334,13 +334,6 @@ onSnapshot(doc(db, 'users', 'emaad', 'meta', 'fitness'), (snap) => {
     if(el('dDec'))el('dDec').textContent=d.decNote||'';
   }
 
-    const wDiff = lb - 170;
-    const wEl = el('dWt');
-    if(wEl) wEl.textContent = wDiff > 0
-      ? `${lb} lb — ${wDiff} lb from 170 lb goal. Each lb lost improves running economy ~2 sec/mile — ${wDiff} lb = ~${wDiff*2} sec/mile potential gain over time. Don't restrict calories during taper. Race performance over weight loss until after Jun 20.`
-      : `${lb} lb — goal reached! Maintain with consistent training and nutrition.`;
-  }
-
   // Dynamic CTL/ATL/TSB/AC detail panels
   if(d.ctl!==undefined) {
     const ctlEl=el('dCTL');
