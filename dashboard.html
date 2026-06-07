@@ -154,27 +154,37 @@ button:hover{opacity:.85}
 <div class="wo-list" style="margin-bottom:10px">
   <div class="wo-hdr">
     <span>Training load</span>
-    <span id="acLabel" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--text3)">A:C —</span>
+    <span id="acLabel" style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--text3);cursor:pointer;text-decoration:underline;text-decoration-style:dotted" onclick="tgl('pAC')">A:C —</span>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;text-align:center">
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pCTL')">
       <div id="vCTL" style="font-size:16px;font-weight:600;color:var(--ok)">—</div>
-      <div style="font-size:9px;color:var(--text3);margin-top:1px">Fitness</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Fitness</div>
     </div>
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pATL')">
       <div id="vATL" style="font-size:16px;font-weight:600;color:var(--warn)">—</div>
-      <div style="font-size:9px;color:var(--text3);margin-top:1px">Fatigue</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Fatigue</div>
     </div>
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pTSB')">
       <div id="vTSB" style="font-size:16px;font-weight:600">—</div>
-      <div style="font-size:9px;color:var(--text3);margin-top:1px">Form</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Form</div>
     </div>
-    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px">
+    <div style="background:var(--bg3);border-radius:var(--rs);padding:7px 4px;cursor:pointer" onclick="tgl('pTRIMP')">
       <div id="vTRIMP" style="font-size:16px;font-weight:600;color:var(--info)">—</div>
-      <div style="font-size:9px;color:var(--text3);margin-top:1px">Wk TRIMP</div>
+      <div style="font-size:9px;color:var(--text3);margin-top:1px;text-decoration:underline;text-decoration-style:dotted">Wk TRIMP</div>
     </div>
   </div>
 </div>
+
+<div class="xp" id="pCTL"><button class="xbtn" onclick="cli('pCTL')"><i class="ti ti-x"></i></button><p class="xp-title">Fitness (CTL — Chronic Training Load)</p><span class="bdg bok">7-week rolling average</span><p class="xp-body">CTL measures your fitness — the average training load over the past 42 days. Higher = more fit. It rises slowly with consistent training and falls during rest or taper. Think of it as your aerobic engine size.</p><p class="xp-you">Your CTL is 55. For context: recreational runners are typically 20–40, competitive age-groupers 50–80, elite ultra runners 100+. Your CTL will naturally dip during taper — that's expected and correct.</p></div>
+
+<div class="xp" id="pATL"><button class="xbtn" onclick="cli('pATL')"><i class="ti ti-x"></i></button><p class="xp-title">Fatigue (ATL — Acute Training Load)</p><span class="bdg bwn">7-day rolling average</span><p class="xp-body">ATL measures your fatigue — the average training load over the past 7 days. Higher = more fatigued. It responds quickly to hard training and drops fast with rest. A high ATL relative to CTL means you're carrying fatigue.</p><p class="xp-you">Your ATL is 67 — higher than your CTL of 55, meaning you've been training harder recently than your long-term average. This is normal mid-training cycle. The race and subsequent easy run have started bringing it down. It will drop quickly over the next few easy days.</p></div>
+
+<div class="xp" id="pTSB"><button class="xbtn" onclick="cli('pTSB')"><i class="ti ti-x"></i></button><p class="xp-title">Form (TSB — Training Stress Balance)</p><span class="bdg bwn">Fitness minus Fatigue</span><p class="xp-body">TSB = CTL − ATL. It tells you how "fresh" you are. Negative = carrying fatigue. Positive = fresh and rested. The sweet spot for racing is +5 to +15 — fit but not rusty. Below -25 = high injury risk. Above +20 = detrained.</p><p class="xp-you">Your TSB is -12 — slightly fatigued, expected mid-taper. Runalyze calculates you're only 0.8 rest days from TSB=0. By Jun 20 Ultra, with easy training this week, you should arrive at +5 to +15 — the ideal racing window.</p></div>
+
+<div class="xp" id="pTRIMP"><button class="xbtn" onclick="cli('pTRIMP')"><i class="ti ti-x"></i></button><p class="xp-title">Weekly TRIMP (Training Impulse)</p><span class="bdg bin">True training load</span><p class="xp-body">TRIMP quantifies the actual physiological load of each session by combining duration and heart rate intensity. A 5-mile easy run (TRIMP ~40) and a 3-mile race (TRIMP 91) look similar by distance but TRIMP correctly shows the race was more than twice the load. It's a more accurate measure of training stress than miles alone.</p><p class="xp-you">Your week TRIMP is 362. Breakdown: Long run 58 + Easy runs 78 + Intervals 55 + Race 91 + Warm/cool 15 + Today 65 = 362. For taper week (Jun 8–12), target TRIMP under 150 — about 3 easy runs with no intensity. This lets TSB rise toward +10 by race day.</p></div>
+
+<div class="xp" id="pAC"><button class="xbtn" onclick="cli('pAC')"><i class="ti ti-x"></i></button><p class="xp-title">A:C Ratio (Acute:Chronic Workload Ratio)</p><span class="bdg bok">Injury risk indicator</span><p class="xp-body">A:C = ATL ÷ CTL. Compares your recent load to your long-term load. Optimum range: 0.8–1.3. Below 0.8 = undertraining. Above 1.3 = elevated injury risk. Above 1.5 = high injury risk — avoid at all costs.</p><p class="xp-you">Your A:C is 1.22 — squarely in the optimum zone. You've been training hard relative to your base but not recklessly so. This is the "sweet spot" — building fitness without exceeding your body's ability to adapt. Maintain this range as you build toward Tesla Hertz in October.</p></div>
 
 <!-- Metric detail panels -->
 <div class="xp" id="pHRV"><button class="xbtn" onclick="cli('pHRV',document.getElementById('mHRV'))"><i class="ti ti-x"></i></button><p class="xp-title">HRV (RMSSD)</p><span class="bdg bin">Amazfit/Zepp</span><p class="xp-body">Your most sensitive daily recovery indicator. Higher = more recovered. Garmin 30-day baseline was 26ms — Amazfit typically reads higher, new baseline being established.</p><p class="xp-you" id="dHRV">—</p></div>
