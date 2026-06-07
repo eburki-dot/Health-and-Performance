@@ -340,7 +340,15 @@ onSnapshot(doc(db, 'users', 'emaad', 'meta', 'fitness'), (snap) => {
     if(ctlEl) ctlEl.textContent=`Your Fitness (CTL) is ${d.ctl}. Context: recreational runners 20–40, competitive age-groupers 50–80, elite ultra runners 100+. ${d.ctl>=50?'You sit in the competitive age-grouper range — solid fitness base for ultra running.':'Building toward competitive range.'} CTL will dip during taper — that's correct and expected.`;
 
     const atlEl=el('dATL');
-    if(atlEl) atlEl.textContent=`Your Fatigue (ATL) is ${d.atl}${d.ctl?` — ${d.atl>d.ctl?`higher than your CTL of ${d.ctl}, meaning you've been training harder recently than your long-term average. Normal mid-training cycle.`:`lower than your CTL of ${d.ctl} — you're in recovery mode.`}`:''}. ATL drops quickly with easy training — a few easy days will bring this down noticeably.`;
+    if(atlEl) {
+      let atlMsg = "Your Fatigue (ATL) is " + d.atl;
+      if(d.ctl) {
+        if(d.atl > d.ctl) atlMsg += " — higher than your CTL of " + d.ctl + ", meaning you've been training harder recently than your long-term average. Normal mid-training cycle.";
+        else atlMsg += " — lower than your CTL of " + d.ctl + " — you're in recovery mode.";
+      }
+      atlMsg += " ATL drops quickly with easy training — a few easy days will bring this down noticeably.";
+      atlEl.textContent = atlMsg;
+    }
 
     const tsbEl=el('dTSB');
     if(tsbEl) {
@@ -348,13 +356,24 @@ onSnapshot(doc(db, 'users', 'emaad', 'meta', 'fitness'), (snap) => {
       const today = new Date(); today.setHours(0,0,0,0);
       const daysToRace = Math.round((nextRace-today)/86400000);
       const targetTSB = '+5 to +15';
-      tsbEl.textContent=`Your Form (TSB) is ${d.tsb>0?'+':''}${d.tsb}. ${d.tsb<-20?'Significant fatigue — prioritize recovery.':d.tsb<0?`Slight fatigue — normal mid-taper. With easy training, TSB rises ~3–5 points per rest day.`:d.tsb<=15?'In the ideal racing window — fit and fresh.':'Very fresh — be careful not to undertrain before race day.'} ${daysToRace>0?`${daysToRace} days to Jun 20 Ultra — target TSB ${targetTSB} by race day.`:'Race day!'}`;
+      let tsbState;
+      if(d.tsb < -20) tsbState = "Significant fatigue — prioritize recovery.";
+      else if(d.tsb < 0) tsbState = "Slight fatigue — normal mid-taper. TSB rises ~3-5 points per rest day.";
+      else if(d.tsb <= 15) tsbState = "In the ideal racing window — fit and fresh.";
+      else tsbState = "Very fresh — be careful not to undertrain before race day.";
+      const raceStr = daysToRace > 0 ? daysToRace + " days to Jun 20 Ultra — target TSB " + targetTSB + " by race day." : "Race day!";
+      tsbEl.textContent = "Your Form (TSB) is " + (d.tsb > 0 ? "+" : "") + d.tsb + ". " + tsbState + " " + raceStr;
     }
 
     const acEl=el('dAC');
     if(acEl && d.acRatio) {
       const inZone = d.acRatio>=0.8 && d.acRatio<=1.3;
-      acEl.textContent=`Your A:C ratio is ${d.acRatio} — ${inZone?'squarely in the optimum 0.8–1.3 zone. Training hard relative to your base but not recklessly. This is the sweet spot — building fitness without exceeding your body's ability to adapt.':d.acRatio>1.3?`above optimum zone (1.3). Elevated injury risk — ease back on intensity.`:'below optimum (0.8) — slightly undertraining relative to your base.'} Maintain 0.8–1.3 as you build toward Tesla Hertz in October.`;
+      const acMsg = inZone
+        ? "squarely in the optimum 0.8-1.3 zone — training hard but not recklessly. This is the sweet spot."
+        : d.acRatio > 1.3
+          ? "above optimum (1.3). Elevated injury risk — ease back on intensity."
+          : "below optimum (0.8) — slightly undertraining relative to your base.";
+      acEl.textContent = "Your A:C ratio is " + d.acRatio + " — " + acMsg + " Maintain 0.8-1.3 as you build toward Tesla Hertz.";
     }
   }
 
