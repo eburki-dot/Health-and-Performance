@@ -144,6 +144,7 @@ button:hover{opacity:.85}
     <p class="m-label">VO₂max</p>
     <p class="m-val" id="vVO2" style="color:var(--text3)">—<span class="m-unit"> ml/kg</span></p>
     <p class="m-sub" id="sVO2">—</p>
+    <p class="m-sub" id="sVO2Garmin" style="font-size:0.7rem;margin-top:2px;color:var(--text3)">—</p>
   </div>
   <div class="metric" id="mDec" onclick="tgl('pDec',this)">
     <p class="m-label">Decoupling</p>
@@ -196,7 +197,7 @@ button:hover{opacity:.85}
 
 <div class="xp" id="pSleep"><button class="xbtn" onclick="cli('pSleep',document.getElementById('mSleep'))"><i class="ti ti-x"></i></button><p class="xp-title">Deep sleep</p><span class="bdg bin">Nightly</span><p class="xp-body">Target 90+ min. Deep sleep drives growth hormone release, muscle repair, and testosterone production. With low-normal testosterone (414 ng/dL), this matters especially.</p><p class="xp-you" id="dSleep">—</p></div>
 
-<div class="xp" id="pVO2"><button class="xbtn" onclick="cli('pVO2',document.getElementById('mVO2'))"><i class="ti ti-x"></i></button><p class="xp-title">VO₂max</p><span class="bdg bin">Garmin estimate</span><p class="xp-body">Maximum oxygen consumption — the single best indicator of aerobic fitness. Garmin estimates from pace-to-HR ratio during runs. Runalyze predicts race times from this value.</p><p class="xp-you" id="dVO2">—</p></div>
+<div class="xp" id="pVO2"><button class="xbtn" onclick="cli('pVO2',document.getElementById('mVO2'))"><i class="ti ti-x"></i></button><p class="xp-title">VO₂max</p><span class="bdg bin">Runalyze + Garmin</span><p class="xp-body">Maximum oxygen consumption — the single best indicator of aerobic fitness. <strong>Runalyze</strong> calculates from your training pace and HR data (conservative, training-model based). <strong>Garmin</strong> estimates from pace-to-HR ratio via FirstBeat algorithm (tends to read higher). Track each independently over time — don't compare them directly.</p><p class="xp-you" id="dVO2">—</p></div>
 
 <div class="xp" id="pDec"><button class="xbtn" onclick="cli('pDec',document.getElementById('mDec'))"><i class="ti ti-x"></i></button><p class="xp-title">Aerobic decoupling</p><span class="bdg bin">Per run</span><p class="xp-body">How much HR drifts relative to pace over a run. Under 5% = strong aerobic base. Under 2% = excellent. The most direct predictor of ultra endurance performance — low decoupling means you hold pace efficiently over long distances.</p><p class="xp-you" id="dDec">—</p></div>
 
@@ -323,7 +324,8 @@ onSnapshot(doc(db, 'users', 'emaad', 'meta', 'fitness'), (snap) => {
   // VO2max
   if(d.vo2max){
     const delta=d.vo2maxDelta||0;
-    setMetric('vVO2','sVO2',d.vo2max,'ml/kg',(delta>0?'↑':'↓')+' from '+(d.vo2max-delta).toFixed(1),'ok');
+    setMetric('vVO2','sVO2',d.vo2max,'ml/kg','Runalyze: '+(delta>0?'↑':'↓')+' from '+(d.vo2max-delta).toFixed(1),'ok');
+    if(el('sVO2Garmin'))el('sVO2Garmin').textContent=d.vo2maxGarmin?'Garmin: '+d.vo2maxGarmin+' ml/kg':'';
     if(el('dVO2'))el('dVO2').textContent=d.vo2Note||'';
   }
 
